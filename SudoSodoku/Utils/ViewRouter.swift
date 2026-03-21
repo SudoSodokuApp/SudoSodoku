@@ -1,4 +1,17 @@
 import SwiftUI
+import UIKit
+import Combine
+
+enum Platform {
+    case phone
+    case pad
+}
+
+extension UIDevice {
+    static var isPad: Bool {
+        UIDevice.current.userInterfaceIdiom == .pad
+    }
+}
 
 /// View router to handle platform-specific UI routing
 @MainActor
