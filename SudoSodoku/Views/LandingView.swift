@@ -72,6 +72,10 @@ struct LandingView: View {
                     HStack { Image(systemName: "archivebox"); Text("cd /archives") }
                         .font(.system(size: 16, weight: .bold, design: .monospaced)).foregroundColor(.gray).padding()
                 }
+                NavigationLink(destination: StatsView()) {
+                    HStack { Image(systemName: "chart.bar.xaxis"); Text("cat /stats") }
+                        .font(.system(size: 16, weight: .bold, design: .monospaced)).foregroundColor(.gray).padding(.vertical, 4)
+                }
                 Spacer()
             }
         }
