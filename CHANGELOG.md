@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased]
+
+### Changed
+
+- Set minimum deployment target to iOS 17.0 (aligned project and target settings)
+- iPhone-only app: removed iPad-specific views, routing, and orientation settings
+- Updated documentation to reflect local-only persistence (no iCloud sync)
+- Fixed Game Center leaderboard ID for MASTER difficulty (`leaderboard.master`)
+
+### Removed
+
+- `Views-iPad/` directory and `ViewRouter` platform routing
+- Committed build artifacts (`SudoSodoku.xcarchive/`, `IPA/`) from version control
+
+---
+
 ## [1.0.0] - 2026-01-02
 
 ### 🎉 First Official Release

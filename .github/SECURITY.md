@@ -52,7 +52,7 @@ We care about your security. Here's how you can stay safe:
 * **Keep Updated**: Always use the latest version of the app
 * **Official Sources Only**: Download only from the App Store or GitHub releases
 * **Report Issues**: If you notice anything suspicious, please report it immediately
-* **Review Permissions**: The app requests minimal permissions (iCloud and Game Center, both optional)
+* **Review Permissions**: The app requests minimal permissions (Game Center, optional)
 
 #### For Contributors
 
@@ -68,17 +68,15 @@ If you're contributing code:
 
 #### Data Privacy
 
-* **Local Storage**: Game data is stored locally or in iCloud
+* **Local Storage**: Game data is stored locally on device
 * **No Data Collection**: We don't collect user data
 * **Game Center**: Uses Apple's Game Center (subject to Apple's privacy policy)
-* **iCloud Sync**: Uses Apple's iCloud (subject to Apple's privacy policy)
 
 #### Permissions
 
 SudoSodoku requests minimal permissions:
 
-* **iCloud**: For game state synchronization (optional)
-* **Game Center**: For user authentication and achievements (optional)
+* **Game Center**: For user authentication and leaderboards (optional)
 
 #### Third-Party Dependencies
 

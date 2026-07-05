@@ -18,11 +18,11 @@ Welcome! This document provides transparency into SudoSodoku's development proce
 ### Planned Features
 
 1. **Detailed Statistics** 📊
-2. **iPad Optimization** 📱
-3. **Achievement System** 🏅
-4. **Global Leaderboard** 🌍 (Requires Apple Developer features)
-5. **Hint System** 💡
-6. **Tutorial Mode** 📚
+2. **Achievement System** 🏅
+3. **Global Leaderboard** 🌍 (Requires Apple Developer features)
+4. **Hint System** 💡
+5. **Tutorial Mode** 📚
+6. **iPad Support** 📱 (Deferred)
 7. **macOS Version** 💻
 8. **Custom Themes** 🎨
 9. **Variant Sudoku** 🔀
@@ -53,25 +53,19 @@ Welcome! This document provides transparency into SudoSodoku's development proce
 
 ---
 
-#### 2. iPad Optimization 📱
+#### 2. iPad Support 📱
 
-**Priority**: High | **Version**: v1.1 | **Complexity**: Medium
+**Priority**: Deferred | **Version**: TBD | **Complexity**: Medium
 
-**Features:**
+**Status:** The app currently targets iPhone only. iPad-optimized layouts were removed to reduce maintenance overhead during early development.
+
+**Future features (when revisited):**
 
 - Adaptive layout for larger screens
 - Split view support
 - Keyboard shortcuts
 - Trackpad/mouse support
 - Stage Manager support
-- Larger board display
-
-**Implementation:**
-
-- Size class detection
-- New `iPadGameView` with optimized layout
-- Keyboard event handling
-- Pointer interaction enhancements
 
 ---
 
@@ -245,33 +239,33 @@ Welcome! This document provides transparency into SudoSodoku's development proce
 
 ## 🎯 Feature Priority
 
-### Tier 1: Quick Wins (v1.1) - 2-3 weeks
+### Tier 1: Quick Wins (v1.1)
 
 1. **Detailed Statistics** 📊
-2. **iPad Optimization** 📱
 
-### Tier 2: Core Enhancements (v1.2) - 4-6 weeks
+### Tier 2: Core Enhancements (v1.2)
 
-3. **Achievement System** 🏅
-2. **Hint System** 💡
-3. **Tutorial Mode** 📚
+2. **Achievement System** 🏅
+3. **Hint System** 💡
+4. **Tutorial Mode** 📚
 
-### Tier 3: Social Features (v1.3) - 6-8 weeks
+### Tier 3: Social Features (v1.3)
 
-6. **Global Leaderboard** 🌍 (Requires Apple Developer)
+5. **Global Leaderboard** 🌍 (Requires Apple Developer)
 
-### Tier 4: Customization (v1.4) - 3-4 weeks
+### Tier 4: Customization (v1.4)
 
-7. **Custom Themes** 🎨
+6. **Custom Themes** 🎨
 
-### Tier 5: Advanced Features (v1.5) - 8-12 weeks
+### Tier 5: Advanced Features (v1.5)
 
-8. **Variant Sudoku** 🔀
+7. **Variant Sudoku** 🔀
 
-### Tier 6: Platform Expansion (v2.0) - 12+ weeks
+### Tier 6: Platform Expansion (v2.0+)
 
+8. **iPad Support** 📱
 9. **macOS Version** 💻
-2. **AI Features** 🤖
+10. **AI Features** 🤖
 
 ### Recommended Starting Point
 
@@ -325,8 +319,7 @@ We take quality seriously. Before every release, we thoroughly test all features
 
 - [ ] **Data Persistence**
   - [ ] Games save/load correctly
-  - [ ] iCloud sync works (if available)
-  - [ ] Local fallback works
+  - [ ] Local storage works reliably
   - [ ] Data migration works
 
 #### UI/UX Tests
@@ -341,8 +334,7 @@ We take quality seriously. Before every release, we thoroughly test all features
 #### Platform Tests
 
 - [ ] App runs on iPhone simulator
-- [ ] App runs on iPad simulator
-- [ ] App runs on physical devices (if available)
+- [ ] App runs on physical iPhone (if available)
 - [ ] Performance is acceptable
 - [ ] No crashes during extended play
 
@@ -424,7 +416,7 @@ Our contribution process:
 ### External Dependencies
 
 - **Game Center**: For achievements and leaderboards
-- **CloudKit**: For global leaderboard data
+- **CloudKit**: For global leaderboard data (future)
 - **Core ML**: For AI features
 - **Swift Charts**: For statistics visualization
 
@@ -444,5 +436,5 @@ Our contribution process:
 
 ---
 
-*Last Updated: January 2, 2026*  
+*Last Updated: July 5, 2026*  
 *Current Version: 1.0.0*

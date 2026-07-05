@@ -13,7 +13,7 @@ class StorageManager: ObservableObject {
     init() { loadData() }
     
     private func getFileURL(name: String) -> URL {
-        // 完全使用本地存储，不使用iCloud
+        // Local-only storage (Documents directory)
         let localURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(name)
         return localURL
     }

@@ -43,7 +43,6 @@ We welcome contributions of all kinds:
    * Select the SudoSodoku target
    * Go to Signing & Capabilities
    * Set your development team
-   * Note: iCloud capabilities require a paid Apple Developer account
 
 4. **Build and Run**
 

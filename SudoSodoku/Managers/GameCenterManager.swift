@@ -83,8 +83,8 @@ class GameCenterManager: NSObject, ObservableObject {
             return "com.kaichen.SudoSodoku.leaderboard.medium"
         case "hard":
             return "com.kaichen.SudoSodoku.leaderboard.hard"
-        case "expert":
-            return "com.kaichen.SudoSodoku.leaderboard.expert"
+        case "master":
+            return "com.kaichen.SudoSodoku.leaderboard.master"
         default:
             return leaderboardID
         }

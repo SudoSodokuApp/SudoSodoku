@@ -47,8 +47,7 @@ We are thrilled to announce the first stable release of SudoSodoku! This version
 
 ### **💾 Robust Persistence**
 
-* **Game Center Integration**: Seamless, password-less login and user profile management.  
-* **Cloud Sync**: Leveraging **iCloud Documents** to sync game states and archives across devices (automatically degrades to local storage if iCloud is unavailable).  
+* **Local Storage**: Game records and rating data saved to the device Documents directory.  
 * **JSON Serialization**: All game records are stored as Codable JSON structs, ensuring backward compatibility and easy migration.
 
 ## **🛠️ Technical Architecture**
@@ -60,8 +59,7 @@ SudoSodoku is built with modern iOS technologies, designed for maintainability a
 * **Architecture**: MVVM (Model-View-ViewModel) pattern for clean code organization  
 * **State Management**: Reactive updates using Combine framework  
 * **Data Persistence**:  
-  * Automatic cloud sync via iCloud (with local fallback)  
-  * Safe file operations with atomic writes  
+  * Local JSON storage with atomic writes  
   * Backward-compatible data migration  
 * **User Experience**: Custom animations and haptic feedback for a polished feel
 
@@ -80,7 +78,7 @@ SudoSodoku/
 │   ├── GameCenterManager.swift   # GameKit authentication
 │   ├── RatingManager.swift       # ELO calculation algorithms
 │   ├── HapticManager.swift      # Haptic feedback engine
-│   └── StorageManager.swift      # File I/O & Cloud syncing
+│   └── StorageManager.swift      # File I/O & local persistence
 ├── Views/
 │   ├── ContentView.swift         # Main entry & NavigationStack
 │   ├── LandingView.swift         # Landing page
@@ -121,8 +119,7 @@ SudoSodoku/
    * Go to the Project Navigator (blue icon).  
    * Select the SudoSodoku target.  
    * Click **Signing & Capabilities**.  
-   * Change the **Team** to your own Apple Developer account.  
-   * *Note: If you are on a Free Developer Account, iCloud capabilities will be disabled. The app will automatically fallback to local storage.*
+   * Change the **Team** to your own Apple Developer account.
 
 3. **Run**:  
    Connect your iPhone or select a Simulator and press `Cmd + R`.
@@ -169,6 +166,7 @@ We provide convenient build scripts for command-line development:
 * macOS 13.0+ (for iOS development)
 * Xcode 15.0+ with Command Line Tools
 * iOS 17.0+ deployment target
+* iPhone only (portrait and landscape)
 
 ## **📱 Running in Simulator**
 
