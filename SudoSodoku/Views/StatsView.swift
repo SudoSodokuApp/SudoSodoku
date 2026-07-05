@@ -1,37 +1,31 @@
 import SwiftUI
 
 struct StatsView: View {
-    @ObservedObject var stats = StatisticsManager.shared
-    @ObservedObject var storage = StorageManager.shared
+    @ObservedObject private var stats = StatisticsManager.shared
 
     var body: some View {
         ZStack {
             TerminalBackground()
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
-
-                    // MARK: - Overall Stats
                     sectionHeader("SYSTEM_OVERVIEW:")
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
-                        StatCard(title: "TOTAL_GAMES",   value: "\(stats.overallStats.totalGames)",      icon: "gamecontroller")
-                        StatCard(title: "SOLVED",        value: "\(stats.overallStats.solvedGames)",     icon: "checkmark.seal")
-                        StatCard(title: "WIN_RATE",      value: winRateString,                           icon: "percent")
-                        StatCard(title: "BEST_EFF",      value: "\(stats.overallStats.bestLogicalEfficiency)", icon: "bolt")
+                        StatCard(title: "TOTAL_GAMES", value: "\(stats.overallStats.totalGames)", icon: "gamecontroller")
+                        StatCard(title: "SOLVED", value: "\(stats.overallStats.solvedGames)", icon: "checkmark.seal")
+                        StatCard(title: "WIN_RATE", value: winRateString, icon: "percent")
+                        StatCard(title: "BEST_EFF", value: "\(stats.overallStats.bestLogicalEfficiency)", icon: "bolt")
                     }
 
-                    // MARK: - Personal Bests
                     sectionHeader("PERSONAL_BEST_RECORDS:")
                     VStack(spacing: 8) {
-                        ForEach(Difficulty.allCases, id: \.self) { diff in
-                            PersonalBestRow(difficulty: diff, record: stats.personalBests[diff])
+                        ForEach(Difficulty.allCases, id: \.self) { difficulty in
+                            PersonalBestRow(difficulty: difficulty, record: stats.personalBests[difficulty])
                         }
                     }
 
-                    // MARK: - Difficulty Distribution
                     sectionHeader("DIFFICULTY_DISTRIBUTION:")
                     difficultyDistribution
 
-                    // MARK: - Recent Completions
                     let recents = stats.getRecentCompletions(limit: 10)
                     if !recents.isEmpty {
                         sectionHeader("RECENT_COMPLETIONS:")
@@ -49,10 +43,7 @@ struct StatsView: View {
             }
         }
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear { stats.refreshData() }
     }
-
-    // MARK: - Subviews
 
     @ViewBuilder
     private func sectionHeader(_ text: String) -> some View {
@@ -65,20 +56,19 @@ struct StatsView: View {
         let distribution = stats.getDifficultyDistribution()
         let maxCount = max(distribution.values.max() ?? 1, 1)
         return VStack(spacing: 10) {
-            ForEach(Difficulty.allCases, id: \.self) { diff in
-                let count = distribution[diff] ?? 0
+            ForEach(Difficulty.allCases, id: \.self) { difficulty in
+                let count = distribution[difficulty] ?? 0
                 HStack(spacing: 10) {
-                    Text(diff.rawValue)
+                    Text(difficulty.rawValue)
                         .font(.system(size: 11, weight: .bold, design: .monospaced))
-                        .foregroundColor(diff.color)
+                        .foregroundColor(difficulty.color)
                         .frame(width: 56, alignment: .leading)
-                    GeometryReader { geo in
+                    GeometryReader { geometry in
                         ZStack(alignment: .leading) {
+                            RoundedRectangle(cornerRadius: 4).fill(Color.white.opacity(0.05))
                             RoundedRectangle(cornerRadius: 4)
-                                .fill(Color.white.opacity(0.05))
-                            RoundedRectangle(cornerRadius: 4)
-                                .fill(diff.color.opacity(0.7))
-                                .frame(width: geo.size.width * CGFloat(count) / CGFloat(maxCount))
+                                .fill(difficulty.color.opacity(0.7))
+                                .frame(width: geometry.size.width * CGFloat(count) / CGFloat(maxCount))
                         }
                     }
                     .frame(height: 14)
@@ -103,9 +93,9 @@ struct StatsView: View {
                 .frame(width: 56, alignment: .leading)
             Text("EFF: \(record.logicalEfficiency)")
                 .font(.system(size: 11, design: .monospaced))
-                .foregroundColor(efficiencyColor(record.logicalEfficiency))
+                .foregroundColor(LogicalEfficiencyStyle.color(for: record.logicalEfficiency))
             Spacer()
-            Text(DateFormatter.archiveDate.string(from: record.lastPlayedTime))
+            Text(DateFormatting.archiveDate.string(from: record.lastPlayedTime))
                 .font(.system(size: 10, design: .monospaced))
                 .foregroundColor(.gray)
         }
@@ -115,18 +105,7 @@ struct StatsView: View {
         .cornerRadius(8)
     }
 
-    // MARK: - Helpers
-
     private var winRateString: String {
         String(format: "%.0f%%", stats.overallStats.winRate * 100)
-    }
-
-    private func efficiencyColor(_ score: Int) -> Color {
-        switch score {
-        case 900...: return .green
-        case 700..<900: return .yellow
-        case 500..<700: return .orange
-        default: return .red
-        }
     }
 }

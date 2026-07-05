@@ -1,25 +1,13 @@
-import SwiftUI
+import UIKit
 
 class HapticManager {
     static let shared = HapticManager()
 
     func lightImpact() {
-        let g = UIImpactFeedbackGenerator(style: .light)
-        g.impactOccurred()
-    }
-
-    func mediumImpact() {
-        let g = UIImpactFeedbackGenerator(style: .medium)
-        g.impactOccurred()
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
     }
 
     func success() {
-        let g = UINotificationFeedbackGenerator()
-        g.notificationOccurred(.success)
-    }
-
-    func error() {
-        let g = UINotificationFeedbackGenerator()
-        g.notificationOccurred(.error)
+        UINotificationFeedbackGenerator().notificationOccurred(.success)
     }
 }

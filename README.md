@@ -67,28 +67,38 @@ SudoSodoku is built with modern iOS technologies, designed for maintainability a
 
 ```
 SudoSodoku/
+├── SudoSodokuApp.swift           # @main entry
 ├── Models/
 │   ├── GameRecord.swift          # Codable save data structure
 │   ├── SudokuCell.swift          # Unit cell model
 │   ├── MoveHistory.swift         # Move history for undo/redo
-│   └── Difficulty.swift          # Enum with rating ranges
+│   ├── Difficulty.swift          # Enum with rating ranges
+│   ├── RankTier.swift            # ELO rank definitions
+│   └── OverallStats.swift        # Aggregated statistics model
 ├── ViewModels/
 │   └── SudokuGame.swift          # Core game logic & state machine
 ├── Managers/
-│   ├── GameCenterManager.swift   # GameKit authentication
+│   ├── GameCenterManager.swift   # GameKit authentication & scores
 │   ├── RatingManager.swift       # ELO calculation algorithms
-│   ├── HapticManager.swift      # Haptic feedback engine
+│   ├── HapticManager.swift       # Haptic feedback engine
+│   ├── StatisticsManager.swift   # Stats aggregation
 │   └── StorageManager.swift      # File I/O & local persistence
+├── Utils/
+│   ├── AppConstants.swift        # Bundle ID, leaderboard IDs, version
+│   ├── DateFormatting.swift      # Shared date formatters
+│   └── LogicalEfficiencyStyle.swift
 ├── Views/
-│   ├── ContentView.swift         # Main entry & NavigationStack
+│   ├── ContentView.swift         # Root navigation shell
 │   ├── LandingView.swift         # Landing page
 │   ├── GameView.swift            # The game board
-│   ├── UserProfileView.swift     # User profile & statistics
-│   ├── ArchiveView.swift         # History & Favorites list
+│   ├── StatsView.swift           # Statistics dashboard
+│   ├── UserProfileView.swift     # User profile & rank table
+│   ├── ArchiveView.swift         # History & favorites list
 │   ├── ModeSelectionView.swift   # Difficulty selection
 │   ├── BoardView.swift           # Sudoku board rendering
 │   ├── ControlPanelView.swift    # Game controls (undo/redo/numpad)
 │   ├── Components/
+│   │   ├── CellView.swift              # Single board cell
 │   │   ├── TerminalBackground.swift    # Terminal-style background
 │   │   ├── MatrixVictoryOverlay.swift  # Victory animation
 │   │   ├── NoteGridView.swift          # Note display grid
@@ -99,7 +109,7 @@ SudoSodoku/
 │   └── Styles/
 │       └── BouncyButtonStyle.swift     # Button animation style
 └── Algorithms/
-    └── SudokuGenerator.swift     # Backtracking & Digging logic
+    └── SudokuGenerator.swift     # Backtracking & digging logic
 ```
 
 ## **🚀 Building the Project**
@@ -149,12 +159,6 @@ We provide convenient build scripts for command-line development:
   2. Boot the simulator
   3. Build the project
   4. Install and launch the app
-
-* **`run.sh`** - Alternative run script with more detailed output
-
-  ```bash
-  ./run.sh
-  ```
 
 #### **Using Keyboard Shortcuts in Cursor**
 

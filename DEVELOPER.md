@@ -17,43 +17,36 @@ Welcome! This document provides transparency into SudoSodoku's development proce
 
 ### Planned Features
 
-1. **Detailed Statistics** 📊
-2. **Achievement System** 🏅
-3. **Global Leaderboard** 🌍 (Requires Apple Developer features)
-4. **Hint System** 💡
-5. **Tutorial Mode** 📚
+1. **Achievement System** 🏅
+2. **Global Leaderboard** 🌍 (Requires Apple Developer features)
+3. **Hint System** 💡
+4. **Tutorial Mode** 📚
+5. **Swift Charts Enhancements** 📊
 6. **iPad Support** 📱 (Deferred)
 7. **macOS Version** 💻
 8. **Custom Themes** 🎨
 9. **Variant Sudoku** 🔀
 10. **AI Features** 🤖
 
-### Feature Details
+### Shipped Features
 
-#### 1. Detailed Statistics 📊
+#### Detailed Statistics 📊 (v1.0)
 
-**Priority**: High | **Version**: v1.1 | **Complexity**: Medium
+**Status**: Shipped (baseline)
 
-**Features:**
+- `StatisticsManager` with personal bests, win rate, difficulty distribution, recent completions
+- `StatsView` dashboard
+- Logical efficiency scoring based on undo count
+
+**Future enhancements (v1.1+)**:
 
 - Completion time tracking
-- Difficulty analysis and success rates
-- Progress charts over time
-- Technique usage tracking
-- Error analysis heatmap
+- Swift Charts progress visualization
 - Streak tracking (daily/weekly/monthly)
-- Performance metrics
 
-**Implementation:**
+### Feature Details
 
-- New `StatisticsManager` class
-- Extend `GameRecord` with timing data
-- New `StatisticsView` with Swift Charts
-- Data aggregation functions
-
----
-
-#### 2. iPad Support 📱
+#### 1. Achievement System 🏅
 
 **Priority**: Deferred | **Version**: TBD | **Complexity**: Medium
 
@@ -69,7 +62,7 @@ Welcome! This document provides transparency into SudoSodoku's development proce
 
 ---
 
-#### 3. Achievement System 🏅
+#### 2. iPad Support 📱
 
 **Priority**: Medium | **Version**: v1.2 | **Complexity**: Medium
 
@@ -91,7 +84,7 @@ Welcome! This document provides transparency into SudoSodoku's development proce
 
 ---
 
-#### 4. Global Leaderboard 🌍
+#### 3. Global Leaderboard 🌍
 
 **Priority**: Medium | **Version**: v1.3 | **Complexity**: High
 
@@ -111,7 +104,7 @@ Welcome! This document provides transparency into SudoSodoku's development proce
 
 ---
 
-#### 5. Hint System 💡
+#### 4. Hint System 💡
 
 **Priority**: Medium | **Version**: v1.2 | **Complexity**: Medium-High
 
@@ -132,7 +125,7 @@ Welcome! This document provides transparency into SudoSodoku's development proce
 
 ---
 
-#### 6. Tutorial Mode 📚
+#### 5. Tutorial Mode 📚
 
 **Priority**: Medium | **Version**: v1.2 | **Complexity**: Medium
 
@@ -153,7 +146,7 @@ Welcome! This document provides transparency into SudoSodoku's development proce
 
 ---
 
-#### 7. macOS Version 💻
+#### 6. macOS Version 💻
 
 **Priority**: Low | **Version**: v2.0 | **Complexity**: High
 
@@ -174,7 +167,7 @@ Welcome! This document provides transparency into SudoSodoku's development proce
 
 ---
 
-#### 8. Custom Themes 🎨
+#### 7. Custom Themes 🎨
 
 **Priority**: Low | **Version**: v1.4 | **Complexity**: Medium
 
@@ -194,7 +187,7 @@ Welcome! This document provides transparency into SudoSodoku's development proce
 
 ---
 
-#### 9. Variant Sudoku 🔀
+#### 8. Variant Sudoku 🔀
 
 **Priority**: Low | **Version**: v1.5 | **Complexity**: High
 
@@ -216,7 +209,7 @@ Welcome! This document provides transparency into SudoSodoku's development proce
 
 ---
 
-#### 10. AI Features 🤖
+#### 9. AI Features 🤖
 
 **Priority**: Low | **Version**: v2.0+ | **Complexity**: Very High
 
@@ -241,11 +234,11 @@ Welcome! This document provides transparency into SudoSodoku's development proce
 
 ### Tier 1: Quick Wins (v1.1)
 
-1. **Detailed Statistics** 📊
+1. **Swift Charts Enhancements** 📊
+2. **Achievement System** 🏅
 
 ### Tier 2: Core Enhancements (v1.2)
 
-2. **Achievement System** 🏅
 3. **Hint System** 💡
 4. **Tutorial Mode** 📚
 
@@ -269,13 +262,11 @@ Welcome! This document provides transparency into SudoSodoku's development proce
 
 ### Recommended Starting Point
 
-**Start with Detailed Statistics** 📊
+**Start with Achievement System** 🏅
 
-- Builds on existing data
-- High user value
-- No external dependencies
-- Relatively quick to implement
-- Sets foundation for other features
+- Builds on existing Game Center integration
+- High user value for retention
+- Natural extension of ELO and stats systems
 
 ---
 

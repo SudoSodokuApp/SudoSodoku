@@ -53,6 +53,7 @@ fastlane/test_output
 *.jsbundle
 *.xcarchive
 IPA/
+/build/
 
 # Mac OS X
 
