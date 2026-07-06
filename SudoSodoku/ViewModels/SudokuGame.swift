@@ -200,6 +200,18 @@ class SudokuGame: ObservableObject {
         return Array(peers)
     }
 
+    // MARK: - Digit availability
+
+    func placedCount(of number: Int) -> Int {
+        board.filter { $0.value == number }.count
+    }
+
+    /// A digit is exhausted once all nine instances are on the board.
+    /// Derived from board state, so undo/clear revives the numpad key.
+    func isExhausted(_ number: Int) -> Bool {
+        placedCount(of: number) >= 9
+    }
+
     func undoLastMove() {
         guard let lastMove = undoStack.popLast() else { return }
         redoStack.append(lastMove)

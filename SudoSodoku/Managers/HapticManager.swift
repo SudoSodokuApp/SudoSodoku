@@ -10,4 +10,8 @@ class HapticManager {
     func success() {
         UINotificationFeedbackGenerator().notificationOccurred(.success)
     }
+
+    func warning() {
+        UINotificationFeedbackGenerator().notificationOccurred(.warning)
+    }
 }
