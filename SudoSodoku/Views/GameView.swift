@@ -16,6 +16,7 @@ struct GameView: View {
     @AppStorage("showPlayTimer") private var showPlayTimer = true
     @State private var clockNow = Date()
     @State private var showBreachLog = false
+    @State private var showSudoersJoke = false
     private let clockTicker = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     enum ExitAction {
@@ -40,7 +41,21 @@ struct GameView: View {
             TerminalBackground()
                 .onTapGesture { game.selectedCellIndex = nil }
 
-            if game.isGenerating || showBreachLog {
+            if showSudoersJoke {
+                SudoersInterstitial(
+                    username: GameCenterManager.shared.isAuthenticated
+                        ? GameCenterManager.shared.playerName.lowercased()
+                        : "user",
+                    onFinished: {
+                        SudoersJoke.markSeen()
+                        withAnimation(.easeOut(duration: 0.2)) { showSudoersJoke = false }
+                        if let difficulty {
+                            showBreachLog = true
+                            game.generateGame(for: difficulty)
+                        }
+                    }
+                )
+            } else if game.isGenerating || showBreachLog {
                 BreachLogView(
                     difficulty: game.difficulty,
                     isGenerating: game.isGenerating,
@@ -181,8 +196,12 @@ struct GameView: View {
                 game.loadFromRecord(record)
                 if record.isSolved { game.showSolution() }
             } else if let difficulty {
-                showBreachLog = true
-                game.generateGame(for: difficulty)
+                if SudoersJoke.shouldShow(for: difficulty) {
+                    showSudoersJoke = true
+                } else {
+                    showBreachLog = true
+                    game.generateGame(for: difficulty)
+                }
             }
         }
         .alert("SAVE_PROGRESS?", isPresented: $showSaveAlert) {
