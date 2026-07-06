@@ -47,9 +47,9 @@ class GameCenterManager: NSObject, ObservableObject {
         }
     }
 
-    /// Submits the player's current ELO to the global ranking. Game Center
-    /// keeps the highest submitted value; ELO only rises in this game, so the
-    /// board always reflects the latest rating.
+    /// Submits the player's current ELO to the global ranking. The board is
+    /// configured as "Most Recent Score" in ASC, so it always shows the
+    /// current rating — correct even if ratings can drop in the future.
     func submitRating(_ rating: Int) {
         guard isAuthenticated else { return }
 
@@ -62,7 +62,8 @@ class GameCenterManager: NSObject, ObservableObject {
     }
 
     /// Submits a solve time to the per-difficulty fastest-time board.
-    /// Game Center keeps the lowest submitted value automatically.
+    /// Boards are "Best Score" + Low-to-High in ASC, so Game Center keeps
+    /// only the fastest submission automatically.
     func submitCompletionTime(_ duration: TimeInterval, difficulty: String) {
         guard isAuthenticated else { return }
 
