@@ -22,6 +22,33 @@ class SudokuGame: ObservableObject {
     private var currentUndoCount: Int = 0
     private var sessionStartTime: Date?
 
+    // MARK: - Play clock
+    // Accumulated active play time; the running segment is open while
+    // activeSegmentStart is non-nil (paused in background / after solving).
+    private var accumulatedPlayTime: TimeInterval = 0
+    private var activeSegmentStart: Date?
+
+    func playDuration(at date: Date = Date()) -> TimeInterval {
+        guard let start = activeSegmentStart else { return accumulatedPlayTime }
+        return accumulatedPlayTime + max(0, date.timeIntervalSince(start))
+    }
+
+    func pauseClock(at date: Date = Date()) {
+        guard let start = activeSegmentStart else { return }
+        accumulatedPlayTime += max(0, date.timeIntervalSince(start))
+        activeSegmentStart = nil
+    }
+
+    func resumeClock(at date: Date = Date()) {
+        guard !isSolved, !isGenerating, activeSegmentStart == nil else { return }
+        activeSegmentStart = date
+    }
+
+    private func resetClock(to accumulated: TimeInterval, running: Bool, at date: Date = Date()) {
+        accumulatedPlayTime = accumulated
+        activeSegmentStart = running ? date : nil
+    }
+
     func discardCurrentRecord() {
         guard let recordID = currentRecordID else { return }
         if !isArchived {
@@ -62,6 +89,7 @@ class SudokuGame: ObservableObject {
                     )
                 }
                 self.isGenerating = false
+                self.resetClock(to: 0, running: true)
                 self.saveCurrentState()
             }
         }
@@ -101,6 +129,7 @@ class SudokuGame: ObservableObject {
 
         updateBoardErrors()
         isGenerating = false
+        resetClock(to: record.playDuration, running: !record.isSolved)
     }
 
     func selectCell(at index: Int) {
@@ -111,6 +140,7 @@ class SudokuGame: ObservableObject {
         guard let index = selectedCellIndex, !board[index].isGiven else { return }
 
         let oldCell = board[index]
+        var peerChanges: [CellChange] = []
 
         if isNoteMode {
             if board[index].notes.contains(number) {
@@ -124,24 +154,58 @@ class SudokuGame: ObservableObject {
             } else {
                 board[index].value = number
                 board[index].notes = []
+                peerChanges = clearPeerNotes(of: number, around: index)
             }
             updateBoardErrors()
             checkVictory()
         }
 
         let newCell = board[index]
+        var changes = peerChanges
         if oldCell != newCell {
-            undoStack.append(MoveHistory(index: index, oldCell: oldCell, newCell: newCell))
+            changes.insert(CellChange(index: index, oldCell: oldCell, newCell: newCell), at: 0)
+        }
+        if !changes.isEmpty {
+            undoStack.append(MoveHistory(changes: changes))
             redoStack.removeAll()
         }
 
         saveCurrentState()
     }
 
+    /// Placing a number removes it from the pencil notes of every peer
+    /// (same row, column, or box). Returns the changes for undo history.
+    private func clearPeerNotes(of number: Int, around index: Int) -> [CellChange] {
+        var changes: [CellChange] = []
+        for peer in peerIndices(of: index)
+        where board[peer].value == nil && board[peer].notes.contains(number) {
+            let oldCell = board[peer]
+            board[peer].notes.remove(number)
+            changes.append(CellChange(index: peer, oldCell: oldCell, newCell: board[peer]))
+        }
+        return changes
+    }
+
+    private func peerIndices(of index: Int) -> [Int] {
+        let row = index / 9
+        let col = index % 9
+        var peers = Set<Int>()
+        for i in 0..<9 {
+            peers.insert(row * 9 + i)
+            peers.insert(i * 9 + col)
+            let boxIndex = ((row / 3) * 3 + i / 3) * 9 + (col / 3) * 3 + i % 3
+            peers.insert(boxIndex)
+        }
+        peers.remove(index)
+        return Array(peers)
+    }
+
     func undoLastMove() {
         guard let lastMove = undoStack.popLast() else { return }
         redoStack.append(lastMove)
-        board[lastMove.index] = lastMove.oldCell
+        for change in lastMove.changes {
+            board[change.index] = change.oldCell
+        }
         updateBoardErrors()
         currentUndoCount += 1
         saveCurrentState()
@@ -151,7 +215,9 @@ class SudokuGame: ObservableObject {
     func redoLastMove() {
         guard let nextMove = redoStack.popLast() else { return }
         undoStack.append(nextMove)
-        board[nextMove.index] = nextMove.newCell
+        for change in nextMove.changes {
+            board[change.index] = change.newCell
+        }
         updateBoardErrors()
         saveCurrentState()
         HapticManager.shared.lightImpact()
@@ -209,7 +275,8 @@ class SudokuGame: ObservableObject {
             ratingChange: ratingGained,
             isArchived: isArchived,
             isFavorite: isFavorite,
-            undoCount: currentUndoCount
+            undoCount: currentUndoCount,
+            playDuration: playDuration()
         )
         StorageManager.shared.saveGame(record)
     }
@@ -229,6 +296,7 @@ class SudokuGame: ObservableObject {
         redoStack = []
         currentUndoCount = 0
         sessionStartTime = Date()
+        resetClock(to: 0, running: true)
         saveCurrentState()
     }
 
@@ -239,6 +307,7 @@ class SudokuGame: ObservableObject {
             board[index].isError = false
         }
         isSolved = true
+        pauseClock()
         saveCurrentState()
     }
 
@@ -291,6 +360,7 @@ class SudokuGame: ObservableObject {
         guard isFull, !hasError, !isSolved else { return }
 
         isSolved = true
+        pauseClock()
         HapticManager.shared.success()
 
         let currentElo = StorageManager.shared.userRating
