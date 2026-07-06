@@ -140,6 +140,7 @@ class SudokuGame: ObservableObject {
         guard let index = selectedCellIndex, !board[index].isGiven else { return }
 
         let oldCell = board[index]
+        var peerChanges: [CellChange] = []
 
         if isNoteMode {
             if board[index].notes.contains(number) {
@@ -153,24 +154,58 @@ class SudokuGame: ObservableObject {
             } else {
                 board[index].value = number
                 board[index].notes = []
+                peerChanges = clearPeerNotes(of: number, around: index)
             }
             updateBoardErrors()
             checkVictory()
         }
 
         let newCell = board[index]
+        var changes = peerChanges
         if oldCell != newCell {
-            undoStack.append(MoveHistory(index: index, oldCell: oldCell, newCell: newCell))
+            changes.insert(CellChange(index: index, oldCell: oldCell, newCell: newCell), at: 0)
+        }
+        if !changes.isEmpty {
+            undoStack.append(MoveHistory(changes: changes))
             redoStack.removeAll()
         }
 
         saveCurrentState()
     }
 
+    /// Placing a number removes it from the pencil notes of every peer
+    /// (same row, column, or box). Returns the changes for undo history.
+    private func clearPeerNotes(of number: Int, around index: Int) -> [CellChange] {
+        var changes: [CellChange] = []
+        for peer in peerIndices(of: index)
+        where board[peer].value == nil && board[peer].notes.contains(number) {
+            let oldCell = board[peer]
+            board[peer].notes.remove(number)
+            changes.append(CellChange(index: peer, oldCell: oldCell, newCell: board[peer]))
+        }
+        return changes
+    }
+
+    private func peerIndices(of index: Int) -> [Int] {
+        let row = index / 9
+        let col = index % 9
+        var peers = Set<Int>()
+        for i in 0..<9 {
+            peers.insert(row * 9 + i)
+            peers.insert(i * 9 + col)
+            let boxIndex = ((row / 3) * 3 + i / 3) * 9 + (col / 3) * 3 + i % 3
+            peers.insert(boxIndex)
+        }
+        peers.remove(index)
+        return Array(peers)
+    }
+
     func undoLastMove() {
         guard let lastMove = undoStack.popLast() else { return }
         redoStack.append(lastMove)
-        board[lastMove.index] = lastMove.oldCell
+        for change in lastMove.changes {
+            board[change.index] = change.oldCell
+        }
         updateBoardErrors()
         currentUndoCount += 1
         saveCurrentState()
@@ -180,7 +215,9 @@ class SudokuGame: ObservableObject {
     func redoLastMove() {
         guard let nextMove = redoStack.popLast() else { return }
         undoStack.append(nextMove)
-        board[nextMove.index] = nextMove.newCell
+        for change in nextMove.changes {
+            board[change.index] = change.newCell
+        }
         updateBoardErrors()
         saveCurrentState()
         HapticManager.shared.lightImpact()
