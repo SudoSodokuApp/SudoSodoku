@@ -16,6 +16,10 @@
 
 - iPhone-only iOS app (`TARGETED_DEVICE_FAMILY = 1`), iOS 17.0+, SwiftUI + MVVM,
   Swift 5.9. **No iPadOS or macOS work** — deferred indefinitely.
+- `IPHONEOS_DEPLOYMENT_TARGET` must stay the literal `17.0` in project.pbxproj.
+  Do not accept Xcode's "Update to recommended settings" suggestion that rewrites
+  it to `$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)` — Xcode Cloud resolves that
+  macro to nothing and builds fail with iOS 16/17 availability errors.
 - Bundle ID `dev.kaichen.sudoku.app`; Game Center leaderboard IDs live in
   `SudoSodoku/Utils/AppConstants.swift`.
 - Persistence is a single local JSON file managed by `StorageManager`
