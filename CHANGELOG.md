@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `SudoSodokuTests` unit test target covering puzzle generation (solvability, unique solution, difficulty scoring), ELO rating (K-factor tiers, anti-smurfing), and storage (persistence roundtrip, legacy save migration)
+- Shared `SudoSodoku` scheme with test action, enabling `xcodebuild test` and Xcode Cloud test workflows
+
 ### Changed
 
 - Set minimum deployment target to iOS 17.0 (aligned project and target settings)
@@ -23,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Rating anti-smurfing: zero gain when puzzle difficulty is far below player ELO
 - Unified signing config, Swift 5.9, marketing version `1.0.0`, and `play.sh` bundle ID fallback
 - Landing page version reads from app bundle instead of hardcoded string
+- Fixed swapped section bodies in DEVELOPER.md (Achievement System / iPad Support) and aligned the roadmap tiers with the phased v1.1-v1.3 plan
 
 ### Removed
 

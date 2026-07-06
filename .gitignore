@@ -58,3 +58,7 @@ IPA/
 # Mac OS X
 
 .DS_Store
+
+# Local dev notes (not tracked)
+
+DEVLOG.md

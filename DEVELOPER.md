@@ -48,23 +48,7 @@ Welcome! This document provides transparency into SudoSodoku's development proce
 
 #### 1. Achievement System 🏅
 
-**Priority**: Deferred | **Version**: TBD | **Complexity**: Medium
-
-**Status:** The app currently targets iPhone only. iPad-optimized layouts were removed to reduce maintenance overhead during early development.
-
-**Future features (when revisited):**
-
-- Adaptive layout for larger screens
-- Split view support
-- Keyboard shortcuts
-- Trackpad/mouse support
-- Stage Manager support
-
----
-
-#### 2. iPad Support 📱
-
-**Priority**: Medium | **Version**: v1.2 | **Complexity**: Medium
+**Priority**: High | **Version**: v1.1 | **Complexity**: Medium
 
 **Features:**
 
@@ -81,6 +65,22 @@ Welcome! This document provides transparency into SudoSodoku's development proce
 - Achievement definitions (Codable)
 - Progress tracking
 - Game Center integration
+
+---
+
+#### 2. iPad Support 📱
+
+**Priority**: Deferred | **Version**: TBD | **Complexity**: Medium
+
+**Status:** The app currently targets iPhone only. iPad-optimized layouts were removed to reduce maintenance overhead during early development.
+
+**Future features (when revisited):**
+
+- Adaptive layout for larger screens
+- Split view support
+- Keyboard shortcuts
+- Trackpad/mouse support
+- Stage Manager support
 
 ---
 
@@ -232,41 +232,56 @@ Welcome! This document provides transparency into SudoSodoku's development proce
 
 ## 🎯 Feature Priority
 
-### Tier 1: Quick Wins (v1.1)
+> **Note (July 2026):** Paid Apple Developer membership is now active, unlocking
+> Game Center leaderboards/achievements and CloudKit. The next App Store release
+> is **v2.0**: Game Center features plus a full UX & delight pass. Work items are
+> tracked as GitHub issues under the `v2.0` milestone.
 
-1. **Swift Charts Enhancements** 📊
-2. **Achievement System** 🏅
+### v2.0 — Next App Store Release
 
-### Tier 2: Core Enhancements (v1.2)
+**Foundation (done / in progress):**
 
-3. **Hint System** 💡
-4. **Tutorial Mode** 📚
+1. **Unit Test Target** ✅ (`SudoSodokuTests`: generator, rating, storage migration)
+2. **Completion Time Tracking** ⏱️ (prerequisite for time leaderboards & speed achievements)
 
-### Tier 3: Social Features (v1.3)
+**Game Center:**
 
-5. **Global Leaderboard** 🌍 (Requires Apple Developer)
+3. **Global Leaderboard** 🌍 (ELO board + per-difficulty fastest-time boards)
+4. **Achievement System** 🏅
 
-### Tier 4: Customization (v1.4)
+**UX & Delight (three tiers, all in scope):**
 
-6. **Custom Themes** 🎨
+5. **Tier A — Fluidity**: auto-clear peer notes (compound undo), numpad digit
+   strike-out when exhausted, no-selection affordance, haptic hierarchy
+   (`.sensoryFeedback` + CoreHaptics), error shake, sliding selection frame
+6. **Tier B — Signature moments**: `sudoers` joke on first MASTER entry,
+   breach-log loading screen, unit-completion phosphor pulse, victory sequence
+   rework (matrix rain + typewriter + ELO count-up), streak indicator
+7. **Tier C — Ambience**: CRT scanlines + vignette (toggleable), mechanical key
+   sounds (opt-in), cold-launch boot sequence (skippable)
 
-### Tier 5: Advanced Features (v1.5)
+**Accessibility baseline:** every animation must respect Reduce Motion; error
+states never rely on color alone; sounds are never forced on.
 
-7. **Variant Sudoku** 🔀
+### v2.1 — Cloud Sync
 
-### Tier 6: Platform Expansion (v2.0+)
+8. **iCloud Sync** ☁️ (CloudKit private database + `CKSyncEngine`)
 
-8. **iPad Support** 📱
-9. **macOS Version** 💻
-10. **AI Features** 🤖
+### v2.2 — Statistics
 
-### Recommended Starting Point
+9. **Swift Charts Enhancements** 📊 (rating trend, solve-time trend, streaks)
 
-**Start with Achievement System** 🏅
+### Later (v2.3+)
 
-- Builds on existing Game Center integration
-- High user value for retention
-- Natural extension of ELO and stats systems
+10. **Hint System** 💡
+11. **Tutorial Mode** 📚
+12. **Custom Themes** 🎨
+13. **Variant Sudoku** 🔀
+
+### Deferred (not planned)
+
+- **iPad Support** 📱 / **macOS Version** 💻 — iPhone-only for the foreseeable future
+- **AI Features** 🤖
 
 ---
 
@@ -335,6 +350,7 @@ We take quality seriously. Before every release, we thoroughly test all features
 - [ ] Release build succeeds
 - [ ] Clean build works
 - [ ] No warnings (or acceptable warnings)
+- [ ] Unit tests pass (`SudoSodokuTests` via Cmd+U or `xcodebuild test`)
 
 ### Code Quality
 
@@ -413,8 +429,8 @@ Our contribution process:
 
 ### Apple Developer Requirements
 
-- Paid Apple Developer Account ($99/year) for leaderboards
-- Game Center configuration
+- Paid Apple Developer Account ($99/year) — **active since July 2026**
+- Game Center configuration (leaderboards & achievements in App Store Connect)
 - CloudKit container setup
 - App Store Connect configuration
 

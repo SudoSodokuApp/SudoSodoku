@@ -1,0 +1,9 @@
+{
+  "id" : "2fc1af73-40a3-42f0-8fb6-014903906011",
+  "targets" : [
+    {
+      "id" : "54DF7FB3-C349-4A20-9784-1FA0F6F7C48F",
+      "name" : "SudoSodoku"
+    }
+  ]
+}
