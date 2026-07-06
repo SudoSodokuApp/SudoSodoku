@@ -36,14 +36,13 @@ If applicable, add screenshots to help explain your problem.
 **Device:**
 
 - [ ] iPhone
-- [ ] iPad
 - [ ] Simulator
 
 **iOS Version:** [e.g., iOS 17.0]
 
 **App Version:** [e.g., 1.0.0]
 
-**Device Model:** [e.g., iPhone 15 Pro, iPad Pro 12.9"]
+**Device Model:** [e.g., iPhone 15 Pro]
 
 ## 📝 Additional Context
 

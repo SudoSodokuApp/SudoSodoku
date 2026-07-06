@@ -1,5 +1,7 @@
 # SudoSodoku v1.0.0 - First Official Release 🎉
 
+> **Note:** This document describes the original v1.0.0 release. For current platform support and persistence behavior, see [CHANGELOG.md](CHANGELOG.md) `[Unreleased]`.
+
 We're thrilled to announce the first stable release of **SudoSodoku** - a terminal-style Sudoku experience for iOS!
 
 ## What's New

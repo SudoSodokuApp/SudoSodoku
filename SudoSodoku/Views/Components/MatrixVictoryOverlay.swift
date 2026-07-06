@@ -1,14 +1,11 @@
 import SwiftUI
-import Combine
 
 struct MatrixVictoryOverlay: View {
     @State private var opacity = 0.0
     @State private var scale = 0.8
-    @State private var matrixChars: [String] = []
-    
-    let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
-    let characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ<>?[]{}"
-    
+
+    private let characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ<>?[]{}"
+
     var body: some View {
         ZStack {
             Color.black.opacity(0.95).ignoresSafeArea()
@@ -24,14 +21,14 @@ struct MatrixVictoryOverlay: View {
                 }
             }
             .opacity(0.3)
-            
+
             VStack(spacing: 20) {
                 Text("ACCESS GRANTED")
                     .font(.system(size: 40, weight: .heavy, design: .monospaced))
                     .foregroundColor(.green)
                     .shadow(color: .green, radius: 20)
                     .scaleEffect(scale)
-                
+
                 Text("SYSTEM COMPROMISED")
                     .font(.system(size: 16, weight: .bold, design: .monospaced))
                     .foregroundColor(.white)
@@ -45,4 +42,3 @@ struct MatrixVictoryOverlay: View {
         }
     }
 }
-

@@ -47,8 +47,7 @@ We are thrilled to announce the first stable release of SudoSodoku! This version
 
 ### **💾 Robust Persistence**
 
-* **Game Center Integration**: Seamless, password-less login and user profile management.  
-* **Cloud Sync**: Leveraging **iCloud Documents** to sync game states and archives across devices (automatically degrades to local storage if iCloud is unavailable).  
+* **Local Storage**: Game records and rating data saved to the device Documents directory.  
 * **JSON Serialization**: All game records are stored as Codable JSON structs, ensuring backward compatibility and easy migration.
 
 ## **🛠️ Technical Architecture**
@@ -60,8 +59,7 @@ SudoSodoku is built with modern iOS technologies, designed for maintainability a
 * **Architecture**: MVVM (Model-View-ViewModel) pattern for clean code organization  
 * **State Management**: Reactive updates using Combine framework  
 * **Data Persistence**:  
-  * Automatic cloud sync via iCloud (with local fallback)  
-  * Safe file operations with atomic writes  
+  * Local JSON storage with atomic writes  
   * Backward-compatible data migration  
 * **User Experience**: Custom animations and haptic feedback for a polished feel
 
@@ -69,28 +67,38 @@ SudoSodoku is built with modern iOS technologies, designed for maintainability a
 
 ```
 SudoSodoku/
+├── SudoSodokuApp.swift           # @main entry
 ├── Models/
 │   ├── GameRecord.swift          # Codable save data structure
 │   ├── SudokuCell.swift          # Unit cell model
 │   ├── MoveHistory.swift         # Move history for undo/redo
-│   └── Difficulty.swift          # Enum with rating ranges
+│   ├── Difficulty.swift          # Enum with rating ranges
+│   ├── RankTier.swift            # ELO rank definitions
+│   └── OverallStats.swift        # Aggregated statistics model
 ├── ViewModels/
 │   └── SudokuGame.swift          # Core game logic & state machine
 ├── Managers/
-│   ├── GameCenterManager.swift   # GameKit authentication
+│   ├── GameCenterManager.swift   # GameKit authentication & scores
 │   ├── RatingManager.swift       # ELO calculation algorithms
-│   ├── HapticManager.swift      # Haptic feedback engine
-│   └── StorageManager.swift      # File I/O & Cloud syncing
+│   ├── HapticManager.swift       # Haptic feedback engine
+│   ├── StatisticsManager.swift   # Stats aggregation
+│   └── StorageManager.swift      # File I/O & local persistence
+├── Utils/
+│   ├── AppConstants.swift        # Bundle ID, leaderboard IDs, version
+│   ├── DateFormatting.swift      # Shared date formatters
+│   └── LogicalEfficiencyStyle.swift
 ├── Views/
-│   ├── ContentView.swift         # Main entry & NavigationStack
+│   ├── ContentView.swift         # Root navigation shell
 │   ├── LandingView.swift         # Landing page
 │   ├── GameView.swift            # The game board
-│   ├── UserProfileView.swift     # User profile & statistics
-│   ├── ArchiveView.swift         # History & Favorites list
+│   ├── StatsView.swift           # Statistics dashboard
+│   ├── UserProfileView.swift     # User profile & rank table
+│   ├── ArchiveView.swift         # History & favorites list
 │   ├── ModeSelectionView.swift   # Difficulty selection
 │   ├── BoardView.swift           # Sudoku board rendering
 │   ├── ControlPanelView.swift    # Game controls (undo/redo/numpad)
 │   ├── Components/
+│   │   ├── CellView.swift              # Single board cell
 │   │   ├── TerminalBackground.swift    # Terminal-style background
 │   │   ├── MatrixVictoryOverlay.swift  # Victory animation
 │   │   ├── NoteGridView.swift          # Note display grid
@@ -101,7 +109,7 @@ SudoSodoku/
 │   └── Styles/
 │       └── BouncyButtonStyle.swift     # Button animation style
 └── Algorithms/
-    └── SudokuGenerator.swift     # Backtracking & Digging logic
+    └── SudokuGenerator.swift     # Backtracking & digging logic
 ```
 
 ## **🚀 Building the Project**
@@ -121,8 +129,7 @@ SudoSodoku/
    * Go to the Project Navigator (blue icon).  
    * Select the SudoSodoku target.  
    * Click **Signing & Capabilities**.  
-   * Change the **Team** to your own Apple Developer account.  
-   * *Note: If you are on a Free Developer Account, iCloud capabilities will be disabled. The app will automatically fallback to local storage.*
+   * Change the **Team** to your own Apple Developer account.
 
 3. **Run**:  
    Connect your iPhone or select a Simulator and press `Cmd + R`.
@@ -153,12 +160,6 @@ We provide convenient build scripts for command-line development:
   3. Build the project
   4. Install and launch the app
 
-* **`run.sh`** - Alternative run script with more detailed output
-
-  ```bash
-  ./run.sh
-  ```
-
 #### **Using Keyboard Shortcuts in Cursor**
 
 1. Press `Cmd+Shift+B` (macOS) to trigger the default build task
@@ -169,6 +170,7 @@ We provide convenient build scripts for command-line development:
 * macOS 13.0+ (for iOS development)
 * Xcode 15.0+ with Command Line Tools
 * iOS 17.0+ deployment target
+* iPhone only (portrait and landscape)
 
 ## **📱 Running in Simulator**
 

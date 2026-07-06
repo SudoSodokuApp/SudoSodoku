@@ -96,7 +96,7 @@ xcrun simctl install "$SIMULATOR_ID" "$APP_PATH"
 BUNDLE_ID=$(xcodebuild -project "$PROJECT_PATH" -scheme "$SCHEME" -showBuildSettings 2>/dev/null | grep "PRODUCT_BUNDLE_IDENTIFIER" | head -1 | sed 's/.*= *//' | xargs)
 
 if [ -z "$BUNDLE_ID" ]; then
-    BUNDLE_ID="com.kaichen.SudoSodoku"
+    BUNDLE_ID="dev.kaichen.sudoku.app"
 fi
 
 echo "🚀 Launching app..."

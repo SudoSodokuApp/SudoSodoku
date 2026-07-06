@@ -51,6 +51,9 @@ fastlane/test_output
 # Bundle artifacts
 
 *.jsbundle
+*.xcarchive
+IPA/
+/build/
 
 # Mac OS X
 

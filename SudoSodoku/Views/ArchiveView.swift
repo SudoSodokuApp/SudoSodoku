@@ -76,10 +76,7 @@ struct ArchiveView: View {
                 Button("SHOW ANSWER (cat solution)") { if let rec = selectedRecordForAction { gameToLoad = rec; navigateToGame = true } }
                 Button("CANCEL", role: .cancel) { }
             }
-        }.navigationBarTitleDisplayMode(.inline).onAppear { 
-            storage.loadData()
-            GameCenterManager.shared.authenticateUser()
-        }
+        }.navigationBarTitleDisplayMode(.inline)
     }
     
     func handleRecordTap(_ record: GameRecord) {

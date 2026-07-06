@@ -1,5 +1,4 @@
 import SwiftUI
-import Combine
 
 class SudokuGame: ObservableObject {
     @Published var board: [SudokuCell] = []
@@ -8,31 +7,27 @@ class SudokuGame: ObservableObject {
     @Published var isSolved: Bool = false
     @Published var currentScore: Int = 0
     @Published var isGenerating: Bool = true
-    @Published var ratingGained: Int? = nil
-    
+    @Published var ratingGained: Int?
+
     @Published var isNoteMode: Bool = false
-    
     @Published var isArchived: Bool = false
     @Published var isFavorite: Bool = false
-    
     @Published var undoStack: [MoveHistory] = []
     @Published var redoStack: [MoveHistory] = []
-    
+
     var onSolved: (() -> Void)?
     var currentRecordID: UUID?
-    
-    // Logical quality statistics
+
     private var currentUndoCount: Int = 0
-    
-    init() { }
-    
+    private var sessionStartTime: Date?
+
     func discardCurrentRecord() {
         guard let recordID = currentRecordID else { return }
         if !isArchived {
             StorageManager.shared.deleteRecord(id: recordID)
         }
     }
-    
+
     func generateGame(for difficulty: Difficulty) {
         self.difficulty = difficulty
         self.isGenerating = true
@@ -44,27 +39,25 @@ class SudokuGame: ObservableObject {
         self.isNoteMode = false
         self.undoStack = []
         self.redoStack = []
-        
-        // Reset logical quality statistics
         self.currentUndoCount = 0
-        
+        self.sessionStartTime = Date()
+
         DispatchQueue.global(qos: .userInitiated).async {
             let (puzzle, solution, score) = SudokuGenerator.generatePuzzle(targetDifficulty: difficulty)
             let newRecordID = UUID()
-            
+
             DispatchQueue.main.async {
                 self.currentScore = score
                 self.currentRecordID = newRecordID
-                
-                self.board = (0..<81).map { i in
-                    let val = puzzle[i]
-                    let sol = solution[i]
+                self.board = (0..<81).map { index in
+                    let value = puzzle[index]
+                    let solutionValue = solution[index]
                     return SudokuCell(
-                        row: i / 9,
-                        col: i % 9,
-                        value: val == 0 ? nil : val,
-                        solutionValue: sol,
-                        isGiven: val != 0
+                        row: index / 9,
+                        col: index % 9,
+                        value: value == 0 ? nil : value,
+                        solutionValue: solutionValue,
+                        isGiven: value != 0
                     )
                 }
                 self.isGenerating = false
@@ -72,56 +65,52 @@ class SudokuGame: ObservableObject {
             }
         }
     }
-    
+
     func loadFromRecord(_ record: GameRecord) {
-        self.isGenerating = true
-        self.currentRecordID = record.id
-        self.difficulty = Difficulty(rawValue: record.difficulty) ?? .easy
-        self.isSolved = record.isSolved
-        self.currentScore = record.difficultyIndex
-        self.ratingGained = record.ratingChange
-        self.isArchived = record.isArchived
-        self.isFavorite = record.isFavorite
-        self.isNoteMode = false
-        self.undoStack = []
-        self.redoStack = []
-        
-        // Load logical quality statistics
-        self.currentUndoCount = record.undoCount
-        
-        self.board = (0..<81).map { i in
-            let initialVal = record.initialBoard[i]
-            let playerVal = record.playerBoard[i]
-            let solutionVal = record.solution[i]
-            let displayValue = initialVal != 0 ? initialVal : (playerVal != 0 ? playerVal : nil)
-            
-            let notesArray = record.playerNotes?[i] ?? []
-            let notes = Set(notesArray)
-            
+        isGenerating = true
+        currentRecordID = record.id
+        sessionStartTime = record.startTime
+        difficulty = Difficulty(rawValue: record.difficulty) ?? .easy
+        isSolved = record.isSolved
+        currentScore = record.difficultyIndex
+        ratingGained = record.ratingChange
+        isArchived = record.isArchived
+        isFavorite = record.isFavorite
+        isNoteMode = false
+        undoStack = []
+        redoStack = []
+        currentUndoCount = record.undoCount
+
+        board = (0..<81).map { index in
+            let initialValue = record.initialBoard[index]
+            let playerValue = record.playerBoard[index]
+            let solutionValue = record.solution[index]
+            let displayValue = initialValue != 0 ? initialValue : (playerValue != 0 ? playerValue : nil)
+            let notes = Set(record.playerNotes?[index] ?? [])
+
             return SudokuCell(
-                row: i / 9,
-                col: i % 9,
+                row: index / 9,
+                col: index % 9,
                 value: displayValue,
-                solutionValue: solutionVal,
-                isGiven: initialVal != 0,
+                solutionValue: solutionValue,
+                isGiven: initialValue != 0,
                 notes: notes
             )
         }
-        
+
         updateBoardErrors()
-        self.isGenerating = false
+        isGenerating = false
     }
-    
+
     func selectCell(at index: Int) {
         selectedCellIndex = index
     }
-    
+
     func inputNumber(_ number: Int) {
-        guard let index = selectedCellIndex else { return }
-        if board[index].isGiven { return }
-        
+        guard let index = selectedCellIndex, !board[index].isGiven else { return }
+
         let oldCell = board[index]
-        
+
         if isNoteMode {
             if board[index].notes.contains(number) {
                 board[index].notes.remove(number)
@@ -138,17 +127,16 @@ class SudokuGame: ObservableObject {
             updateBoardErrors()
             checkVictory()
         }
-        
+
         let newCell = board[index]
-        
         if oldCell != newCell {
             undoStack.append(MoveHistory(index: index, oldCell: oldCell, newCell: newCell))
             redoStack.removeAll()
         }
-        
+
         saveCurrentState()
     }
-    
+
     func undoLastMove() {
         guard let lastMove = undoStack.popLast() else { return }
         redoStack.append(lastMove)
@@ -158,7 +146,7 @@ class SudokuGame: ObservableObject {
         saveCurrentState()
         HapticManager.shared.lightImpact()
     }
-    
+
     func redoLastMove() {
         guard let nextMove = redoStack.popLast() else { return }
         undoStack.append(nextMove)
@@ -167,65 +155,55 @@ class SudokuGame: ObservableObject {
         saveCurrentState()
         HapticManager.shared.lightImpact()
     }
-    
+
     func clearSelectedCell() {
         guard let index = selectedCellIndex, !board[index].isGiven else { return }
-        
+
         let oldCell = board[index]
         board[index].value = nil
         board[index].notes = []
         board[index].isError = false
         let newCell = board[index]
-        
+
         if oldCell != newCell {
             undoStack.append(MoveHistory(index: index, oldCell: oldCell, newCell: newCell))
             redoStack.removeAll()
         }
-        
+
         updateBoardErrors()
         saveCurrentState()
     }
-    
+
     func toggleFavorite() {
         guard let id = currentRecordID else { return }
-        isFavorite.toggle()
-        if isFavorite { isArchived = true }
         StorageManager.shared.toggleFavorite(for: id)
-        if let rec = StorageManager.shared.records.first(where: { $0.id == id }) {
-            self.isArchived = rec.isArchived
-        }
+        syncRecordFlags(from: id)
     }
-    
+
     func toggleArchived() {
         guard let id = currentRecordID else { return }
-        isArchived.toggle()
-        StorageManager.shared.setArchived(for: id, isArchived: isArchived)
-        if !isArchived { isFavorite = false }
+        StorageManager.shared.setArchived(for: id, isArchived: !isArchived)
+        syncRecordFlags(from: id)
     }
-    
+
     func markAsArchived() {
         isArchived = true
         saveCurrentState()
     }
-    
+
     func saveCurrentState() {
         guard let recordID = currentRecordID else { return }
-        
-        let initialBoardInts = board.map { $0.isGiven ? ($0.value ?? 0) : 0 }
-        let solutionInts = board.map { $0.solutionValue ?? 0 }
-        let playerBoardInts = board.map { $0.isGiven ? 0 : ($0.value ?? 0) }
-        let notesData = board.map { Array($0.notes) }
-        
+
         let record = GameRecord(
             id: recordID,
-            startTime: Date(),
+            startTime: sessionStartTime ?? Date(),
             lastPlayedTime: Date(),
             difficulty: difficulty.rawValue,
             difficultyIndex: currentScore,
-            initialBoard: initialBoardInts,
-            solution: solutionInts,
-            playerBoard: playerBoardInts,
-            playerNotes: notesData,
+            initialBoard: board.map { $0.isGiven ? ($0.value ?? 0) : 0 },
+            solution: board.map { $0.solutionValue ?? 0 },
+            playerBoard: board.map { $0.isGiven ? 0 : ($0.value ?? 0) },
+            playerNotes: board.map { Array($0.notes) },
             isSolved: isSolved,
             ratingChange: ratingGained,
             isArchived: isArchived,
@@ -234,95 +212,99 @@ class SudokuGame: ObservableObject {
         )
         StorageManager.shared.saveGame(record)
     }
-    
+
     func replayCurrentGame() {
-        guard let recordID = currentRecordID else { return }
-        guard let _ = StorageManager.shared.records.first(where: { $0.id == recordID }) else { return }
-        
-        for i in 0..<81 {
-            if !board[i].isGiven {
-                board[i].value = nil
-                board[i].notes = []
-                board[i].isError = false
-            }
+        guard currentRecordID != nil else { return }
+
+        for index in board.indices where !board[index].isGiven {
+            board[index].value = nil
+            board[index].notes = []
+            board[index].isError = false
         }
-        
-        // Reset game state and logical quality statistics
+
         isSolved = false
         ratingGained = nil
         undoStack = []
         redoStack = []
         currentUndoCount = 0
-        
+        sessionStartTime = Date()
         saveCurrentState()
     }
-    
+
     func showSolution() {
-        for i in 0..<81 {
-            board[i].value = board[i].solutionValue
-            board[i].notes = []
-            board[i].isError = false
+        for index in board.indices {
+            board[index].value = board[index].solutionValue
+            board[index].notes = []
+            board[index].isError = false
         }
         isSolved = true
         saveCurrentState()
     }
-    
+
+    private func syncRecordFlags(from id: UUID) {
+        guard let record = StorageManager.shared.records.first(where: { $0.id == id }) else { return }
+        isFavorite = record.isFavorite
+        isArchived = record.isArchived
+    }
+
     private func isConflict(at index: Int, value: Int) -> Bool {
         let row = index / 9
         let col = index % 9
-        
-        for c in 0..<9 {
-            let otherIndex = row * 9 + c
-            if otherIndex != index, let otherVal = board[otherIndex].value, otherVal == value { return true }
+
+        for column in 0..<9 {
+            let otherIndex = row * 9 + column
+            if otherIndex != index, board[otherIndex].value == value { return true }
         }
-        for r in 0..<9 {
-            let otherIndex = r * 9 + col
-            if otherIndex != index, let otherVal = board[otherIndex].value, otherVal == value { return true }
+
+        for rowIndex in 0..<9 {
+            let otherIndex = rowIndex * 9 + col
+            if otherIndex != index, board[otherIndex].value == value { return true }
         }
+
         let startRow = (row / 3) * 3
         let startCol = (col / 3) * 3
-        for r in 0..<3 {
-            for c in 0..<3 {
-                let otherIndex = (startRow + r) * 9 + (startCol + c)
-                if otherIndex != index, let otherVal = board[otherIndex].value, otherVal == value { return true }
+        for rowOffset in 0..<3 {
+            for columnOffset in 0..<3 {
+                let otherIndex = (startRow + rowOffset) * 9 + (startCol + columnOffset)
+                if otherIndex != index, board[otherIndex].value == value { return true }
             }
         }
+
         return false
     }
-    
+
     private func updateBoardErrors() {
-        for i in 0..<81 {
-            guard let val = board[i].value else {
-                board[i].isError = false
+        for index in board.indices {
+            guard let value = board[index].value else {
+                board[index].isError = false
                 continue
             }
-            if isConflict(at: i, value: val) {
-                board[i].isError = true
-            } else {
-                board[i].isError = false
-            }
+            board[index].isError = isConflict(at: index, value: value)
         }
     }
-    
+
     private func checkVictory() {
         let isFull = !board.contains { $0.value == nil }
         let hasError = board.contains { $0.isError }
-        
-        if isFull && !hasError && !isSolved {
-            isSolved = true
-            HapticManager.shared.success()
-            let currentElo = StorageManager.shared.userRating
-            let gained = RatingManager.shared.calculateRatingChange(playerRating: currentElo, puzzleDifficultyIndex: currentScore)
-            self.ratingGained = gained
+
+        guard isFull, !hasError, !isSolved else { return }
+
+        isSolved = true
+        HapticManager.shared.success()
+
+        let currentElo = StorageManager.shared.userRating
+        let gained = RatingManager.shared.calculateRatingChange(
+            playerRating: currentElo,
+            puzzleDifficultyIndex: currentScore
+        )
+        ratingGained = gained
+
+        if gained > 0 {
             StorageManager.shared.updateUserRating(add: gained)
-            
-            // Submit score to Game Center
-            GameCenterManager.shared.submitScore(currentScore, difficulty: difficulty.rawValue)
-            
-            saveCurrentState()
-            onSolved?()
         }
+
+        GameCenterManager.shared.submitScore(currentScore, difficulty: difficulty.rawValue)
+        saveCurrentState()
+        onSolved?()
     }
 }
-
-

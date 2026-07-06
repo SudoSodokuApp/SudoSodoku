@@ -17,65 +17,52 @@ Welcome! This document provides transparency into SudoSodoku's development proce
 
 ### Planned Features
 
-1. **Detailed Statistics** 📊
-2. **iPad Optimization** 📱
-3. **Achievement System** 🏅
-4. **Global Leaderboard** 🌍 (Requires Apple Developer features)
-5. **Hint System** 💡
-6. **Tutorial Mode** 📚
+1. **Achievement System** 🏅
+2. **Global Leaderboard** 🌍 (Requires Apple Developer features)
+3. **Hint System** 💡
+4. **Tutorial Mode** 📚
+5. **Swift Charts Enhancements** 📊
+6. **iPad Support** 📱 (Deferred)
 7. **macOS Version** 💻
 8. **Custom Themes** 🎨
 9. **Variant Sudoku** 🔀
 10. **AI Features** 🤖
 
-### Feature Details
+### Shipped Features
 
-#### 1. Detailed Statistics 📊
+#### Detailed Statistics 📊 (v1.0)
 
-**Priority**: High | **Version**: v1.1 | **Complexity**: Medium
+**Status**: Shipped (baseline)
 
-**Features:**
+- `StatisticsManager` with personal bests, win rate, difficulty distribution, recent completions
+- `StatsView` dashboard
+- Logical efficiency scoring based on undo count
+
+**Future enhancements (v1.1+)**:
 
 - Completion time tracking
-- Difficulty analysis and success rates
-- Progress charts over time
-- Technique usage tracking
-- Error analysis heatmap
+- Swift Charts progress visualization
 - Streak tracking (daily/weekly/monthly)
-- Performance metrics
 
-**Implementation:**
+### Feature Details
 
-- New `StatisticsManager` class
-- Extend `GameRecord` with timing data
-- New `StatisticsView` with Swift Charts
-- Data aggregation functions
+#### 1. Achievement System 🏅
 
----
+**Priority**: Deferred | **Version**: TBD | **Complexity**: Medium
 
-#### 2. iPad Optimization 📱
+**Status:** The app currently targets iPhone only. iPad-optimized layouts were removed to reduce maintenance overhead during early development.
 
-**Priority**: High | **Version**: v1.1 | **Complexity**: Medium
-
-**Features:**
+**Future features (when revisited):**
 
 - Adaptive layout for larger screens
 - Split view support
 - Keyboard shortcuts
 - Trackpad/mouse support
 - Stage Manager support
-- Larger board display
-
-**Implementation:**
-
-- Size class detection
-- New `iPadGameView` with optimized layout
-- Keyboard event handling
-- Pointer interaction enhancements
 
 ---
 
-#### 3. Achievement System 🏅
+#### 2. iPad Support 📱
 
 **Priority**: Medium | **Version**: v1.2 | **Complexity**: Medium
 
@@ -97,7 +84,7 @@ Welcome! This document provides transparency into SudoSodoku's development proce
 
 ---
 
-#### 4. Global Leaderboard 🌍
+#### 3. Global Leaderboard 🌍
 
 **Priority**: Medium | **Version**: v1.3 | **Complexity**: High
 
@@ -117,7 +104,7 @@ Welcome! This document provides transparency into SudoSodoku's development proce
 
 ---
 
-#### 5. Hint System 💡
+#### 4. Hint System 💡
 
 **Priority**: Medium | **Version**: v1.2 | **Complexity**: Medium-High
 
@@ -138,7 +125,7 @@ Welcome! This document provides transparency into SudoSodoku's development proce
 
 ---
 
-#### 6. Tutorial Mode 📚
+#### 5. Tutorial Mode 📚
 
 **Priority**: Medium | **Version**: v1.2 | **Complexity**: Medium
 
@@ -159,7 +146,7 @@ Welcome! This document provides transparency into SudoSodoku's development proce
 
 ---
 
-#### 7. macOS Version 💻
+#### 6. macOS Version 💻
 
 **Priority**: Low | **Version**: v2.0 | **Complexity**: High
 
@@ -180,7 +167,7 @@ Welcome! This document provides transparency into SudoSodoku's development proce
 
 ---
 
-#### 8. Custom Themes 🎨
+#### 7. Custom Themes 🎨
 
 **Priority**: Low | **Version**: v1.4 | **Complexity**: Medium
 
@@ -200,7 +187,7 @@ Welcome! This document provides transparency into SudoSodoku's development proce
 
 ---
 
-#### 9. Variant Sudoku 🔀
+#### 8. Variant Sudoku 🔀
 
 **Priority**: Low | **Version**: v1.5 | **Complexity**: High
 
@@ -222,7 +209,7 @@ Welcome! This document provides transparency into SudoSodoku's development proce
 
 ---
 
-#### 10. AI Features 🤖
+#### 9. AI Features 🤖
 
 **Priority**: Low | **Version**: v2.0+ | **Complexity**: Very High
 
@@ -245,43 +232,41 @@ Welcome! This document provides transparency into SudoSodoku's development proce
 
 ## 🎯 Feature Priority
 
-### Tier 1: Quick Wins (v1.1) - 2-3 weeks
+### Tier 1: Quick Wins (v1.1)
 
-1. **Detailed Statistics** 📊
-2. **iPad Optimization** 📱
+1. **Swift Charts Enhancements** 📊
+2. **Achievement System** 🏅
 
-### Tier 2: Core Enhancements (v1.2) - 4-6 weeks
+### Tier 2: Core Enhancements (v1.2)
 
-3. **Achievement System** 🏅
-2. **Hint System** 💡
-3. **Tutorial Mode** 📚
+3. **Hint System** 💡
+4. **Tutorial Mode** 📚
 
-### Tier 3: Social Features (v1.3) - 6-8 weeks
+### Tier 3: Social Features (v1.3)
 
-6. **Global Leaderboard** 🌍 (Requires Apple Developer)
+5. **Global Leaderboard** 🌍 (Requires Apple Developer)
 
-### Tier 4: Customization (v1.4) - 3-4 weeks
+### Tier 4: Customization (v1.4)
 
-7. **Custom Themes** 🎨
+6. **Custom Themes** 🎨
 
-### Tier 5: Advanced Features (v1.5) - 8-12 weeks
+### Tier 5: Advanced Features (v1.5)
 
-8. **Variant Sudoku** 🔀
+7. **Variant Sudoku** 🔀
 
-### Tier 6: Platform Expansion (v2.0) - 12+ weeks
+### Tier 6: Platform Expansion (v2.0+)
 
+8. **iPad Support** 📱
 9. **macOS Version** 💻
-2. **AI Features** 🤖
+10. **AI Features** 🤖
 
 ### Recommended Starting Point
 
-**Start with Detailed Statistics** 📊
+**Start with Achievement System** 🏅
 
-- Builds on existing data
-- High user value
-- No external dependencies
-- Relatively quick to implement
-- Sets foundation for other features
+- Builds on existing Game Center integration
+- High user value for retention
+- Natural extension of ELO and stats systems
 
 ---
 
@@ -325,8 +310,7 @@ We take quality seriously. Before every release, we thoroughly test all features
 
 - [ ] **Data Persistence**
   - [ ] Games save/load correctly
-  - [ ] iCloud sync works (if available)
-  - [ ] Local fallback works
+  - [ ] Local storage works reliably
   - [ ] Data migration works
 
 #### UI/UX Tests
@@ -341,8 +325,7 @@ We take quality seriously. Before every release, we thoroughly test all features
 #### Platform Tests
 
 - [ ] App runs on iPhone simulator
-- [ ] App runs on iPad simulator
-- [ ] App runs on physical devices (if available)
+- [ ] App runs on physical iPhone (if available)
 - [ ] Performance is acceptable
 - [ ] No crashes during extended play
 
@@ -424,7 +407,7 @@ Our contribution process:
 ### External Dependencies
 
 - **Game Center**: For achievements and leaderboards
-- **CloudKit**: For global leaderboard data
+- **CloudKit**: For global leaderboard data (future)
 - **Core ML**: For AI features
 - **Swift Charts**: For statistics visualization
 
@@ -444,5 +427,5 @@ Our contribution process:
 
 ---
 
-*Last Updated: January 2, 2026*  
+*Last Updated: July 5, 2026*  
 *Current Version: 1.0.0*

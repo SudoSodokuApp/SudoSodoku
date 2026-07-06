@@ -7,25 +7,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased]
+
+### Changed
+
+- Set minimum deployment target to iOS 17.0 (aligned project and target settings)
+- iPhone-only app: removed iPad-specific views, routing, and orientation settings
+- Updated documentation to reflect local-only persistence (no iCloud sync)
+- Aligned Game Center leaderboard IDs with bundle prefix (`dev.kaichen.sudoku.app.leaderboard.*`)
+- Moved `ContentView` into `Views/` and extracted shared utilities (`AppConstants`, `DateFormatting`, `RankTier`, `LogicalEfficiencyStyle`)
+- Centralized rank tiers, date formatting, and efficiency colors; removed duplicate logic across views
+- `StatisticsManager` now auto-refreshes when storage changes
+- `StorageManager` uses atomic JSON writes; `SudokuGame` preserves session `startTime` across saves
+- Game Center auth runs once at app root; removed duplicate `authenticateUser()` calls
+- Rating anti-smurfing: zero gain when puzzle difficulty is far below player ELO
+- Unified signing config, Swift 5.9, marketing version `1.0.0`, and `play.sh` bundle ID fallback
+- Landing page version reads from app bundle instead of hardcoded string
+
+### Removed
+
+- `Views-iPad/` directory and `ViewRouter` platform routing
+- Dead Game Center UI helpers, unused haptic methods, and unused statistics trend code
+- Duplicate `run.sh` script (use `play.sh` as the canonical simulator runner)
+- Committed build artifacts (`SudoSodoku.xcarchive/`, `IPA/`) from version control
+
+---
+
 ## [1.0.0] - 2026-01-02
 
 ### 🎉 First Official Release
 
 SudoSodoku v1.0.0 marks a major milestone - the first stable release of our terminal-style Sudoku experience. After months of development and beta testing, we're excited to share this polished, feature-complete game with the community.
 
-**System Requirements:**
+**System Requirements (at release):**
 
 - iOS 17.0 or later
-- iPhone and iPad support
 - Minimal storage (~5MB)
-- Optional internet (for iCloud sync and Game Center)
+- Optional internet (for Game Center)
 
 **What's Next:**
-We're planning future updates including detailed statistics, iPad optimization, achievement system, hint system, tutorial mode, and more. See [DEVELOPER.md](DEVELOPER.md) for the full roadmap.
-
-### 🎉 First Official Release
-
-SudoSodoku v1.0.0 marks the first stable release of the terminal-style Sudoku experience for iOS. This version represents a complete, polished game with all core features implemented and tested.
+See [DEVELOPER.md](DEVELOPER.md) for the current roadmap.
 
 ### ✨ Added
 
@@ -104,7 +125,6 @@ SudoSodoku/
 - **Build Scripts**: Command-line build scripts for Cursor/VS Code development
   - `build.sh`: Build project (Debug/Release/Clean)
   - `play.sh`: Build and run in iOS Simulator
-  - `run.sh`: Alternative run script with detailed output
 - **Task Integration**: VS Code tasks for keyboard shortcuts (Cmd+Shift+B)
 - **Documentation**: Comprehensive README with build instructions
 
