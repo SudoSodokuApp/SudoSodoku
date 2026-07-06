@@ -63,6 +63,11 @@ struct GameView: View {
                                     .font(.system(size: 10, design: .monospaced))
                                     .foregroundColor(.green.opacity(0.8))
                             }
+                            if game.streak >= 5 {
+                                Text("streak: \(game.streak) ▲")
+                                    .font(.system(size: 10, design: .monospaced))
+                                    .foregroundColor(.cyan.opacity(0.9))
+                            }
                         }
 
                         Spacer()

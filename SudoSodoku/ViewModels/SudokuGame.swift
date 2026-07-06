@@ -31,6 +31,10 @@ class SudokuGame: ObservableObject {
     @Published private(set) var completedUnitPulse: UnitPulse?
     private var pulseCounter = 0
 
+    /// Consecutive conflict-free placements. Resets silently on a conflict;
+    /// removals, notes, and undo leave it untouched.
+    @Published private(set) var streak = 0
+
     var onSolved: (() -> Void)?
     var currentRecordID: UUID?
 
@@ -85,6 +89,7 @@ class SudokuGame: ObservableObject {
         self.currentUndoCount = 0
         self.sessionStartTime = Date()
         self.completedUnitPulse = nil
+        self.streak = 0
 
         DispatchQueue.global(qos: .userInitiated).async {
             let (puzzle, solution, score) = SudokuGenerator.generatePuzzle(targetDifficulty: difficulty)
@@ -126,6 +131,7 @@ class SudokuGame: ObservableObject {
         redoStack = []
         currentUndoCount = record.undoCount
         completedUnitPulse = nil
+        streak = 0
 
         board = (0..<81).map { index in
             let initialValue = record.initialBoard[index]
@@ -178,8 +184,10 @@ class SudokuGame: ObservableObject {
                 updateBoardErrors()
                 if board[index].isError {
                     conflictShakes[index, default: 0] += 1
+                    streak = 0
                     HapticManager.shared.conflictDetected()
                 } else {
+                    streak += 1
                     // One haptic per move, strongest event wins:
                     // victory > unit completion > plain placement.
                     let unitCells = unitsCompleted(by: index)
@@ -370,6 +378,7 @@ class SudokuGame: ObservableObject {
         currentUndoCount = 0
         sessionStartTime = Date()
         completedUnitPulse = nil
+        streak = 0
         resetClock(to: 0, running: true)
         saveCurrentState()
     }
