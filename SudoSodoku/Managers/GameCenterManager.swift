@@ -47,15 +47,33 @@ class GameCenterManager: NSObject, ObservableObject {
         }
     }
 
-    func submitScore(_ score: Int, difficulty: String) {
+    /// Submits the player's current ELO to the global ranking. Game Center
+    /// keeps the highest submitted value; ELO only rises in this game, so the
+    /// board always reflects the latest rating.
+    func submitRating(_ rating: Int) {
         guard isAuthenticated else { return }
 
-        let leaderboardID = AppConstants.leaderboardID(for: difficulty)
         GKLeaderboard.submitScore(
-            score,
+            rating,
             context: 0,
             player: GKLocalPlayer.local,
-            leaderboardIDs: [leaderboardID]
+            leaderboardIDs: [AppConstants.eloLeaderboardID]
+        ) { _ in }
+    }
+
+    /// Submits a solve time to the per-difficulty fastest-time board.
+    /// Game Center keeps the lowest submitted value automatically.
+    func submitCompletionTime(_ duration: TimeInterval, difficulty: String) {
+        guard isAuthenticated else { return }
+
+        let value = AppConstants.timeLeaderboardValue(for: duration)
+        guard value > 0 else { return }
+
+        GKLeaderboard.submitScore(
+            value,
+            context: 0,
+            player: GKLocalPlayer.local,
+            leaderboardIDs: [AppConstants.leaderboardID(for: difficulty)]
         ) { _ in }
     }
 }
