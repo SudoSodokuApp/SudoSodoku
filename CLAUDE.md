@@ -9,6 +9,8 @@
 - Update `CHANGELOG.md` (`[Unreleased]` section) in the same PR as the change.
 - Work items are tracked as GitHub issues; reference them in PRs (`Closes #N`).
   Kai mirrors GitHub issues into Linear — keep issue state accurate.
+- **Assign every new issue to `kaiiiichen`** (sole owner; there is no other
+  agent/boss account).
 
 ## Project Facts
 
