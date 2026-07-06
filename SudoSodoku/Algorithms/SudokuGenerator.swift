@@ -144,7 +144,7 @@ struct SudokuGenerator {
     
     static func digHoles(solvedBoard: [Int], targetClues: Int) -> [Int] {
         var puzzle = solvedBoard
-        var indices = Array(0..<81).shuffled()
+        let indices = Array(0..<81).shuffled()
         var holesToDig = 81 - targetClues
         for idx in indices {
             if holesToDig <= 0 { break }
