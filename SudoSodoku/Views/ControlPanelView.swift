@@ -65,21 +65,34 @@ struct ControlPanelView: View {
             .padding(.horizontal, 20)
             
             // 3. Numpad
+            let hasSelection = game.selectedCellIndex != nil
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 9), spacing: 8) {
                 ForEach(1...9, id: \.self) { num in
-                    Button(action: { game.inputNumber(num) }) {
+                    let exhausted = game.isExhausted(num)
+                    Button(action: {
+                        // With no cell selected the input would be silently
+                        // swallowed; nudge instead so the tap never feels dead.
+                        guard hasSelection else {
+                            HapticManager.shared.warning()
+                            return
+                        }
+                        game.inputNumber(num)
+                    }) {
                         Text("\(num)")
                             .font(.system(size: 24, weight: .bold, design: .monospaced))
+                            .strikethrough(exhausted, color: .gray)
                             .frame(maxWidth: .infinity)
                             .frame(height: 55)
-                            .background(Color.white.opacity(0.1))
-                            .foregroundColor(.white)
+                            .background(Color.white.opacity(exhausted ? 0.04 : 0.1))
+                            .foregroundColor(exhausted ? .gray.opacity(0.5) : .white)
                             .cornerRadius(12)
                     }
                     .buttonStyle(BouncyButtonStyle())
                 }
             }
             .padding(.horizontal)
+            .opacity(hasSelection ? 1.0 : 0.45)
+            .animation(.easeInOut(duration: 0.15), value: hasSelection)
         }
     }
 }
