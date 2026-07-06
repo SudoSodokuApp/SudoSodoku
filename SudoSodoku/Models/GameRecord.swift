@@ -15,10 +15,19 @@ struct GameRecord: Codable, Identifiable, Hashable {
     
     var isArchived: Bool = false
     var isFavorite: Bool = false
-    
+
     // Logical quality metrics
     var undoCount: Int = 0                  // Number of undos
-    
+
+    // Accumulated active play time in seconds (excludes backgrounded time)
+    var playDuration: TimeInterval = 0
+
+    enum CodingKeys: String, CodingKey {
+        case id, startTime, lastPlayedTime, difficulty, difficultyIndex
+        case initialBoard, solution, playerBoard, playerNotes
+        case isSolved, ratingChange, isArchived, isFavorite, undoCount, playDuration
+    }
+
     var progress: Int {
         if isSolved { return 100 }
         let totalToFill = initialBoard.filter { $0 == 0 }.count
@@ -59,7 +68,32 @@ struct GameRecord: Codable, Identifiable, Hashable {
         restarted.isSolved = false
         restarted.ratingChange = nil
         restarted.undoCount = 0
+        restarted.playDuration = 0
         return restarted
+    }
+}
+
+extension GameRecord {
+    // Custom decoding: synthesized Codable would throw on saves written before a
+    // field existed, silently discarding the whole archive. Fields added after
+    // 1.0 must decode with a default instead.
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(UUID.self, forKey: .id)
+        startTime = try container.decode(Date.self, forKey: .startTime)
+        lastPlayedTime = try container.decode(Date.self, forKey: .lastPlayedTime)
+        difficulty = try container.decode(String.self, forKey: .difficulty)
+        difficultyIndex = try container.decode(Int.self, forKey: .difficultyIndex)
+        initialBoard = try container.decode([Int].self, forKey: .initialBoard)
+        solution = try container.decode([Int].self, forKey: .solution)
+        playerBoard = try container.decode([Int].self, forKey: .playerBoard)
+        playerNotes = try container.decodeIfPresent([[Int]].self, forKey: .playerNotes)
+        isSolved = try container.decode(Bool.self, forKey: .isSolved)
+        ratingChange = try container.decodeIfPresent(Int.self, forKey: .ratingChange)
+        isArchived = try container.decodeIfPresent(Bool.self, forKey: .isArchived) ?? false
+        isFavorite = try container.decodeIfPresent(Bool.self, forKey: .isFavorite) ?? false
+        undoCount = try container.decodeIfPresent(Int.self, forKey: .undoCount) ?? 0
+        playDuration = try container.decodeIfPresent(TimeInterval.self, forKey: .playDuration) ?? 0
     }
 }
 

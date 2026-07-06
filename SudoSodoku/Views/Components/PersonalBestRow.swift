@@ -36,6 +36,16 @@ struct PersonalBestRow: View {
                             .font(.system(size: 10, design: .monospaced))
                             .foregroundColor(.white)
                     }
+                    if record.playDuration > 0 {
+                        HStack {
+                            Image(systemName: "stopwatch")
+                                .font(.system(size: 10))
+                                .foregroundColor(.green)
+                            Text("TIME: \(DateFormatting.playClock(record.playDuration))")
+                                .font(.system(size: 10, design: .monospaced))
+                                .foregroundColor(.white)
+                        }
+                    }
                 }
 
                 Spacer()

@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Completion time tracking: play clock accumulates active time per game, pauses in the background and freezes on victory; terminal-style `T+MM:SS` timer in the game header (toggleable via the game menu), duration shown on victory, in archive rows, and in personal bests (#4)
+
 - `SudoSodokuTests` unit test target covering puzzle generation (solvability, unique solution, difficulty scoring), ELO rating (K-factor tiers, anti-smurfing), and storage (persistence roundtrip, legacy save migration)
 - Shared `SudoSodoku` scheme with test action, enabling `xcodebuild test` and Xcode Cloud test workflows
 

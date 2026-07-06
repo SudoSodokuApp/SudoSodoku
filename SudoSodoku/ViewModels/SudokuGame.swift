@@ -22,6 +22,33 @@ class SudokuGame: ObservableObject {
     private var currentUndoCount: Int = 0
     private var sessionStartTime: Date?
 
+    // MARK: - Play clock
+    // Accumulated active play time; the running segment is open while
+    // activeSegmentStart is non-nil (paused in background / after solving).
+    private var accumulatedPlayTime: TimeInterval = 0
+    private var activeSegmentStart: Date?
+
+    func playDuration(at date: Date = Date()) -> TimeInterval {
+        guard let start = activeSegmentStart else { return accumulatedPlayTime }
+        return accumulatedPlayTime + max(0, date.timeIntervalSince(start))
+    }
+
+    func pauseClock(at date: Date = Date()) {
+        guard let start = activeSegmentStart else { return }
+        accumulatedPlayTime += max(0, date.timeIntervalSince(start))
+        activeSegmentStart = nil
+    }
+
+    func resumeClock(at date: Date = Date()) {
+        guard !isSolved, !isGenerating, activeSegmentStart == nil else { return }
+        activeSegmentStart = date
+    }
+
+    private func resetClock(to accumulated: TimeInterval, running: Bool, at date: Date = Date()) {
+        accumulatedPlayTime = accumulated
+        activeSegmentStart = running ? date : nil
+    }
+
     func discardCurrentRecord() {
         guard let recordID = currentRecordID else { return }
         if !isArchived {
@@ -62,6 +89,7 @@ class SudokuGame: ObservableObject {
                     )
                 }
                 self.isGenerating = false
+                self.resetClock(to: 0, running: true)
                 self.saveCurrentState()
             }
         }
@@ -101,6 +129,7 @@ class SudokuGame: ObservableObject {
 
         updateBoardErrors()
         isGenerating = false
+        resetClock(to: record.playDuration, running: !record.isSolved)
     }
 
     func selectCell(at index: Int) {
@@ -209,7 +238,8 @@ class SudokuGame: ObservableObject {
             ratingChange: ratingGained,
             isArchived: isArchived,
             isFavorite: isFavorite,
-            undoCount: currentUndoCount
+            undoCount: currentUndoCount,
+            playDuration: playDuration()
         )
         StorageManager.shared.saveGame(record)
     }
@@ -229,6 +259,7 @@ class SudokuGame: ObservableObject {
         redoStack = []
         currentUndoCount = 0
         sessionStartTime = Date()
+        resetClock(to: 0, running: true)
         saveCurrentState()
     }
 
@@ -239,6 +270,7 @@ class SudokuGame: ObservableObject {
             board[index].isError = false
         }
         isSolved = true
+        pauseClock()
         saveCurrentState()
     }
 
@@ -291,6 +323,7 @@ class SudokuGame: ObservableObject {
         guard isFull, !hasError, !isSolved else { return }
 
         isSolved = true
+        pauseClock()
         HapticManager.shared.success()
 
         let currentElo = StorageManager.shared.userRating

@@ -1,8 +1,10 @@
+import Combine
 import SwiftUI
 
 struct GameView: View {
     @StateObject private var game: SudokuGame
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.scenePhase) private var scenePhase
 
     private let difficulty: Difficulty?
     private let record: GameRecord?
@@ -10,6 +12,10 @@ struct GameView: View {
     @State private var showSaveAlert = false
     @State private var pendingExitAction: ExitAction?
     @State private var showVictoryAnimation = false
+
+    @AppStorage("showPlayTimer") private var showPlayTimer = true
+    @State private var clockNow = Date()
+    private let clockTicker = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     enum ExitAction {
         case back
@@ -49,6 +55,11 @@ struct GameView: View {
                         VStack(alignment: .leading) {
                             Text("MODE: \(game.difficulty.rawValue)").font(.system(size: 12, weight: .bold, design: .monospaced)).foregroundColor(game.difficulty.color)
                             Text("SCORE: \(game.currentScore)").font(.system(size: 10, design: .monospaced)).foregroundColor(.gray)
+                            if showPlayTimer {
+                                Text("T+\(DateFormatting.playClock(game.playDuration(at: clockNow)))")
+                                    .font(.system(size: 10, design: .monospaced))
+                                    .foregroundColor(.green.opacity(0.8))
+                            }
                         }
 
                         Spacer()
@@ -86,6 +97,9 @@ struct GameView: View {
                             Button(action: { handleExitRequest(.refresh) }) {
                                 Label("NEW TARGET (New Game)", systemImage: "arrow.clockwise")
                             }
+                            Button(action: { showPlayTimer.toggle() }) {
+                                Label(showPlayTimer ? "HIDE TIMER" : "SHOW TIMER", systemImage: "stopwatch")
+                            }
                         } label: {
                             Image(systemName: "ellipsis.circle")
                                 .font(.system(size: 20))
@@ -110,6 +124,11 @@ struct GameView: View {
                                     Text("LOW DIFFICULTY / NO GAIN").font(.system(size: 14, weight: .bold, design: .monospaced)).foregroundColor(.gray)
                                 }
                             }
+                            if game.playDuration() > 0 {
+                                Text("TIME: \(DateFormatting.playClock(game.playDuration()))")
+                                    .font(.system(size: 12, design: .monospaced))
+                                    .foregroundColor(.gray)
+                            }
                         }
                     } else {
                         Spacer()
@@ -121,6 +140,18 @@ struct GameView: View {
             if showVictoryAnimation { MatrixVictoryOverlay().zIndex(100) }
         }
         .navigationBarHidden(true)
+        .onReceive(clockTicker) { clockNow = $0 }
+        .onChange(of: scenePhase) { _, phase in
+            switch phase {
+            case .background, .inactive:
+                game.pauseClock()
+                if !game.board.isEmpty { game.saveCurrentState() }
+            case .active:
+                game.resumeClock()
+            @unknown default:
+                break
+            }
+        }
         .onAppear {
             guard game.board.isEmpty else { return }
 

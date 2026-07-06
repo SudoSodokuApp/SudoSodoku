@@ -17,6 +17,9 @@ struct RecordRow: View {
                         if let gain = record.ratingChange, gain > 0 {
                             Text("+\(gain) RP").font(.system(size: 12, weight: .bold, design: .monospaced)).foregroundColor(.yellow)
                         }
+                        if record.playDuration > 0 {
+                            Text("T+\(DateFormatting.playClock(record.playDuration))").font(.system(size: 12, design: .monospaced)).foregroundColor(.gray)
+                        }
                     } else {
                         Text("[IN_PROGRESS]").font(.system(size: 12, weight: .bold, design: .monospaced)).foregroundColor(.cyan)
                     }
