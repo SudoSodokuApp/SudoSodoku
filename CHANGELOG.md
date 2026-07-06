@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Game Center leaderboards: global ELO ranking plus per-difficulty fastest-time boards; victories submit the solve time (whole seconds) and rating gains submit the new ELO; terminal-styled leaderboard screen (`cat /leaderboard` in the profile) with guest sign-in notice and `GKAccessPoint` fallback (#11)
 - `SudoSodokuTests` unit test target covering puzzle generation (solvability, unique solution, difficulty scoring), ELO rating (K-factor tiers, anti-smurfing), and storage (persistence roundtrip, legacy save migration)
 - Shared `SudoSodoku` scheme with test action, enabling `xcodebuild test` and Xcode Cloud test workflows
+- Product identity: slogan "sudo solve — root access for logical purists", four-pillar philosophy in the README, and the tagline on the landing screen
 
 ### Changed
 
