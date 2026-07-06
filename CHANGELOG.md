@@ -30,6 +30,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Landing page version reads from app bundle instead of hardcoded string
 - Fixed swapped section bodies in DEVELOPER.md (Achievement System / iPad Support) and aligned the roadmap tiers with the phased v1.1-v1.3 plan
 
+### Fixed
+
+- Pinned `IPHONEOS_DEPLOYMENT_TARGET` back to the literal `17.0` on all targets: Xcode's "Update to recommended settings" had rewritten it to `$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)`, which Xcode Cloud's toolchain resolves to nothing, dropping the deployment target to the SDK floor and failing builds with iOS 16/17 availability errors
+
 ### Removed
 
 - `Views-iPad/` directory and `ViewRouter` platform routing
