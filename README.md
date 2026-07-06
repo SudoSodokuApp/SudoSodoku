@@ -1,137 +1,109 @@
 # **SudoSodoku**
 
-**A terminal-style Sudoku experience for iOS, designed for logical purists.**
+```
+$ sudo solve
+[sudo] password for logic: ********
+> root access granted.
+```
 
-**SudoSodoku** is a minimalist, keyboard-centric (conceptually) puzzle game that brings the Linux terminal aesthetic to your iPhone. It strips away the distractions of modern casual games, offering a raw, focus-driven environment powered by a robust algorithmic core.
+**`sudo solve` — root access for logical purists.**
 
-### **🎉 v1.0.0 - First Official Release**
+SudoSodoku is the only sudoku on the App Store that treats you like root. It is a full terminal fantasy: green phosphor on deep dark glass, mechanical-keyboard haptics, and an ELO ladder that climbs from `SCRIPT_KIDDIE` to `THE_ARCHITECT`. You are not filling in numbers — you are breaching a grid, and every victory ends the only way it should: `ACCESS GRANTED`.
 
-We are thrilled to announce the first stable release of SudoSodoku! This version represents a complete, polished game with all core features implemented and tested.
+## **🧠 Philosophy**
 
-**Key Features:**
+Four rules the whole game is built on:
 
-* **Procedural Puzzle Generation**: Real-time generation of unique, solvable puzzles
-* **Four Difficulty Levels**: Easy, Medium, Hard, and Master with intelligent scoring
-* **Pencil Mode**: Toggle candidate notes for complex deduction strategies
-* **Undo/Redo System**: Full history stack for fearless experimentation
-* **Smart Archives**: Automatic saving with favorites and replay functionality
-* **ELO Rating System**: Competitive ranking from SCRIPT_KIDDIE to THE_ARCHITECT
-* **Terminal Aesthetic**: Authentic green phosphor UI with haptic feedback
-* **Modular Architecture**: Clean, maintainable codebase organized by feature
+1. **You're not filling numbers. You're breaching systems.**
+   The terminal fantasy is total. Puzzles generate behind a live breach log (`$ sudo breach --target=grid_9x9`), victories detonate matrix rain, and rank-ups get a ceremony. Every touchpoint speaks shell.
+
+2. **Pure logic. Zero noise.**
+   No ads. No lives. No pay-to-win. No guilt mechanics. Even the timer is optional — nothing is allowed to interrupt a deduction.
+
+3. **Earn your rank.**
+   A real ELO system with anti-smurfing (top players gain nothing from stomping easy grids), and Game Center leaderboards that rank actual performance — fastest solves and rating — never spending.
+
+4. **Juice with respect.**
+   Rigid-impact keystrokes, phosphor pulses, CRT-glitch error shakes — and every single animation respects Reduce Motion, sounds are never forced on. Delight is a layer, not a tax.
 
 ## **✨ Features**
 
-### **🖥️ Immersive Terminal Aesthetic**
+### **🖥️ The Terminal**
 
-* **Visuals**: Authentic Green Phosphor (#00FF00) on Deep Dark Background (#0D121A).  
-* **Feedback**: "Juice" interaction model with UIImpactFeedbackGenerator providing mechanical-keyboard-like haptics for every input.  
-* **Animations**: Matrix-style victory effects and CRT-like glow pulses.
+* Authentic green phosphor (#00FF00) on deep dark background (#0D121A), all-monospaced UI
+* Typewriter **breach-log loading screen** whose verdict lines report the real uniqueness check and difficulty index of your puzzle
+* Three-act **victory sequence**: Canvas-drawn matrix rain → typewriter `ACCESS GRANTED` → ELO ticker rolling to your new rating, with a glowing `>> RANK_UP <<` ceremony on tier crossings
+* A semantic **haptic vocabulary**: cell selection ticks, rigid key-press placements, error notifications, and a custom CoreHaptics victory rumble
 
-### **♾️ Infinite Procedural Generation**
+### **♾️ The Grid**
 
-* **Real-time Engine**: Generates unique, solvable puzzles on-the-fly using a randomized **Backtracking Algorithm**.  
-* **Human-like Grading**: Difficulty is not determined by random holes, but by a **Logical Solver** that simulates human techniques (Naked Singles, Hidden Singles, etc.) to assign a precise difficulty score (0-100).
+* Real-time procedural generation — unique, human-gradable puzzles with a logical-solver difficulty score (0–100), never a canned database
+* Four difficulty flags: `--easy` `--medium` `--hard` `--master`
+* Pencil notes with **auto-clear**: placing a digit sweeps it from peer notes, and undo restores everything as one compound move
+* Numpad that thinks: exhausted digits strike through, dead taps nudge instead of being swallowed, the selection frame glides between cells
+* Optional play clock (`T+MM:SS`) that only counts active time — backgrounding pauses it, victory freezes it
 
-### **🏆 Competitive ELO System**
+### **🏆 The Ladder**
 
-* **Dynamic Rating**: Starts at 1200 (USER). Beats puzzles to rank up.  
-* **Adaptive K-Factor**: Rating changes stabilize as you reach higher tiers (Master/Grandmaster).  
-* **Anti-Smurfing**: High-level players gain zero rating from solving low-level puzzles.  
-* **Rank Titles**:  
-  * < 1200: SCRIPT_KIDDIE  
-  * 1200 - 1400: USER  
-  * 1400 - 1600: SUDOER
-  * 1600 - 1800: SYS_ADMIN
-  * 1800 - 2000: KERNEL_HACKER
-  * 2000+: THE_ARCHITECT
-
-### **💾 Robust Persistence**
-
-* **Local Storage**: Game records and rating data saved to the device Documents directory.  
-* **JSON Serialization**: All game records are stored as Codable JSON structs, ensuring backward compatibility and easy migration.
+* ELO rating from 1200 with adaptive K-factor and anti-smurfing
+* Six ranks: `SCRIPT_KIDDIE` → `USER` → `SUDOER` → `SYS_ADMIN` → `KERNEL_HACKER` → `THE_ARCHITECT`
+* **Game Center leaderboards**: a global ELO ranking plus fastest-time boards per difficulty (`cat /leaderboard`)
+* Personal bests, logical-efficiency scoring, and full session archives with favorites and replay
 
 ## **🛠️ Technical Architecture**
 
-SudoSodoku is built with modern iOS technologies, designed for maintainability and performance:
-
-* **Language**: Swift 5.9  
-* **UI Framework**: SwiftUI (Apple's modern declarative UI framework)  
-* **Architecture**: MVVM (Model-View-ViewModel) pattern for clean code organization  
-* **State Management**: Reactive updates using Combine framework  
-* **Data Persistence**:  
-  * Local JSON storage with atomic writes  
-  * Backward-compatible data migration  
-* **User Experience**: Custom animations and haptic feedback for a polished feel
+* **Language**: Swift 5.9 · **UI**: SwiftUI · **Pattern**: MVVM · **State**: Combine
+* **Platform**: iPhone-only, iOS 17.0+
+* **Persistence**: single local JSON file, atomic writes, versioned migration chain
+* **Game services**: GameKit (auth, leaderboards) · CoreHaptics
+* **Testing**: `SudoSodokuTests` unit suite (generator, rating, storage, gameplay logic) run locally and on Xcode Cloud
 
 ### **Directory Structure**
 
 ```
 SudoSodoku/
 ├── SudoSodokuApp.swift           # @main entry
-├── Models/
-│   ├── GameRecord.swift          # Codable save data structure
-│   ├── SudokuCell.swift          # Unit cell model
-│   ├── MoveHistory.swift         # Move history for undo/redo
-│   ├── Difficulty.swift          # Enum with rating ranges
-│   ├── RankTier.swift            # ELO rank definitions
-│   └── OverallStats.swift        # Aggregated statistics model
+├── Models/                       # GameRecord, SudokuCell, MoveHistory, Difficulty, RankTier, ...
 ├── ViewModels/
-│   └── SudokuGame.swift          # Core game logic & state machine
+│   └── SudokuGame.swift          # Core game logic, play clock, undo/redo, conflict signals
 ├── Managers/
-│   ├── GameCenterManager.swift   # GameKit authentication & scores
-│   ├── RatingManager.swift       # ELO calculation algorithms
-│   ├── HapticManager.swift       # Haptic feedback engine
+│   ├── GameCenterManager.swift   # Auth + leaderboard submissions
+│   ├── RatingManager.swift       # ELO calculation
+│   ├── HapticManager.swift       # Semantic haptic vocabulary (+ CoreHaptics victory)
 │   ├── StatisticsManager.swift   # Stats aggregation
-│   └── StorageManager.swift      # File I/O & local persistence
-├── Utils/
-│   ├── AppConstants.swift        # Bundle ID, leaderboard IDs, version
-│   ├── DateFormatting.swift      # Shared date formatters
-│   └── LogicalEfficiencyStyle.swift
-├── Views/
-│   ├── ContentView.swift         # Root navigation shell
-│   ├── LandingView.swift         # Landing page
-│   ├── GameView.swift            # The game board
-│   ├── StatsView.swift           # Statistics dashboard
-│   ├── UserProfileView.swift     # User profile & rank table
-│   ├── ArchiveView.swift         # History & favorites list
-│   ├── ModeSelectionView.swift   # Difficulty selection
-│   ├── BoardView.swift           # Sudoku board rendering
-│   ├── ControlPanelView.swift    # Game controls (undo/redo/numpad)
-│   ├── Components/
-│   │   ├── CellView.swift              # Single board cell
-│   │   ├── TerminalBackground.swift    # Terminal-style background
-│   │   ├── MatrixVictoryOverlay.swift  # Victory animation
-│   │   ├── NoteGridView.swift          # Note display grid
-│   │   ├── GridLinesOverlay.swift      # Board grid lines
-│   │   ├── StatCard.swift              # Statistics card component
-│   │   ├── RankRow.swift               # Rank display row
-│   │   └── RecordRow.swift             # Archive record row
-│   └── Styles/
-│       └── BouncyButtonStyle.swift     # Button animation style
-└── Algorithms/
-    └── SudokuGenerator.swift     # Backtracking & digging logic
+│   └── StorageManager.swift      # Atomic JSON persistence + migrations
+├── Algorithms/
+│   └── SudokuGenerator.swift     # Backtracking generation + logical difficulty grading
+├── Utils/                        # AppConstants (leaderboard IDs), DateFormatting, ...
+└── Views/
+    ├── GameView.swift            # The board screen
+    ├── LeaderboardView.swift     # Terminal-styled Game Center rankings
+    ├── ...                       # Landing, Archive, Stats, Profile, ModeSelection
+    └── Components/               # BreachLogView, MatrixVictoryOverlay, CellView, ...
+
+SudoSodokuTests/                  # Unit tests (picked up automatically by the shared scheme)
 ```
 
 ## **🚀 Building the Project**
 
 ### **Method 1: Using Xcode (Traditional)**
 
-1. **Clone the repository**:  
+1. **Clone the repository**:
 
   ```bash
   git clone https://github.com/kaiiiichen/SudoSodoku.git
   ```
 
-1. **Open in Xcode**:  
+1. **Open in Xcode**:
    Double-click `SudoSodoku.xcodeproj`. Ensure you have Xcode 15.0+ installed.
 
-2. **Configure Signing**:  
-   * Go to the Project Navigator (blue icon).  
-   * Select the SudoSodoku target.  
-   * Click **Signing & Capabilities**.  
+2. **Configure Signing**:
+   * Go to the Project Navigator (blue icon).
+   * Select the SudoSodoku target.
+   * Click **Signing & Capabilities**.
    * Change the **Team** to your own Apple Developer account.
 
-3. **Run**:  
+3. **Run**:
    Connect your iPhone or select a Simulator and press `Cmd + R`.
 
 ### **Method 2: Using Command Line (Cursor/VS Code)**
@@ -154,16 +126,12 @@ We provide convenient build scripts for command-line development:
   ./play.sh
   ```
 
-  This script will:
-  1. Find an available iPhone simulator
-  2. Boot the simulator
-  3. Build the project
-  4. Install and launch the app
+#### **Running Tests**
 
-#### **Using Keyboard Shortcuts in Cursor**
-
-1. Press `Cmd+Shift+B` (macOS) to trigger the default build task
-2. Use `Cmd+Shift+P` → "Tasks: Run Task" to access all build tasks
+```bash
+xcodebuild test -project SudoSodoku.xcodeproj -scheme SudoSodoku \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
+```
 
 ### **Build Requirements**
 
@@ -171,24 +139,6 @@ We provide convenient build scripts for command-line development:
 * Xcode 15.0+ with Command Line Tools
 * iOS 17.0+ deployment target
 * iPhone only (portrait and landscape)
-
-## **📱 Running in Simulator**
-
-After building, you can run the app in the iOS Simulator:
-
-```bash
-# Quick way: Use the play script
-./play.sh
-
-# Or manually:
-# 1. Build first
-./build.sh
-
-# 2. Open Simulator
-open -a Simulator
-
-# 3. Install and run (see play.sh for details)
-```
 
 ## **🤝 Contributing**
 
@@ -201,22 +151,14 @@ Contributions are welcome! We appreciate your help in making SudoSodoku better.
 3. Look for issues labeled `good first issue`
 4. Fork, make changes, and submit a Pull Request
 
-**Quick Start:**
-
-```bash
-git checkout -b feature/AmazingFeature
-git commit -m "feat: Add some AmazingFeature"
-git push origin feature/AmazingFeature
-```
-
-Then open a Pull Request. See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
+All changes go through feature branches and pull requests — never direct commits to `main`. Update `CHANGELOG.md` in the same PR, and keep new generator/rating/storage logic covered by unit tests.
 
 ### **Code Style Guidelines**
 
-* All code comments and documentation should be in English
-* Follow Swift naming conventions
-* Maintain MVVM architecture pattern
-* Add appropriate MARK comments for code organization
+* All code comments and documentation in English
+* Follow Swift naming conventions and the MVVM architecture
+* Match the terminal aesthetic in UI copy (monospaced, `UPPER_SNAKE` labels, shell-flavored strings)
+* Every animation must respect Reduce Motion; sounds are never forced on
 
 ## **📚 Additional Documentation**
 

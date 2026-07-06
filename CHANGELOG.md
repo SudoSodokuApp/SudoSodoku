@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Victory sequence rework: real matrix rain (TimelineView + Canvas), typewriter `ACCESS GRANTED`, ELO ticker rolling to the new value with a rank-up ceremony on tier crossings; dismissed by tap instead of a 2-second timer; fade-only under Reduce Motion (#13)
 - `SudoSodokuTests` unit test target covering puzzle generation (solvability, unique solution, difficulty scoring), ELO rating (K-factor tiers, anti-smurfing), and storage (persistence roundtrip, legacy save migration)
 - Shared `SudoSodoku` scheme with test action, enabling `xcodebuild test` and Xcode Cloud test workflows
+- Product identity: slogan "sudo solve — root access for logical purists", four-pillar philosophy in the README, and the tagline on the landing screen
 
 ### Changed
 
