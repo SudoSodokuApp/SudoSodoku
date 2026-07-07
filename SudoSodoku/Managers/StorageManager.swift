@@ -68,6 +68,15 @@ class StorageManager: ObservableObject {
         persist()
     }
 
+    /// Factory reset: drops every record and returns the rating to the
+    /// starting 1200. Persists immediately so legacy files can't resurrect
+    /// the old state on next launch.
+    func wipeAllData() {
+        records = []
+        userRating = 1200
+        persist()
+    }
+
     func loadData() {
         let currentURL = getFileURL(name: currentFileName)
 

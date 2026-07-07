@@ -5,6 +5,10 @@ struct UserProfileView: View {
     @ObservedObject private var stats = StatisticsManager.shared
     @ObservedObject private var achievements = AchievementManager.shared
 
+    #if DEBUG
+    @State private var showWipeConfirmation = false
+    #endif
+
     private var ratingInfo: (title: String, color: Color) {
         RatingManager.shared.getRankTitle(rating: storage.userRating)
     }
@@ -65,12 +69,47 @@ struct UserProfileView: View {
                         }
                     }.padding().background(Color.white.opacity(0.05)).cornerRadius(12).padding(.horizontal)
 
+                    #if DEBUG
+                    debugWipeButton
+                    #endif
+
                     Spacer()
                 }
             }
         }
         .navigationBarTitleDisplayMode(.inline)
     }
+
+    #if DEBUG
+    /// Debug builds only: factory reset for verifying first-run flows
+    /// (achievement unlocks, the sudoers joke) on an already-played account.
+    private var debugWipeButton: some View {
+        Button(role: .destructive, action: { showWipeConfirmation = true }) {
+            HStack {
+                Image(systemName: "trash")
+                Text("$ rm -rf /user_data")
+            }
+            .font(.system(size: 14, weight: .bold, design: .monospaced))
+            .foregroundColor(.red)
+            .padding(.vertical, 12)
+            .frame(maxWidth: .infinity)
+            .background(Color.red.opacity(0.08))
+            .cornerRadius(12)
+            .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.red.opacity(0.4), lineWidth: 1))
+        }
+        .padding(.horizontal)
+        .confirmationDialog("WIPE_USER_DATA?", isPresented: $showWipeConfirmation, titleVisibility: .visible) {
+            Button("CONFIRM (irreversible)", role: .destructive) {
+                StorageManager.shared.wipeAllData()
+                AchievementManager.shared.resetAllProgress()
+                UserDefaults.standard.removeObject(forKey: SudoersJoke.seenKey)
+            }
+            Button("CANCEL", role: .cancel) {}
+        } message: {
+            Text("Erases local records and rating, clears achievements, and resets Game Center achievement progress.")
+        }
+    }
+    #endif
 
     @ViewBuilder
     private func achievementRow(_ achievement: Achievement) -> some View {
