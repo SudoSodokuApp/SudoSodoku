@@ -39,6 +39,19 @@ final class AchievementManager: ObservableObject {
         unlock([.incidentReported])
     }
 
+    /// Clears local unlock state and, when signed in, asks Game Center to
+    /// reset server-side achievement progress. Used by the debug factory
+    /// reset so unlock flows can be re-verified on a played account.
+    func resetAllProgress() {
+        defaults.removeObject(forKey: unlockedKey)
+        defaults.removeObject(forKey: pendingReportsKey)
+        justUnlocked = []
+        objectWillChange.send()
+        if GameCenterManager.shared.isAuthenticated {
+            GKAchievement.resetAchievements { _ in }
+        }
+    }
+
     /// Called after Game Center authentication succeeds.
     func flushPendingReports() {
         let pending = defaults.stringArray(forKey: pendingReportsKey) ?? []

@@ -28,7 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `SudoSodokuTests` unit test target covering puzzle generation (solvability, unique solution, difficulty scoring), ELO rating (K-factor tiers, anti-smurfing), and storage (persistence roundtrip, legacy save migration)
 - Shared `SudoSodoku` scheme with test action, enabling `xcodebuild test` and Xcode Cloud test workflows
 - Product identity: slogan "sudo solve — root access for logical purists", four-pillar philosophy in the README, and the tagline on the landing screen
-- `Tools/gen_achievement_art.swift`: generator for the ASC achievement images (phosphor ring + monospaced glyph, 1024×1024); the PNGs themselves are one-time uploads and stay out of the repo
+- Debug builds only: `$ rm -rf /user_data` factory reset in the profile (records, rating, achievements, sudoers-joke flag, and Game Center achievement progress via `resetAchievements`) for verifying first-run flows; compiled out of Release
 
 ### Changed
 
