@@ -461,6 +461,16 @@ class SudokuGame: ObservableObject {
         // Clock is already frozen, so this is the final solve time.
         GameCenterManager.shared.submitCompletionTime(playDuration(), difficulty: difficulty.rawValue)
         saveCurrentState()
+
+        // After saveCurrentState so the solved count includes this game.
+        AchievementManager.shared.evaluateVictory(VictoryContext(
+            difficulty: difficulty,
+            undoCount: currentUndoCount,
+            playDuration: playDuration(),
+            newRating: StorageManager.shared.userRating,
+            totalSolved: StorageManager.shared.records.filter(\.isSolved).count
+        ))
+
         onSolved?()
     }
 }
