@@ -49,8 +49,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Achievement unlocks had no visible feedback: the toast raced the victory overlay and could expire unseen behind the matrix rain. Unlocks now render inside the victory sequence itself, and the sudoers interstitial shows its own secret-achievement unlock — the separate toast and its cross-view choreography are gone
-- Unlock display upgraded from a single small text line to a proper badge: bordered glowing card (`ACHIEVEMENT_UNLOCKED` + large title) popping in one per beat with a spring and a haptic tick, as the victory sequence's fourth act
+- EASY puzzles could dead-end a player: the difficulty grader's hidden-single scan only checked rows (column/box logic counted as "stuck"), digging ignored clue distribution (boards could be top-dense with a deserted bottom half), and the score counted steps but not breadth. Hidden singles now scan all 27 houses, digging enforces per-difficulty clue floors (EASY keeps ≥3 clues per box and ≥2 per row/column), and EASY boards must be solvable with singles alone while always offering at least two parallel moves; the 40-attempt fallback now prefers boards passing that gate (#37)
+- Achievement unlocks had no visible feedback: the toast raced the victory overlay and could expire unseen behind the matrix rain. Unlocks now render inside the victory sequence itself (`>> UNLOCKED: ...` under the ELO ticker), and the sudoers interstitial types out its own secret-achievement line — the separate toast and its cross-view choreography are gone
 - Pinned `IPHONEOS_DEPLOYMENT_TARGET` back to the literal `17.0` on all targets: Xcode's "Update to recommended settings" had rewritten it to `$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)`, which Xcode Cloud's toolchain resolves to nothing, dropping the deployment target to the SDK floor and failing builds with iOS 16/17 availability errors
 
 ### Removed
