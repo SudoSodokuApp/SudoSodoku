@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct StatsView: View {
+    var commandPrefix: String = "sudo sodoku stats"
+
     @ObservedObject private var stats = StatisticsManager.shared
 
     var body: some View {
@@ -8,6 +10,7 @@ struct StatsView: View {
             TerminalBackground()
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
+                    ExecutedCommandLine(command: commandPrefix)
                     sectionHeader("SYSTEM_OVERVIEW:")
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
                         StatCard(title: "TOTAL_GAMES", value: "\(stats.overallStats.totalGames)", icon: "gamecontroller")
