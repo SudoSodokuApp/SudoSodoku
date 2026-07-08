@@ -61,6 +61,17 @@ final class AchievementManagerTests: XCTestCase {
         XCTAssertEqual(defaults.stringArray(forKey: "unlockedAchievements")?.count, 1)
     }
 
+    func testSecretAchievementsAreInvisibleOnTheWallUntilUnlocked() {
+        let locked = Achievement.wallList(isUnlocked: { _ in false })
+        XCTAssertFalse(locked.contains(.incidentReported),
+                       "A hidden achievement must not exist on the wall - its title alone is a spoiler")
+        XCTAssertEqual(locked.count, Achievement.allCases.count - 1)
+
+        let unlocked = Achievement.wallList(isUnlocked: { $0 == .incidentReported })
+        XCTAssertTrue(unlocked.contains(.incidentReported), "Once earned, the secret joins the wall")
+        XCTAssertEqual(unlocked.count, Achievement.allCases.count)
+    }
+
     func testIncidentReportedIsAOneShotEasterEgg() {
         XCTAssertEqual(manager.unlockIncidentReported(), [.incidentReported])
         XCTAssertTrue(manager.isUnlocked(.incidentReported))
