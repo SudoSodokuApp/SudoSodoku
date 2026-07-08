@@ -10,6 +10,12 @@ final class BreachScriptTests: XCTestCase {
                       "Every intro step must report OK")
     }
 
+    func testDifficultyFlagsMatchTheCommandLineFiction() {
+        // Shared by the mode-selection composer and the breach log.
+        XCTAssertEqual(Difficulty.easy.flag, "--easy")
+        XCTAssertEqual(Difficulty.master.flag, "--master")
+    }
+
     func testFinalLinesReportVerdictAndRealScore() {
         let lines = BreachScript.finalLines(score: 82, difficulty: .master)
         XCTAssertTrue(lines[0].hasSuffix(" PASS"))

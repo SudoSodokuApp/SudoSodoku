@@ -7,7 +7,7 @@ enum BreachScript {
 
     static func introLines(difficulty: Difficulty) -> [String] {
         [
-            "$ sudo breach --target=grid_9x9 --\(difficulty.rawValue.lowercased())",
+            "$ sudo breach --target=grid_9x9 \(difficulty.flag)",
             padded("> requesting root access", status: "OK"),
             padded("> generating entropy", status: "OK"),
             padded("> digging holes", status: "OK"),
