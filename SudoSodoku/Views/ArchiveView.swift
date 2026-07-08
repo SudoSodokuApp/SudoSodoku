@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct ArchiveView: View {
+    var commandPrefix: String = "sudo sodoku archives"
+
     @ObservedObject var storage = StorageManager.shared
     @State private var selectedRecordForAction: GameRecord?
     @State private var showActionSheet = false
@@ -17,6 +19,8 @@ struct ArchiveView: View {
         ZStack {
             TerminalBackground()
             VStack(alignment: .leading) {
+                ExecutedCommandLine(command: commandPrefix)
+                    .padding(.leading).padding(.trailing).padding(.top)
                 HStack {
                     Text(filterMode == .favorites ? "FAVORITES:" : "USER_LOGS:")
                         .font(.system(size: 16, weight: .bold, design: .monospaced)).foregroundColor(.gray)

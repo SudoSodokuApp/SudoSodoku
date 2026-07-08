@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct StatsView: View {
+    var commandPrefix: String = "sudo sodoku stats"
+
     @ObservedObject private var stats = StatisticsManager.shared
     @ObservedObject private var storage = StorageManager.shared
 
@@ -9,6 +11,7 @@ struct StatsView: View {
             TerminalBackground()
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
+                    ExecutedCommandLine(command: commandPrefix)
                     sectionHeader("SYSTEM_OVERVIEW:")
                     // No fail state means no "win rate": the honest headline
                     // numbers are volume, rating, speed, and depth.

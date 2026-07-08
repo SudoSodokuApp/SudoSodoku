@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct UserProfileView: View {
+    var commandPrefix: String = "sudo sodoku whoami"
+
     @ObservedObject private var storage = StorageManager.shared
     @ObservedObject private var stats = StatisticsManager.shared
     @ObservedObject private var achievements = AchievementManager.shared
@@ -18,6 +20,9 @@ struct UserProfileView: View {
             TerminalBackground()
             ScrollView {
                 VStack(spacing: 30) {
+                    ExecutedCommandLine(command: commandPrefix)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.top, 20).padding(.horizontal)
                     VStack(spacing: 15) {
                         ZStack {
                             Circle().stroke(ratingInfo.color, lineWidth: 4).frame(width: 120, height: 120).shadow(color: ratingInfo.color.opacity(0.5), radius: 10)
@@ -31,7 +36,7 @@ struct UserProfileView: View {
                             Text(ratingInfo.title).font(.system(size: 24, weight: .heavy, design: .monospaced)).foregroundColor(ratingInfo.color)
                             Text("ELO RATING: \(storage.userRating)").font(.system(size: 16, design: .monospaced)).foregroundColor(.white)
                         }
-                    }.padding(.top, 40)
+                    }.padding(.top, 10)
 
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
                         StatCard(title: "GAMES PLAYED", value: "\(stats.overallStats.totalGames)", icon: "gamecontroller")
