@@ -1,11 +1,17 @@
 import SwiftUI
 
-enum Difficulty: String, CaseIterable, Codable {
+enum Difficulty: String, CaseIterable, Codable, Identifiable {
     case easy = "EASY"
     case medium = "MEDIUM"
     case hard = "HARD"
     case master = "MASTER"
-    
+
+    var id: String { rawValue }
+
+    /// The command-line flag spelling, shared by the mode selector and the
+    /// breach log so the fiction stays consistent.
+    var flag: String { "--" + rawValue.lowercased() }
+
     var scoreRange: ClosedRange<Int> {
         switch self {
         case .easy: return 0...15
