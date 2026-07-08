@@ -55,7 +55,7 @@ struct UserProfileView: View {
 
                     VStack(alignment: .leading, spacing: 12) {
                         Text("ACHIEVEMENTS:").font(.system(size: 14, weight: .bold, design: .monospaced)).foregroundColor(.gray)
-                        ForEach(Achievement.allCases) { achievement in
+                        ForEach(Achievement.wallList(isUnlocked: achievements.isUnlocked)) { achievement in
                             achievementRow(achievement)
                         }
                     }.padding().background(Color.white.opacity(0.05)).cornerRadius(12).padding(.horizontal)
@@ -122,7 +122,7 @@ struct UserProfileView: View {
                 Text(achievement.title)
                     .font(.system(size: 13, weight: .bold, design: .monospaced))
                     .foregroundColor(unlocked ? .white : .gray)
-                Text(achievement.isSecret && !unlocked ? "????????" : achievement.detail)
+                Text(achievement.detail)
                     .font(.system(size: 10, design: .monospaced))
                     .foregroundColor(.gray.opacity(0.8))
             }

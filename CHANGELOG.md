@@ -62,6 +62,7 @@ v2.0.0 is the release where SudoSodoku becomes what it always wanted to be: a fu
 
 ### Fixed
 
+- The secret INCIDENT_REPORTED achievement wasn't actually secret: the profile wall listed its title with only the description masked. Hidden achievements are now entirely absent from the wall until earned, matching Game Center's Hidden semantics
 - Profile (WHOAMI) statistics desynced from storage: `@Published` emits on willSet, and the stats refresh read the records back through the singleton — always one mutation behind. Zeros stuck on a fresh launch, numbers survived the debug wipe, and only playing a move "fixed" them. Stats now derive from the emitted value (#41)
 - Achievement unlocks had no visible feedback: the toast raced the victory overlay and could expire unseen behind the matrix rain. Unlocks now render inside the victory sequence itself (`>> UNLOCKED: ...` under the ELO ticker), and the sudoers interstitial types out its own secret-achievement line — the separate toast and its cross-view choreography are gone
 - Pinned `IPHONEOS_DEPLOYMENT_TARGET` back to the literal `17.0` on all targets: Xcode's "Update to recommended settings" had rewritten it to `$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)`, which Xcode Cloud's toolchain resolves to nothing, dropping the deployment target to the SDK floor and failing builds with iOS 16/17 availability errors

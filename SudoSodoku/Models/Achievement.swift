@@ -53,8 +53,15 @@ enum Achievement: String, CaseIterable, Identifiable {
         }
     }
 
-    /// Secret achievements show masked details until unlocked.
+    /// Secret achievements don't exist publicly until earned.
     var isSecret: Bool { self == .incidentReported }
+
+    /// The profile wall's list: secrets stay entirely invisible until
+    /// unlocked (even the title is a spoiler), matching Game Center's
+    /// Hidden semantics.
+    static func wallList(isUnlocked: (Achievement) -> Bool) -> [Achievement] {
+        allCases.filter { !$0.isSecret || isUnlocked($0) }
+    }
 }
 
 /// Everything a victory needs to be judged against the achievement list.
