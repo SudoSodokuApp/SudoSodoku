@@ -61,7 +61,8 @@ struct TerminalCommandComposer<Hero: View>: View {
         .task {
             // Hard on/off blink, like a real terminal caret. (The old fade
             // relied on animating .opacity, which the concatenated command
-            // line can't express per-segment.)
+            // line can't express per-segment.) Solid under Reduce Motion.
+            guard !reduceMotion else { return }
             while !Task.isCancelled {
                 try? await Task.sleep(for: .milliseconds(600))
                 cursorVisible.toggle()

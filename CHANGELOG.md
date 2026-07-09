@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Command-line caret stays solid under Reduce Motion instead of blinking; `DateFormatting.playClock` is now `nonisolated`, silencing the main-actor warning in StatsView (#64)
+
 ---
 
 ## [2.0.0] - 2026-07-08
