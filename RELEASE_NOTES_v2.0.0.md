@@ -12,7 +12,7 @@ v2.0.0 is the release where SudoSodoku becomes what it always wanted to be: a fu
 ## The Ladder goes live 🏆
 
 - **Game Center leaderboards**: a global ELO ranking plus fastest-time boards for every difficulty. Scores are performance — solve time and rating — never spending.
-- **Twelve achievements**, from `HELLO_WORLD` to `THE_ARCHITECT`, including one secret. Unlocks are celebrated inside the victory sequence with glowing badges.
+- **Eleven achievements**, from `HELLO_WORLD` to `THE_ARCHITECT`, including one secret. Unlocks are celebrated inside the victory sequence with glowing badges.
 
 ## Every puzzle now reads as hand-crafted ✍️
 
