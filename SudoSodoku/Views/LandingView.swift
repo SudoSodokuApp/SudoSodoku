@@ -9,6 +9,10 @@ struct LandingView: View {
     @State private var glowStrength = 1.0
     @State private var launchTarget: LandingTarget?
     @State private var composerKey = UUID()
+    // The terminal boots in (base command types itself) only on the first
+    // appearance after launch; back-navigations get the materialized prompt.
+    @State private var bootsIn = true
+    @State private var hasAppearedBefore = false
     @ObservedObject var gcManager = GameCenterManager.shared
 
     var body: some View {
@@ -30,6 +34,7 @@ struct LandingView: View {
                         CommandOption(id: LandingTarget.whoami.rawValue, label: "whoami", detail: "// operator profile", color: .gray),
                     ],
                     hint: nil,
+                    bootsIn: bootsIn,
                     onExecute: { option in
                         launchTarget = LandingTarget(rawValue: option.id)
                     },
@@ -53,6 +58,8 @@ struct LandingView: View {
             }
         }
         .onAppear {
+            if hasAppearedBefore { bootsIn = false }
+            hasAppearedBefore = true
             composerKey = UUID()
         }
     }

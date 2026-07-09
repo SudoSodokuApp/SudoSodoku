@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- The landing terminal boots in on launch: `sudo sudosodoku` types itself into the prompt and the tab-completion menu materializes once the command lands — once per process, so back-navigations get the materialized prompt; silent (no keystroke haptics) and instant under Reduce Motion (#54)
+
 ### Changed
 
 - Every screen entered from the landing page now reads as one continuous, accumulating shell command instead of separate button taps: picking `breach`, `archives`, `stats`, or `whoami` types the subcommand into the prompt before navigating, and the destination screen echoes the full command (e.g. `sudo sudosodoku breach --easy`) it was reached with (#47)
