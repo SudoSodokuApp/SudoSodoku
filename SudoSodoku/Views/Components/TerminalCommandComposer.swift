@@ -77,8 +77,17 @@ struct TerminalCommandComposer<Hero: View>: View {
             Text(awaitingComment)
                 .font(.system(size: 12, design: .monospaced))
                 .foregroundColor(.gray)
-            commandLine
-                .font(.system(size: 17, weight: .bold, design: .monospaced))
+            // The command line owns a two-line slot up front: a hidden
+            // two-line template sizes the frame, so an overlong composed
+            // command wraps inside reserved space instead of growing the
+            // section and shoving the hero and menu below it (#78). A
+            // template, not a magic number, so the slot tracks the font's
+            // real line metrics.
+            ZStack(alignment: .topLeading) {
+                Text(" \n ").hidden()
+                commandLine
+            }
+            .font(.system(size: 17, weight: .bold, design: .monospaced))
         }
         .padding(.top, 24)
     }
