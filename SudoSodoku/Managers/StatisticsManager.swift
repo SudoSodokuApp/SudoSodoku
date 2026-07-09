@@ -28,14 +28,15 @@ class StatisticsManager: ObservableObject {
 
     private func refresh(with records: [GameRecord]) {
         // A personal best is the fastest timed solve; records from before
-        // time tracking (duration 0) fall back to the most efficient solve.
+        // time tracking (duration 0) fall back to the most recent solve.
+        // Never rank by undo count — undos judge nothing (#62).
         var bests: [Difficulty: GameRecord] = [:]
         for difficulty in Difficulty.allCases {
             let solved = records.filter { $0.difficulty == difficulty.rawValue && $0.isSolved }
             bests[difficulty] = solved
                 .filter { $0.playDuration > 0 }
                 .min { $0.playDuration < $1.playDuration }
-                ?? solved.max { $0.logicalEfficiency < $1.logicalEfficiency }
+                ?? solved.max { $0.lastPlayedTime < $1.lastPlayedTime }
         }
         personalBests = bests
 

@@ -16,8 +16,9 @@ struct GameRecord: Codable, Identifiable, Hashable {
     var isArchived: Bool = false
     var isFavorite: Bool = false
 
-    // Logical quality metrics
-    var undoCount: Int = 0                  // Number of undos
+    // Inert save data: tracked but never displayed or judged — undo count
+    // is not a quality metric (#62, #77).
+    var undoCount: Int = 0
 
     // Accumulated active play time in seconds (excludes backgrounded time)
     var playDuration: TimeInterval = 0
@@ -39,25 +40,6 @@ struct GameRecord: Codable, Identifiable, Hashable {
             }
         }
         return Int((Double(filledCount) / Double(totalToFill)) * 100)
-    }
-    
-    // Calculate logical efficiency score (based on undo count)
-    var logicalEfficiency: Int {
-        let baseScore = 1000
-        let undoPenalty = undoCount * 10        // 10 points deducted per undo
-        
-        return max(0, baseScore - undoPenalty)
-    }
-    
-    // Logical quality level
-    var logicalQuality: String {
-        switch logicalEfficiency {
-        case 950...: return "PERFECT"
-        case 850..<950: return "EXCELLENT"
-        case 700..<850: return "GOOD"
-        case 500..<700: return "FAIR"
-        default: return "NEEDS_IMPROVEMENT"
-        }
     }
 
     /// A fresh attempt at the same puzzle, under a new identity. The new id

@@ -19,22 +19,27 @@ struct PersonalBestRow: View {
             Divider().background(Color.gray.opacity(0.3))
 
             if let record {
+                // No undo/efficiency judgment here: undos are a free tool,
+                // not a quality metric (#62). The honest per-record details
+                // are when the best was set and what it earned.
                 VStack(alignment: .leading, spacing: 2) {
                     HStack {
-                        Image(systemName: "arrow.counterclockwise")
+                        Image(systemName: "calendar")
                             .font(.system(size: 10))
-                            .foregroundColor(record.undoCount > 5 ? .orange : .green)
-                        Text("UNDOS: \(record.undoCount)")
+                            .foregroundColor(.green)
+                        Text("SET: \(DateFormatting.archiveDate.string(from: record.lastPlayedTime))")
                             .font(.system(size: 10, design: .monospaced))
                             .foregroundColor(.white)
                     }
-                    HStack {
-                        Image(systemName: "chart.line.uptrend.xyaxis")
-                            .font(.system(size: 10))
-                            .foregroundColor(LogicalEfficiencyStyle.color(for: record.logicalEfficiency))
-                        Text("QUALITY: \(record.logicalQuality)")
-                            .font(.system(size: 10, design: .monospaced))
-                            .foregroundColor(.white)
+                    if let gain = record.ratingChange, gain > 0 {
+                        HStack {
+                            Image(systemName: "bolt")
+                                .font(.system(size: 10))
+                                .foregroundColor(.yellow)
+                            Text("+\(gain) RP")
+                                .font(.system(size: 10, design: .monospaced))
+                                .foregroundColor(.white)
+                        }
                     }
                 }
 
