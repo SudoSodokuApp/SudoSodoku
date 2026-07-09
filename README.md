@@ -25,7 +25,7 @@ Four rules the whole game is built on:
    No ads. No lives. No pay-to-win. No guilt mechanics. No fail state — boards are finished or unfinished, never "lost". Even the timer is optional; nothing is allowed to interrupt a deduction.
 
 3. **Earn your rank.**
-   A real ELO system with anti-smurfing (top players gain nothing from stomping easy grids), Game Center leaderboards that rank actual performance — fastest solves and rating, never spending — and twelve achievements, one of them secret.
+   A real ELO system with anti-smurfing (top players gain nothing from stomping easy grids), Game Center leaderboards that rank actual performance — fastest solves and rating, never spending — and eleven achievements, one of them secret.
 
 4. **Juice with respect.**
    Rigid-impact keystrokes, phosphor pulses, CRT-glitch error shakes — and every single animation respects Reduce Motion, sounds are never forced on. Delight is a layer, not a tax.
@@ -55,7 +55,7 @@ Four rules the whole game is built on:
 * ELO rating from 1200 with adaptive K-factor and anti-smurfing
 * Six ranks: `SCRIPT_KIDDIE` → `USER` → `SUDOER` → `SYS_ADMIN` → `KERNEL_HACKER` → `THE_ARCHITECT`
 * **Game Center leaderboards**: a global ELO ranking plus fastest-time boards per difficulty (`cat /leaderboard`) — playable fully offline as a guest
-* **Twelve achievements** (`HELLO_WORLD` … `THE_ARCHITECT`), all binary unlocks, one secret
+* **Eleven achievements** (`HELLO_WORLD` … `THE_ARCHITECT`), all binary unlocks, one secret
 * Honest statistics for a no-fail game (SOLVED / ELO / FASTEST / HARDEST — no fake "win rate"), personal bests, and full session archives where solved runs are immutable history: restarts fork a fresh attempt, viewing an old solution never rewrites it
 
 ## **🛠️ Technical Architecture**

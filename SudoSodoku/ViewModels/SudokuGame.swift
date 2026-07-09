@@ -469,7 +469,6 @@ class SudokuGame: ObservableObject {
         // After saveCurrentState so the solved count includes this game.
         victoryUnlocks = AchievementManager.shared.evaluateVictory(VictoryContext(
             difficulty: difficulty,
-            undoCount: currentUndoCount,
             playDuration: playDuration(),
             newRating: StorageManager.shared.userRating,
             totalSolved: StorageManager.shared.records.filter(\.isSolved).count

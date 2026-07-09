@@ -34,7 +34,7 @@ Welcome! This document provides transparency into SudoSodoku's development proce
 
 **Status**: Shipped (see [CHANGELOG.md](CHANGELOG.md) `[2.0.0]` for the full list)
 
-- **Achievement system** 🏅 — twelve binary unlocks incl. one secret, Game Center reporting with an offline queue (`AchievementManager`)
+- **Achievement system** 🏅 — eleven binary unlocks incl. one secret, Game Center reporting with an offline queue (`AchievementManager`)
 - **Game Center leaderboards** 🌍 — global ELO plus per-difficulty fastest-time boards; guest play fully supported
 - **Hand-crafted-feel generator** — aesthetic clue patterns + per-difficulty technique identity
 - **Completion time tracking** — active-time play clock, personal bests by fastest solve
@@ -54,7 +54,7 @@ Welcome! This document provides transparency into SudoSodoku's development proce
 
 #### 1. Achievement System 🏅
 
-**Status**: ✅ Shipped in v2.0 — `AchievementManager` + `Achievement` model, twelve binary unlocks (completion counts, first MASTER, zero-undo, sub-3-minute, rank tiers, one secret), Game Center reporting with an offline queue, unlocks rendered inside the victory sequence.
+**Status**: ✅ Shipped in v2.0 — `AchievementManager` + `Achievement` model, eleven binary unlocks (completion counts, first MASTER, sub-3-minute, rank tiers, one secret), Game Center reporting with an offline queue, unlocks rendered inside the victory sequence. (A zero-undo unlock was cut pre-release: undo count never measured cleanliness, #62.)
 
 ---
 

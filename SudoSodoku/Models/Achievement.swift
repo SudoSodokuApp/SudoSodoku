@@ -1,13 +1,15 @@
 import Foundation
 
-/// The twelve achievements of v2.0 — all binary unlocks, no progress bars.
+/// The eleven achievements of v2.0 — all binary unlocks, no progress bars.
+/// (CLEAN_COMMIT was cut pre-release: it counted only UNDO presses, but
+/// overwriting, toggling off, and DEL retract digits for free, so "zero
+/// undos" never measured cleanliness — #62.)
 enum Achievement: String, CaseIterable, Identifiable {
     case helloWorld = "hello_world"
     case uptime10 = "uptime_10"
     case uptime50 = "uptime_50"
     case uptime100 = "uptime_100"
     case rootPrivileges = "root_privileges"
-    case cleanCommit = "clean_commit"
     case overclocked = "overclocked"
     case rankSudoer = "rank_sudoer"
     case rankSysAdmin = "rank_sysadmin"
@@ -26,7 +28,6 @@ enum Achievement: String, CaseIterable, Identifiable {
         case .uptime50: return "UPTIME_50"
         case .uptime100: return "UPTIME_100"
         case .rootPrivileges: return "ROOT_PRIVILEGES"
-        case .cleanCommit: return "CLEAN_COMMIT"
         case .overclocked: return "OVERCLOCKED"
         case .rankSudoer: return "RANK: SUDOER"
         case .rankSysAdmin: return "RANK: SYS_ADMIN"
@@ -43,7 +44,6 @@ enum Achievement: String, CaseIterable, Identifiable {
         case .uptime50: return "50 systems compromised."
         case .uptime100: return "100 systems compromised."
         case .rootPrivileges: return "First MASTER grid cracked."
-        case .cleanCommit: return "Solved with zero undos."
         case .overclocked: return "Solved in under 3 minutes."
         case .rankSudoer: return "ELO 1400 reached."
         case .rankSysAdmin: return "ELO 1600 reached."
@@ -67,7 +67,6 @@ enum Achievement: String, CaseIterable, Identifiable {
 /// Everything a victory needs to be judged against the achievement list.
 struct VictoryContext {
     let difficulty: Difficulty
-    let undoCount: Int
     let playDuration: TimeInterval
     let newRating: Int
     let totalSolved: Int
@@ -85,7 +84,6 @@ extension Achievement {
         if context.totalSolved >= 100 { earned.append(.uptime100) }
 
         if context.difficulty == .master { earned.append(.rootPrivileges) }
-        if context.undoCount == 0 { earned.append(.cleanCommit) }
         if context.playDuration > 0 && context.playDuration < 180 { earned.append(.overclocked) }
 
         if context.newRating >= 1400 { earned.append(.rankSudoer) }
