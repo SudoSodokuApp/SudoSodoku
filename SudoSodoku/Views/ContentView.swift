@@ -11,7 +11,11 @@ struct ContentView: View {
             LandingView()
         }
         .preferredColorScheme(.dark)
-        .onAppear {
+        .task {
+            // Let the first frame land before GameKit's first-run spin-up
+            // (gamed XPC, signed-out probing) competes with it; signing in
+            // is optional and silent anyway (#21).
+            try? await Task.sleep(for: .seconds(1))
             GameCenterManager.shared.authenticateUser()
         }
     }

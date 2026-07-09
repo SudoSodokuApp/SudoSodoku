@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Mode selection's tab-completion menu is pushed further down the screen instead of sitting directly under the prompt (#47)
 - Command-line branding renamed from `sudo sodoku` to `sudo sudosodoku` everywhere the literal command appears: the landing hero title, the composer's base command, and every echoed command header (#51)
 
+### Fixed
+
+- First launch after install stared at a pale white screen until the first frame arrived: the auto-generated launch screen uses `systemBackground` (white in light mode) while the app itself is always dark. The launch screen now boots in the terminal background color, so even the slow first launch (code-sign verification, cold caches — system costs the app can't remove) reads as the terminal warming up instead of a white hang. The Game Center handshake also waits a beat past the first frame so GameKit's first-run spin-up doesn't compete with the initial render
+
 ---
 
 ## [2.0.0] - 2026-07-08
