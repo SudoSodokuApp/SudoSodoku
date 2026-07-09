@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Stats no longer judge solves by undo count anywhere: personal best rows drop UNDOS/QUALITY for date set and rating gain, recent completions show the solve time instead of the undo-derived EFF score, and the legacy personal-best fallback (pre-time-tracking records) picks the most recent solve instead of the fewest undos; the dead `logicalEfficiency`/`logicalQuality` metrics are removed (#77)
 - The landing hero's glow pulse survives navigation: it restarts on every return to the landing screen instead of freezing dim after the first push; steady full glow under Reduce Motion (#68)
 - Game Center sign-in no longer jolts the landing screen: the identity row renders every auth state in a fixed 30×30 avatar slot with a constant row height, so authentication swaps pixels in place instead of re-flowing the layout (#66)
 - Command-line caret stays solid under Reduce Motion instead of blinking; `DateFormatting.playClock` is now `nonisolated`, silencing the main-actor warning in StatsView (#64)

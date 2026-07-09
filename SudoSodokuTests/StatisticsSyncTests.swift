@@ -58,11 +58,11 @@ final class StatisticsSyncTests: XCTestCase {
     }
 
     func testPersonalBestsTrackTheEmittedRecords() {
-        StorageManager.shared.saveGame(makeRecord(solved: true, undoCount: 10))
-        let cleaner = makeRecord(solved: true, undoCount: 0)
-        StorageManager.shared.saveGame(cleaner)
+        StorageManager.shared.saveGame(makeRecord(solved: true, duration: 500))
+        let faster = makeRecord(solved: true, duration: 200)
+        StorageManager.shared.saveGame(faster)
 
-        XCTAssertEqual(StatisticsManager.shared.personalBests[.easy]?.id, cleaner.id,
+        XCTAssertEqual(StatisticsManager.shared.personalBests[.easy]?.id, faster.id,
                        "Personal best must be recomputed from the just-changed records")
     }
 
@@ -94,18 +94,32 @@ final class StatisticsSyncTests: XCTestCase {
                        "Speed defines the personal best; efficiency is a per-record detail")
     }
 
+    func testLegacyFallbackPicksTheMostRecentSolveNotTheFewestUndos() {
+        // Records from before time tracking (duration 0): the fallback must
+        // be recency — undo count judges nothing (#62, #77).
+        let older = makeRecord(solved: true, undoCount: 0,
+                               lastPlayed: Date(timeIntervalSinceNow: -3600))
+        let newer = makeRecord(solved: true, undoCount: 20, lastPlayed: Date())
+        StorageManager.shared.saveGame(older)
+        StorageManager.shared.saveGame(newer)
+
+        XCTAssertEqual(StatisticsManager.shared.personalBests[.easy]?.id, newer.id,
+                       "Legacy fallback must pick the most recent solve, never rank by undos")
+    }
+
     // MARK: - Fixtures
 
     private func makeRecord(
         solved: Bool,
         undoCount: Int = 0,
         difficulty: Difficulty = .easy,
-        duration: TimeInterval = 0
+        duration: TimeInterval = 0,
+        lastPlayed: Date = Date()
     ) -> GameRecord {
         GameRecord(
             id: UUID(),
             startTime: Date(),
-            lastPlayedTime: Date(),
+            lastPlayedTime: lastPlayed,
             difficulty: difficulty.rawValue,
             difficultyIndex: 10,
             initialBoard: Array(repeating: 0, count: 81),

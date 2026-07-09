@@ -105,9 +105,11 @@ struct StatsView: View {
                 .font(.system(size: 11, weight: .bold, design: .monospaced))
                 .foregroundColor(Difficulty(rawValue: record.difficulty)?.color ?? .gray)
                 .frame(width: 56, alignment: .leading)
-            Text("EFF: \(record.logicalEfficiency)")
+            // Time, not the undo-derived EFF score: speed is the only
+            // per-solve number the stats rework kept judging by (#46, #62).
+            Text(record.playDuration > 0 ? "T+\(DateFormatting.playClock(record.playDuration))" : "T+--:--")
                 .font(.system(size: 11, design: .monospaced))
-                .foregroundColor(LogicalEfficiencyStyle.color(for: record.logicalEfficiency))
+                .foregroundColor(.green)
             Spacer()
             Text(DateFormatting.archiveDate.string(from: record.lastPlayedTime))
                 .font(.system(size: 10, design: .monospaced))
