@@ -21,6 +21,11 @@ struct TerminalCommandComposer<Hero: View>: View {
     let completionComment: String
     let options: [CommandOption]
     let hint: String?
+    /// When true, the terminal "boots in" on appear: the base command types
+    /// itself into the prompt and the completion menu materializes once it
+    /// lands. The landing screen passes this on the first appearance after
+    /// process launch, so the launch screen flows into a booting terminal.
+    var bootsIn: Bool = false
     let onExecute: (CommandOption) -> Void
     @ViewBuilder var hero: () -> Hero
 
@@ -28,6 +33,10 @@ struct TerminalCommandComposer<Hero: View>: View {
     @State private var pickedOption: CommandOption?
     @State private var isComposing = false
     @State private var cursorVisible = true
+    @State private var typedBase = ""
+    @State private var bootComplete = false
+
+    private var isBooting: Bool { bootsIn && !bootComplete }
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -50,6 +59,7 @@ struct TerminalCommandComposer<Hero: View>: View {
             withAnimation(.easeInOut(duration: 0.6).repeatForever(autoreverses: true)) {
                 cursorVisible = false
             }
+            if isBooting { bootIn() }
         }
     }
 
@@ -62,7 +72,7 @@ struct TerminalCommandComposer<Hero: View>: View {
                 .foregroundColor(.gray)
             HStack(spacing: 0) {
                 Text("root@ios:~$ ").foregroundColor(.green)
-                Text(baseCommand + " ").foregroundColor(.white)
+                Text(isBooting ? typedBase : baseCommand + " ").foregroundColor(.white)
                 Text(typedSuffix).foregroundColor(pickedOption?.color ?? .green)
                 Text("_")
                     .foregroundColor(.green)
@@ -82,6 +92,9 @@ struct TerminalCommandComposer<Hero: View>: View {
                 completionRow(option)
             }
         }
+        // Opacity, not `if`: the menu holds its slot between the Spacers
+        // while booting, so nothing shifts when it materializes.
+        .opacity(isBooting ? 0 : 1)
     }
 
     @ViewBuilder
@@ -109,7 +122,28 @@ struct TerminalCommandComposer<Hero: View>: View {
                     .stroke(option.color.opacity(isPicked ? 1 : 0.5), lineWidth: 1)
             )
         }
-        .disabled(isComposing)
+        .disabled(isComposing || isBooting)
+    }
+
+    // MARK: - Booting
+
+    /// Types the base command into the prompt, then reveals the completion
+    /// menu. Silent (no per-keystroke haptics — nobody is typing) and
+    /// instant under Reduce Motion.
+    private func bootIn() {
+        Task {
+            if !reduceMotion {
+                try? await Task.sleep(for: .milliseconds(200))
+                for count in 1...baseCommand.count {
+                    typedBase = String(baseCommand.prefix(count))
+                    try? await Task.sleep(for: .milliseconds(40))
+                }
+                try? await Task.sleep(for: .milliseconds(120))
+            }
+            withAnimation(reduceMotion ? nil : .easeOut(duration: 0.25)) {
+                bootComplete = true
+            }
+        }
     }
 
     // MARK: - Composing
