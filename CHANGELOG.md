@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - The landing hero's glow pulse survives navigation: it restarts on every return to the landing screen instead of freezing dim after the first push; steady full glow under Reduce Motion (#68)
+- Game Center sign-in no longer jolts the landing screen: the identity row renders every auth state in a fixed 30×30 avatar slot with a constant row height, so authentication swaps pixels in place instead of re-flowing the layout (#66)
 
 ---
 

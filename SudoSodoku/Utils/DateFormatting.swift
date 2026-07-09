@@ -8,7 +8,9 @@ enum DateFormatting {
     }()
 
     /// Terminal-style play clock: "00:12:34" (hours shown only when nonzero: "1:02:03").
-    static func playClock(_ interval: TimeInterval) -> String {
+    /// Pure computation — nonisolated so it can be passed as a function value
+    /// (e.g. to `Optional.map`) without tripping main-actor isolation.
+    nonisolated static func playClock(_ interval: TimeInterval) -> String {
         let total = max(0, Int(interval))
         let hours = total / 3600
         let minutes = (total % 3600) / 60
