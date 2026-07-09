@@ -15,6 +15,13 @@ struct CommandOption: Identifiable {
 /// caller (typically to navigate onward with the composed command as the
 /// next screen's prefix). Shared by every screen that wants navigation to
 /// read as one continuous, accumulating shell session instead of taps.
+///
+/// Caller contract: composing is one-way — after `onExecute`, the composer
+/// stays locked (options disabled, subcommand on the prompt) until the
+/// caller rebuilds it with a fresh `.id`. Rebuild when the navigation
+/// binding returns to nil (`.onChange`), not only in `onAppear`: a
+/// swipe-back that lands mid-push-transition never fires `onAppear`, and
+/// a stale composer deadlocks its whole screen (#79).
 struct TerminalCommandComposer<Hero: View>: View {
     let awaitingComment: String
     let baseCommand: String
