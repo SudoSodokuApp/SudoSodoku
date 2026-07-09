@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Swiping back right after picking a tab-completion option no longer strands the screen: composer reset now keys off the navigation binding (which always clears on pop) instead of `onAppear` (which never fires when the pop lands mid-push-transition), so the landing and mode-selection screens can't come back with a stale command and every option dead (#79)
 - An overlong composed command no longer shoves the layout around: the terminal command line reserves a two-line slot up front, so wrapping happens inside it and the hero, tagline, and completion menu stay put on the landing and mode-selection screens (#78)
 - Stats no longer judge solves by undo count anywhere: personal best rows drop UNDOS/QUALITY for date set and rating gain, recent completions show the solve time instead of the undo-derived EFF score, and the legacy personal-best fallback (pre-time-tracking records) picks the most recent solve instead of the fewest undos; the dead `logicalEfficiency`/`logicalQuality` metrics are removed (#77)
 - The landing hero's glow pulse survives navigation: it restarts on every return to the landing screen instead of freezing dim after the first push; steady full glow under Reduce Motion (#68)

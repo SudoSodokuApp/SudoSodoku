@@ -44,5 +44,13 @@ struct ModeSelectionView: View {
             // when returning from a finished game.
             composerKey = UUID()
         }
+        .onChange(of: launchDifficulty) { _, newValue in
+            // Same lifecycle gap as the landing screen (#79): a fast
+            // swipe-back can return here without firing onAppear, stranding
+            // the composer with every difficulty row disabled. The
+            // navigation binding always nils on pop — reset on it.
+            guard newValue == nil else { return }
+            composerKey = UUID()
+        }
     }
 }

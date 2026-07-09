@@ -63,6 +63,19 @@ struct LandingView: View {
             hasAppearedBefore = true
             composerKey = UUID()
         }
+        .onChange(of: launchTarget) { _, newValue in
+            // A swipe-back that lands before the push transition settles
+            // returns here without this view ever leaving the hierarchy, so
+            // onAppear does not fire again and the composer stays stranded
+            // mid-composition: isComposing forever true, every option
+            // disabled, the picked subcommand stuck on the prompt (#79).
+            // The navigation binding, unlike onAppear, always nils on pop —
+            // reset on it. bootsIn too: any return from navigation is past
+            // the once-per-process boot (#54).
+            guard newValue == nil else { return }
+            bootsIn = false
+            composerKey = UUID()
+        }
     }
 
     // MARK: - Sections
