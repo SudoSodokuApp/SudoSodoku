@@ -14,6 +14,7 @@ struct LandingView: View {
     @State private var bootsIn = true
     @State private var hasAppearedBefore = false
     @ObservedObject var gcManager = GameCenterManager.shared
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         ZStack {
@@ -102,6 +103,12 @@ struct LandingView: View {
                 .shadow(color: .green.opacity(glowStrength), radius: 15)
                 .shadow(color: .green.opacity(glowStrength * 0.6), radius: 40)
                 .onAppear {
+                    // repeatForever animations die when a pushed screen covers
+                    // this view; on the way back, animating to the value the
+                    // state already holds is a no-op and the glow froze dim.
+                    // Reset without animation, then restart the pulse.
+                    glowStrength = 1.0
+                    guard !reduceMotion else { return }
                     withAnimation(.easeInOut(duration: 0.6).repeatForever(autoreverses: true)) {
                         glowStrength = 0.4
                     }
