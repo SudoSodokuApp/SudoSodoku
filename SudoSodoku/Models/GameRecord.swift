@@ -60,16 +60,28 @@ struct GameRecord: Codable, Identifiable, Hashable {
         }
     }
 
+    /// A fresh attempt at the same puzzle, under a new identity. The new id
+    /// is the point: a solved record is immutable history (SOLVED counts,
+    /// personal bests, recent completions all derive from it), so a restart
+    /// must never let its autosaves overwrite the original in storage.
     func restartedCopy() -> GameRecord {
-        var restarted = self
-        restarted.lastPlayedTime = Date()
-        restarted.playerBoard = Array(repeating: 0, count: 81)
-        restarted.playerNotes = Array(repeating: [], count: 81)
-        restarted.isSolved = false
-        restarted.ratingChange = nil
-        restarted.undoCount = 0
-        restarted.playDuration = 0
-        return restarted
+        GameRecord(
+            id: UUID(),
+            startTime: Date(),
+            lastPlayedTime: Date(),
+            difficulty: difficulty,
+            difficultyIndex: difficultyIndex,
+            initialBoard: initialBoard,
+            solution: solution,
+            playerBoard: Array(repeating: 0, count: 81),
+            playerNotes: Array(repeating: [], count: 81),
+            isSolved: false,
+            ratingChange: nil,
+            isArchived: isArchived,
+            isFavorite: isFavorite,
+            undoCount: 0,
+            playDuration: 0
+        )
     }
 }
 
