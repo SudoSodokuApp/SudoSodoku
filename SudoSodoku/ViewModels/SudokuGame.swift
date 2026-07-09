@@ -371,6 +371,14 @@ class SudokuGame: ObservableObject {
     func replayCurrentGame() {
         guard currentRecordID != nil else { return }
 
+        // A solved run is immutable history: replaying it forks a fresh
+        // record instead of resetting the completed one in place (which
+        // silently dropped the solve from stats and personal bests while
+        // the ELO it granted remained).
+        if isSolved {
+            currentRecordID = UUID()
+        }
+
         for index in board.indices where !board[index].isGiven {
             board[index].value = nil
             board[index].notes = []
@@ -387,17 +395,6 @@ class SudokuGame: ObservableObject {
         streak = 0
         victoryUnlocks = []
         resetClock(to: 0, running: true)
-        saveCurrentState()
-    }
-
-    func showSolution() {
-        for index in board.indices {
-            board[index].value = board[index].solutionValue
-            board[index].notes = []
-            board[index].isError = false
-        }
-        isSolved = true
-        pauseClock()
         saveCurrentState()
     }
 

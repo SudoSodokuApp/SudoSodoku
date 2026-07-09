@@ -196,8 +196,11 @@ struct GameView: View {
             }
 
             if let record {
+                // Viewing is read-only: loadFromRecord already renders a
+                // solved record's full board. The old showSolution() call
+                // here re-saved the record, bumping lastPlayedTime on every
+                // visit - "cat solution" made an old solve claim today's date.
                 game.loadFromRecord(record)
-                if record.isSolved { game.showSolution() }
             } else if let difficulty {
                 if SudoersJoke.shouldShow(for: difficulty) {
                     showSudoersJoke = true

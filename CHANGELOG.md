@@ -21,6 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Solved records are now immutable history: restarting a solved puzzle from the archive (`sudo reboot`) or the in-game RETRY forked in place under the same record id, so the first autosave overwrote the completed run — the solve silently vanished from SOLVED counts, personal bests, and recent completions while the ELO it granted remained. Both paths now fork a fresh record; the original solve stays
+- Viewing a solved record (`cat solution`) re-saved it with a fresh `lastPlayedTime`, so merely looking at an old solve bumped it to today and reshuffled the archive order. Viewing is read-only now
 - First launch after install stared at a pale white screen until the first frame arrived: the auto-generated launch screen uses `systemBackground` (white in light mode) while the app itself is always dark. The launch screen now boots in the terminal background color, so even the slow first launch (code-sign verification, cold caches — system costs the app can't remove) reads as the terminal warming up instead of a white hang. The Game Center handshake also waits a beat past the first frame so GameKit's first-run spin-up doesn't compete with the initial render
 
 ---
