@@ -64,6 +64,7 @@ v2.0.0 is the release where SudoSodoku becomes what it always wanted to be: a fu
 - Rating anti-smurfing: zero gain when puzzle difficulty is far below player ELO
 - Unified signing config, Swift 5.9, marketing version `1.0.0`, and `play.sh` bundle ID fallback
 - Landing page version reads from app bundle instead of hardcoded string
+- Author attribution reads Kai T. Chen throughout (LICENSE, README, source header), with links to [kaichen.dev](https://kaichen.dev) and the product site
 - Fixed swapped section bodies in DEVELOPER.md (Achievement System / iPad Support) and aligned the roadmap tiers with the phased v1.1-v1.3 plan
 
 ### Fixed

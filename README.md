@@ -173,4 +173,4 @@ Your data never leaves your device: game history, rating, and achievements live 
 
 Distributed under the MIT License. See LICENSE for more information.
 
-*Created with logic and ❤️ by Kai Chen.*
+*Created with logic and ❤️ by [Kai T. Chen](https://kaichen.dev) · [sudosodoku.kaichen.dev](https://sudosodoku.kaichen.dev)*

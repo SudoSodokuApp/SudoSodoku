@@ -2,7 +2,7 @@
 //  SudoSodokuApp.swift
 //  SudoSodoku
 //
-//  Created by Kai Chen on 2025/12/5.
+//  Created by Kai T. Chen on 2025/12/5.
 //
 
 import SwiftUI
