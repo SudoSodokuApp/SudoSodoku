@@ -40,6 +40,7 @@ v2.0.0 is the release where SudoSodoku becomes what it always wanted to be: a fu
 - `SudoSodokuTests` unit test target covering puzzle generation (solvability, unique solution, difficulty scoring), ELO rating (K-factor tiers, anti-smurfing), and storage (persistence roundtrip, legacy save migration)
 - Shared `SudoSodoku` scheme with test action, enabling `xcodebuild test` and Xcode Cloud test workflows
 - Product identity: slogan "sudo solve — root access for logical purists", four-pillar philosophy in the README, and the tagline on the landing screen
+- Public privacy policy (`PRIVACY.md`), written against App Review Guideline 5.1.1(i) and Apple's App Privacy Details guidance: all game data is local-only, the sole online service is Apple-operated Game Center, no analytics/ads/tracking; linked from the README and used as the App Store privacy policy URL (#90)
 - Debug builds only: `$ rm -rf /user_data` factory reset in the profile (records, rating, achievements, sudoers-joke flag, and Game Center achievement progress via `resetAchievements`) for verifying first-run flows; compiled out of Release
 
 ### Changed
