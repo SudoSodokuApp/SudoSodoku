@@ -163,10 +163,11 @@ Also see the [Code of Conduct](CODE_OF_CONDUCT.md) and issues labeled `good firs
 * **[CONTRIBUTING.md](CONTRIBUTING.md)** — How to contribute
 * **[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)** — Community code of conduct
 * **[SECURITY.md](.github/SECURITY.md)** — Security policy and vulnerability reporting
+* **[PRIVACY.md](PRIVACY.md)** — Privacy policy (what data the app handles, and what never leaves the device)
 
 ## **🔒 Privacy**
 
-Your data never leaves your device: game history, rating, and achievements live in a single local JSON file. There is no analytics, no tracking, and no account — Game Center sign-in is optional and only powers the leaderboards. See the [security policy](.github/SECURITY.md) for details.
+Your data never leaves your device: game history, rating, and achievements live in a single local JSON file. There is no analytics, no tracking, and no account — Game Center sign-in is optional, operated by Apple, and only powers the leaderboards. Full details in the [privacy policy](PRIVACY.md) and the [security policy](.github/SECURITY.md).
 
 ## **📄 License**
 
