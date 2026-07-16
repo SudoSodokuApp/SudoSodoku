@@ -16,7 +16,7 @@ root@ios:~$ sudo sudosodoku breach --master
 
 SudoSodoku is the only sudoku on the App Store that treats you like root. It is a full terminal fantasy: green phosphor on deep dark glass, mechanical-keyboard haptics, and an ELO ladder that climbs from `SCRIPT_KIDDIE` to `THE_ARCHITECT`. You are not filling in numbers — you are breaching a grid, and every victory ends the only way it should: `ACCESS GRANTED`.
 
-**📱 v2.0.0 · iOS 17.0+ · iPhone · App Store submission in progress**
+**📱 v2.0.0 · iOS 17.0+ · iPhone · [App Store](https://apps.apple.com/us/app/sudosodoku/id6779813086) · [sudosodoku.kaichen.dev](https://sudosodoku.kaichen.dev)**
 
 ## **🧠 Philosophy**
 
