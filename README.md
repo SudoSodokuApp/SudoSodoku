@@ -1,10 +1,18 @@
 <p align="center">
-  <img src="SudoSodoku/AppIcon_V3.png" width="128" height="128" alt="SudoSodoku logo">
+  <img src="SudoSodoku/AppIcon_V3.png" alt="SudoSodoku app icon" width="128" height="128">
 </p>
 
-# **SudoSodoku**
+<h1 align="center">SudoSodoku</h1>
 
-```
+<p align="center"><strong><code>sudo solve</code> — logic is root access.</strong></p>
+
+<p align="center">
+  <a href="https://apps.apple.com/us/app/sudosodoku/id6779813086">Download on the App Store</a>
+  · <a href="https://sudosodoku.kaichen.dev">Website</a>
+  · <a href="https://github.com/SudoSodokuApp/SudoSodoku/releases/tag/v2.0.0">v2.0.0</a>
+</p>
+
+```text
 root@ios:~$ sudo sudosodoku breach --master
 [sudo] password for logic: ********
 > uniqueness_check ........ [OK]
@@ -12,169 +20,126 @@ root@ios:~$ sudo sudosodoku breach --master
 > ACCESS GRANTED
 ```
 
-**`sudo solve` — logic is root access.**
+SudoSodoku is a pure-logic Sudoku for iPhone wrapped in a full terminal fantasy. Puzzles generate behind a live breach log, victories end in `ACCESS GRANTED`, and a real ELO ladder runs from `SCRIPT_KIDDIE` to `THE_ARCHITECT`.
 
-SudoSodoku is the only sudoku on the App Store that treats you like root. It is a full terminal fantasy: green phosphor on deep dark glass, mechanical-keyboard haptics, and an ELO ladder that climbs from `SCRIPT_KIDDIE` to `THE_ARCHITECT`. You are not filling in numbers — you are breaching a grid, and every victory ends the only way it should: `ACCESS GRANTED`.
+Free. No ads. No in-app purchases. No tracking.
 
-**📱 v2.0.0 · iOS 17.0+ · iPhone · [App Store](https://apps.apple.com/us/app/sudosodoku/id6779813086) · [sudosodoku.kaichen.dev](https://sudosodoku.kaichen.dev)**
+## Designed with intent
 
-## **🧠 Philosophy**
+SudoSodoku is built around four product principles:
 
-Four rules the whole game is built on:
+1. **The fantasy is complete.** The app behaves like one continuous shell session, from the launch prompt to the final victory sequence.
+2. **Logic stays in focus.** There are no lives, fail states, paywalls, or interruption mechanics. The timer is optional and undo is never punished.
+3. **Progress is earned.** Game Center ranks solve time and ELO performance, never spending. Eleven achievements mark meaningful milestones.
+4. **Delight respects the player.** Haptics, phosphor pulses, and matrix rain add character without getting in the way. Every animation respects Reduce Motion; sound is never forced.
 
-1. **You're not filling numbers. You're breaching systems.**
-   The terminal fantasy is total — the app is one continuous shell session. The landing prompt boots in on launch (`root@ios:~$ ` types `sudo sudosodoku` before your eyes), every screen is a subcommand picked from tab completion, puzzles generate behind a live breach log, victories detonate matrix rain, and rank-ups get a ceremony.
+That approach follows the same fundamentals Apple recommends in its [Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/design-principles): purpose, agency, responsibility, simplicity, craft, and delight.
 
-2. **Pure logic. Zero noise.**
-   No ads. No lives. No pay-to-win. No guilt mechanics. No fail state — boards are finished or unfinished, never "lost". Even the timer is optional; nothing is allowed to interrupt a deduction.
+## The experience
 
-3. **Earn your rank.**
-   A real ELO system with anti-smurfing (top players gain nothing from stomping easy grids), Game Center leaderboards that rank actual performance — fastest solves and rating, never spending — and eleven achievements, one of them secret.
+### A terminal you can play
 
-4. **Juice with respect.**
-   Rigid-impact keystrokes, phosphor pulses, CRT-glitch error shakes — and every single animation respects Reduce Motion, sounds are never forced on. Delight is a layer, not a tax.
+- One accumulating command line: `breach`, `archives`, `stats`, and `whoami` are subcommands entered from a live prompt.
+- A typewriter breach log reports the real uniqueness check and difficulty index for each generated puzzle.
+- Victory unfolds in three acts: matrix rain, `ACCESS GRANTED`, then an ELO ticker and rank-up ceremony.
+- A semantic haptic vocabulary distinguishes selection, placement, removal, conflicts, completed units, and victory.
 
-## **✨ Features**
+### Grids grown, not stored
 
-### **🖥️ The Terminal**
+- Infinite, unique-solution puzzles generated on device — never a canned database.
+- Four difficulty flags: `--easy`, `--medium`, `--hard`, and `--master`.
+- A logical solver grades every grid from 0–100; the v2.1 roadmap is refining technique-specific separation between difficulty levels.
+- Pencil notes auto-clear from peers, and undo restores the entire move as one action.
+- The play clock counts active time only, pauses in the background, and freezes on completion.
 
-* Authentic green phosphor on deep dark glass (`#0D121A`), all-monospaced UI — from the launch screen (which boots dark, never a white flash) to the last stat card
-* **One accumulating command line**: `breach`, `archives`, `stats`, and `whoami` are subcommands typed into a live prompt; each destination echoes the full command it was reached with (`root@ios:~$ sudo sudosodoku breach --easy`)
-* Typewriter **breach-log loading screen** whose verdict lines report the real uniqueness check and difficulty index of your puzzle
-* Three-act **victory sequence**: Canvas-drawn matrix rain → typewriter `ACCESS GRANTED` → ELO ticker rolling to your new rating, with a glowing `>> RANK_UP <<` ceremony on tier crossings — and achievement unlocks rendered right inside it
-* A semantic **haptic vocabulary**: cell selection ticks, rigid key-press placements, error notifications, and a custom CoreHaptics victory rumble
-* A one-time surprise waiting in your first MASTER game
+### A fair ladder
 
-### **♾️ The Grid**
+- ELO starts at 1200 with an adaptive K-factor and anti-smurfing.
+- Six ranks: `SCRIPT_KIDDIE` → `USER` → `SUDOER` → `SYS_ADMIN` → `KERNEL_HACKER` → `THE_ARCHITECT`.
+- Five Game Center leaderboards: global ELO plus fastest solve per difficulty.
+- Eleven achievements, including one secret.
+- Honest statistics and immutable solved archives: viewing or replaying an old puzzle never rewrites history.
 
-* Real-time procedural generation — unique-solution, human-gradable puzzles with a logical-solver difficulty score (0–100), never a canned database
-* **Hand-crafted feel**: clue patterns follow varied aesthetic styles (rotational, mirror, diagonal, or deliberately free), and every difficulty has a technique identity — EASY always offers parallel simple moves and can never dead-end you, MEDIUM never demands more than locked candidates / naked pairs, HARD is designed around a fair intermediate "aha" and never requires guessing, MASTER resists intermediate techniques entirely
-* Four difficulty flags: `--easy` `--medium` `--hard` `--master`
-* Pencil notes with **auto-clear**: placing a digit sweeps it from peer notes, and undo restores everything as one compound move
-* Numpad that thinks: exhausted digits strike through, dead taps nudge instead of being swallowed, the selection frame glides between cells
-* Optional play clock (`T+MM:SS`) that only counts active time — backgrounding pauses it, victory freezes it
+## Privacy by construction
 
-### **🏆 The Ladder**
+Game history, rating, statistics, and achievements stay in one local save file on your device. SudoSodoku has no developer account system, analytics, advertising, tracking, or third-party SDKs. Game Center is optional, operated by Apple, and used only for leaderboards and achievements.
 
-* ELO rating from 1200 with adaptive K-factor and anti-smurfing
-* Six ranks: `SCRIPT_KIDDIE` → `USER` → `SUDOER` → `SYS_ADMIN` → `KERNEL_HACKER` → `THE_ARCHITECT`
-* **Game Center leaderboards**: a global ELO ranking plus fastest-time boards per difficulty (`cat /leaderboard`) — playable fully offline as a guest
-* **Eleven achievements** (`HELLO_WORLD` … `THE_ARCHITECT`), all binary unlocks, one secret
-* Honest statistics for a no-fail game (SOLVED / ELO / FASTEST / HARDEST — no fake "win rate"), personal bests, and full session archives where solved runs are immutable history: restarts fork a fresh attempt, viewing an old solution never rewrites it
+Read the full [Privacy Policy](PRIVACY.md) or visit [sudosodoku.kaichen.dev/privacy](https://sudosodoku.kaichen.dev/privacy).
 
-## **🛠️ Technical Architecture**
+## Build from source
 
-* **Language**: Swift 5.9 · **UI**: SwiftUI · **Pattern**: MVVM · **State**: Combine
-* **Platform**: iPhone-only, iOS 17.0+
-* **Persistence**: single local JSON file, atomic writes, versioned migration chain — everything stays on device
-* **Game services**: GameKit (optional auth, leaderboards, achievements) · CoreHaptics
-* **Testing**: `SudoSodokuTests` unit suite (generator quality, rating, storage, record immutability, gameplay logic) run locally and on Xcode Cloud
+### Requirements
 
-### **Directory Structure**
+- macOS 13 or later
+- Xcode 15 or later with iOS 17 SDK support
+- iPhone or iPhone Simulator running iOS 17 or later
 
+### Setup
+
+```bash
+git clone https://github.com/SudoSodokuApp/SudoSodoku.git
+cd SudoSodoku
+open SudoSodoku.xcodeproj
 ```
+
+Select the `SudoSodoku` target, choose your own development team under **Signing & Capabilities**, then run with `Command-R`.
+
+Command-line helpers are also available:
+
+```bash
+./build.sh          # Debug build
+./build.sh release  # Release build
+./play.sh           # Build and launch in Simulator
+
+xcodebuild test \
+  -project SudoSodoku.xcodeproj \
+  -scheme SudoSodoku \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
+```
+
+Do not accept an Xcode recommendation that replaces the literal `IPHONEOS_DEPLOYMENT_TARGET = 17.0`; see [CONTRIBUTING.md](CONTRIBUTING.md) for the project-specific reason.
+
+## Architecture
+
+SudoSodoku is an iPhone-only SwiftUI app using MVVM and Combine, with no external dependencies.
+
+```text
 SudoSodoku/
-├── SudoSodokuApp.swift           # @main entry
-├── Models/                       # GameRecord, SudokuCell, MoveHistory, Difficulty, RankTier, Achievement, ...
-├── ViewModels/
-│   └── SudokuGame.swift          # Core game logic, play clock, undo/redo, victory pipeline
-├── Managers/
-│   ├── GameCenterManager.swift   # Auth + leaderboard submissions
-│   ├── AchievementManager.swift  # Unlock evaluation, local persistence, offline report queue
-│   ├── RatingManager.swift       # ELO calculation
-│   ├── HapticManager.swift       # Semantic haptic vocabulary (+ CoreHaptics victory)
-│   ├── StatisticsManager.swift   # Stats aggregation
-│   └── StorageManager.swift      # Atomic JSON persistence + migrations
-├── Algorithms/
-│   └── SudokuGenerator.swift     # Generation, uniqueness, technique tiers, difficulty grading
-├── Utils/                        # AppConstants (leaderboard IDs), DateFormatting, ...
-└── Views/
-    ├── GameView.swift            # The board screen
-    ├── LeaderboardView.swift     # Terminal-styled Game Center rankings
-    ├── ...                       # Landing, Archive, Stats, Profile, ModeSelection
-    └── Components/               # TerminalCommandComposer, BreachLogView, MatrixVictoryOverlay, ...
+├── Algorithms/       Puzzle generation, uniqueness, and difficulty grading
+├── Managers/         Storage, rating, Game Center, achievements, statistics, haptics
+├── Models/           Game, record, difficulty, rank, and achievement types
+├── ViewModels/       Game state and gameplay orchestration
+├── Views/            Screens and reusable SwiftUI components
+└── Utils/            Shared constants and formatting
 
-Config/Info.plist                 # Launch screen keys merged into the generated Info.plist
-SudoSodokuTests/                  # Unit tests (picked up automatically by the shared scheme)
+SudoSodokuTests/      Generator, gameplay, rating, storage, and regression tests
+Config/               Launch-screen Info.plist values
 ```
 
-## **🚀 Building the Project**
+For invariants, data flow, and release engineering, see [DEVELOPER.md](DEVELOPER.md).
 
-### **Method 1: Using Xcode**
+## Community
 
-1. **Clone the repository**:
+Choose the path that best fits what you need:
 
-   ```bash
-   git clone https://github.com/kaiiiichen/SudoSodoku.git
-   ```
+- **Need help using the app?** Start with [Support](SUPPORT.md), then ask in [GitHub Discussions](https://github.com/SudoSodokuApp/SudoSodoku/discussions/categories/q-a).
+- **Found a reproducible bug?** Open a [bug report](https://github.com/SudoSodokuApp/SudoSodoku/issues/new/choose).
+- **Have an idea?** Share it in [Ideas](https://github.com/SudoSodokuApp/SudoSodoku/discussions/categories/ideas) before opening an implementation issue.
+- **Want to contribute?** Read [CONTRIBUTING.md](CONTRIBUTING.md) and the [Code of Conduct](CODE_OF_CONDUCT.md).
+- **Found a security issue?** Follow the private process in [.github/SECURITY.md](.github/SECURITY.md).
 
-2. **Open in Xcode**:
-   Double-click `SudoSodoku.xcodeproj`. Xcode 15.0+ required.
+## Documentation
 
-3. **Configure Signing**:
-   Select the SudoSodoku target → **Signing & Capabilities** → set your own Team.
+- [Support](SUPPORT.md)
+- [Development and roadmap](DEVELOPER.md)
+- [Contributing](CONTRIBUTING.md)
+- [Changelog](CHANGELOG.md)
+- [v2.0.0 release notes](RELEASE_NOTES_v2.0.0.md)
+- [Privacy Policy](PRIVACY.md)
+- [Security Policy](.github/SECURITY.md)
 
-4. **Run**:
-   Connect your iPhone or select a Simulator and press `Cmd + R`.
+## License
 
-> ⚠️ If Xcode suggests "Update to recommended settings", decline the change that rewrites `IPHONEOS_DEPLOYMENT_TARGET` — it must stay the literal `17.0` (see [CONTRIBUTING.md](CONTRIBUTING.md)).
+SudoSodoku is available under the [MIT License](LICENSE).
 
-### **Method 2: Command Line**
-
-* **`build.sh`** — build the project (like Xcode's Cmd+B)
-
-  ```bash
-  ./build.sh          # Debug build (default)
-  ./build.sh release  # Release build
-  ./build.sh clean    # Clean build artifacts
-  ```
-
-* **`play.sh`** — build and run in the iOS Simulator
-
-  ```bash
-  ./play.sh
-  ```
-
-* **Tests**:
-
-  ```bash
-  xcodebuild test -project SudoSodoku.xcodeproj -scheme SudoSodoku \
-    -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
-  ```
-
-### **Build Requirements**
-
-* macOS 13.0+ · Xcode 15.0+ with Command Line Tools
-* iOS 17.0+ deployment target · iPhone only
-
-## **🤝 Contributing**
-
-Contributions are welcome! Start with the [Contributing Guidelines](CONTRIBUTING.md) — they document this repo's actual workflow, not boilerplate:
-
-* All changes go through feature branches and pull requests — never direct commits to `main`
-* Conventional Commits, and `CHANGELOG.md` updated in the same PR
-* The full test suite must pass before every PR; new generator/rating/storage logic needs matching unit tests
-* iPhone-only scope: no iPad or macOS work
-* UI copy speaks terminal (monospaced, `UPPER_SNAKE`, shell-flavored strings); every animation respects Reduce Motion, sounds are never forced on
-
-Also see the [Code of Conduct](CODE_OF_CONDUCT.md) and issues labeled `good first issue`.
-
-## **📚 Additional Documentation**
-
-* **[CHANGELOG.md](CHANGELOG.md)** — Version history
-* **[RELEASE_NOTES_v2.0.0.md](RELEASE_NOTES_v2.0.0.md)** — What shipped in 2.0
-* **[DEVELOPER.md](DEVELOPER.md)** — Roadmap, testing checklist, and development guidelines
-* **[CONTRIBUTING.md](CONTRIBUTING.md)** — How to contribute
-* **[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)** — Community code of conduct
-* **[SECURITY.md](.github/SECURITY.md)** — Security policy and vulnerability reporting
-* **[PRIVACY.md](PRIVACY.md)** — Privacy policy (what data the app handles, and what never leaves the device)
-
-## **🔒 Privacy**
-
-Your data never leaves your device: game history, rating, and achievements live in a single local JSON file. There is no analytics, no tracking, and no account — Game Center sign-in is optional, operated by Apple, and only powers the leaderboards. Full details in the [privacy policy](PRIVACY.md) and the [security policy](.github/SECURITY.md).
-
-## **📄 License**
-
-Distributed under the MIT License. See LICENSE for more information.
-
-*Created with logic and ❤️ by [Kai T. Chen](https://kaichen.dev) · [sudosodoku.kaichen.dev](https://sudosodoku.kaichen.dev)*
+Created by [Kai T. Chen](https://kaichen.dev).

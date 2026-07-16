@@ -1,0 +1,8 @@
+# Default ownership for the single-maintainer project.
+* @kaiiiichen
+
+# Policy and community surfaces require explicit maintainer review.
+/.github/ @kaiiiichen
+/CODE_OF_CONDUCT.md @kaiiiichen
+/PRIVACY.md @kaiiiichen
+/SUPPORT.md @kaiiiichen

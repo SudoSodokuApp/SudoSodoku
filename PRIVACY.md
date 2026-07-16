@@ -106,6 +106,6 @@ that version ships, with the effective date above revised.
 
 ## 8. Contact
 
-Questions or requests about privacy:
-open an issue at <https://github.com/SudoSodokuApp/SudoSodoku/issues>,
-or reach the developer, Kai T. Chen, via <https://kaichen.dev>.
+For general privacy questions, see [SudoSodoku support](SUPPORT.md). Do not put
+personal information in a public issue. For a private request, reach the
+developer, Kai T. Chen, using the contact details at <https://kaichen.dev>.

@@ -1,136 +1,100 @@
 # Contributing to SudoSodoku
 
-Thank you for your interest in contributing! This document describes how this repository actually works — read it before opening a PR.
+Thank you for helping improve SudoSodoku. This guide describes the project’s actual workflow and the product constraints that keep the app coherent.
 
-## 🎯 What We Welcome
+## Before you begin
 
-* 🐛 **Bug reports** — especially consistency bugs (stats, archives, achievements disagreeing with each other)
-* 💡 **Feature requests** — measured against the four-pillar philosophy in the [README](README.md)
-* 📝 **Documentation** improvements
-* ⚡ **Performance** work (the generator's dig loop is the hot path)
-* 🧪 **Tests** — generator, rating, and storage logic must stay covered
+- Use [GitHub Discussions](https://github.com/SudoSodokuApp/SudoSodoku/discussions/categories/q-a) for questions.
+- Share early product ideas in [Ideas](https://github.com/SudoSodokuApp/SudoSodoku/discussions/categories/ideas).
+- Use Issues for reproducible bugs and accepted, actionable work.
+- Never include personal, Game Center, or security-sensitive information in a public post. Report vulnerabilities through the process in [.github/SECURITY.md](.github/SECURITY.md).
 
-### 🚫 What we will decline
+## What fits the project
 
-* Ads, paywalls, lives, guilt mechanics, or anything that violates "pure logic, zero noise"
-* iPad or macOS support (deferred indefinitely — iPhone only, `TARGETED_DEVICE_FAMILY = 1`)
-* Animations that ignore Reduce Motion, or sounds that force themselves on
-* Telemetry, analytics, or anything that moves user data off the device
-* Closed-source dependencies
+We welcome focused improvements to gameplay correctness, puzzle quality, accessibility, performance, tests, documentation, and the native iPhone experience.
 
-## 🚀 Getting Started
+We generally decline:
 
-### Prerequisites
+- ads, paywalls, lives, guilt mechanics, or pay-to-win systems;
+- analytics, tracking, or third-party SDKs that move gameplay data off device;
+- iPad or macOS work while the product remains intentionally iPhone-only;
+- forced sound or animations that ignore Reduce Motion;
+- features that add surface area without improving the core deduction experience.
 
-* macOS 13.0+, Xcode 15.0+ with Command Line Tools, Git
+When tradeoffs are close, subtraction wins.
 
-### Setup
+## Set up the project
 
-1. **Fork and clone**
-
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/SudoSodoku.git
-   cd SudoSodoku
-   ```
-
-2. **Open `SudoSodoku.xcodeproj`**, set your own Team under Signing & Capabilities.
-
-3. **Build and run**: `Cmd + R` in Xcode, or `./build.sh` / `./play.sh` from the terminal.
-
-## ⚠️ Project-Specific Rules (the ones that bite)
-
-These are the non-obvious constraints; violating them breaks CI or the App Store build:
-
-1. **Never commit directly to `main`.** Every change — including docs-only — goes through a feature branch and a pull request.
-
-2. **`IPHONEOS_DEPLOYMENT_TARGET` must stay the literal `17.0`** in `project.pbxproj`. Do **not** accept Xcode's "Update to recommended settings" suggestion that rewrites it to `$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)` — Xcode Cloud resolves that macro to nothing and the build fails with iOS 16/17 availability errors.
-
-3. **Don't hand-register files in `project.pbxproj`.** The project uses Xcode's synchronized folder groups: new files under `SudoSodoku/` or `SudoSodokuTests/` are picked up automatically. (Corollary: files that must *not* be bundled as resources — like the merged `Info.plist` — live outside those folders, e.g. `Config/`.)
-
-4. **Update `CHANGELOG.md` (`[Unreleased]` section) in the same PR** as the change it describes.
-
-5. **Run the full test suite before every PR**:
-
-   ```bash
-   xcodebuild test -project SudoSodoku.xcodeproj -scheme SudoSodoku \
-     -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
-   ```
-
-   New generator, rating, or storage logic needs matching unit tests in `SudoSodokuTests/`.
-
-## 📋 Workflow
-
-### 1. Branch
+Requirements: macOS 13 or later, Xcode 15 or later, Git, and an iOS 17 simulator or device.
 
 ```bash
-git checkout -b feature/your-feature-name   # or fix/, docs/, refactor/, test/
+git clone https://github.com/YOUR_USERNAME/SudoSodoku.git
+cd SudoSodoku
+open SudoSodoku.xcodeproj
 ```
 
-### 2. Commit — Conventional Commits
+Choose your own development team under **Signing & Capabilities**. You can then run the app with `Command-R`, `./build.sh`, or `./play.sh`.
 
+## Project rules
+
+These constraints are easy to miss and can break CI or an App Store build:
+
+1. **Work on a branch and open a pull request.** Do not commit directly to `main`, including for documentation-only changes.
+2. **Keep `IPHONEOS_DEPLOYMENT_TARGET` as the literal `17.0`.** Do not accept Xcode’s recommendation to replace it with `$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)`; that macro has failed to resolve in Xcode Cloud.
+3. **Do not hand-register source files in `project.pbxproj`.** The project uses synchronized folder groups. Files under `SudoSodoku/` and `SudoSodokuTests/` are discovered automatically.
+4. **Update `[Unreleased]` in `CHANGELOG.md`** in the same pull request as a user-visible change.
+5. **Preserve saved data.** New persisted fields need decoding defaults and migration coverage.
+6. **Keep solved records immutable.** Viewing never writes; restart and replay create a new record.
+
+## Workflow
+
+Create a focused branch:
+
+```bash
+git switch -c feature/short-name
+# Also accepted: fix/, docs/, refactor/, test/, chore/
 ```
-<type>: <subject>
+
+Use a Conventional Commit:
+
+```text
+feat: add technique trace to generated puzzles
+fix: preserve solved record when replaying
+docs: update post-launch support paths
 ```
 
-Types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`. Examples from this repo's history:
+Before opening a pull request:
 
+```bash
+xcodebuild test \
+  -project SudoSodoku.xcodeproj \
+  -scheme SudoSodoku \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
 ```
-feat: landing terminal boots in on launch
-fix: solved records are immutable history
-refactor: rename command-line branding to `sudo sudosodoku`
-```
 
-### 3. Pull Request
+In the pull request, explain the user-visible outcome, link the issue with `Closes #N` when appropriate, describe validation, and include before/after media for interface changes.
 
-* Clear title and description; reference related issues (`Closes #N`)
-* Screenshots or screen recordings for UI changes
-* State how you tested (suite results, device/simulator)
+## Engineering style
 
-## 🎨 Code & Design Style
+- Follow the [Swift API Design Guidelines](https://www.swift.org/documentation/api-design-guidelines/).
+- Views render state; `SudokuGame` owns gameplay; managers own storage, rating, Game Center, achievements, statistics, and haptics.
+- Prefer small functions, explicit names, `let`, and early-exit `guard` statements.
+- Comments explain why an invariant exists, not what the next line does.
+- Code, documentation, issues, and pull requests are written in English.
 
-### Swift
+## Product and interface quality
 
-* Follow the [Swift API Design Guidelines](https://www.swift.org/documentation/api-design-guidelines/)
-* MVVM: views render, `SudokuGame` owns game logic, managers own their domain (storage, rating, haptics, Game Center)
-* All code comments and documentation in **English**; explain *why*, not *what*
-* Prefer `let`, `guard` for early returns, small focused functions
+- Preserve the terminal fiction in user-facing copy: monospaced text, shell-flavored commands, and established `UPPER_SNAKE` labels.
+- Keep controls clear even when terminal styling is applied. Character should never obscure meaning.
+- Respect Dynamic Type where layouts allow, VoiceOver semantics, sufficient contrast, and Reduce Motion.
+- Never rely on color, motion, or haptics as the only signal.
+- Route haptics through `HapticManager` so feedback remains semantic and consistent.
+- Test the smallest supported iPhone layout and at least one current device size.
 
-### The Terminal Aesthetic (UI copy)
+## Data and privacy
 
-* Monospaced everywhere, `UPPER_SNAKE` labels (`SYSTEM_OVERVIEW:`, `NO_RECORDS_FOUND`)
-* Shell-flavored strings (`cat /leaderboard`, `$ rm -rf /user_data`, `# awaiting command`)
-* The navigation fiction is one accumulating command line (`root@ios:~$ sudo sudosodoku …`) — new screens should extend it, not break it
+SudoSodoku stores gameplay data locally and has no analytics, advertising, or third-party SDKs. Game Center is the only online service and must remain optional. Any proposal that changes data handling must update `PRIVACY.md`, App Store privacy metadata, in-app disclosure, and tests before release.
 
-### Accessibility & Feel (non-negotiable)
+## License and conduct
 
-* **Every animation must respect Reduce Motion** — provide an instant path
-* Sounds are never forced on
-* Haptics go through `HapticManager`'s semantic vocabulary — views express intent, never raw generators
-
-### Data Integrity Invariants
-
-* **A solved record is immutable history**: restarts/replays fork a new record; viewing never writes
-* Persistence goes through `StorageManager` (single JSON file, atomic writes); new fields need decode defaults so old saves keep loading (see `GameRecord.init(from:)`)
-* Statistics derive from emitted values, not singleton read-backs (`@Published` emits on *willSet*)
-
-## 🐛 Reporting Bugs
-
-Use the issue templates. Include: description, steps to reproduce, expected vs. actual, iOS version, device/simulator, app version, and screenshots where useful.
-
-## 💡 Suggesting Features
-
-Explain the use case and how it fits the philosophy. Features are evaluated on user value, alignment with the terminal fantasy, complexity, and maintenance burden — subtraction wins ties.
-
-## ❓ Getting Help
-
-* **GitHub Issues** for bugs and feature requests
-* **GitHub Discussions** for questions
-* Check code comments — invariants are documented where they live
-
-## 📜 License
-
-By contributing, you agree that your contributions will be licensed under the MIT License.
-
----
-
-**Thank you for contributing to SudoSodoku!** 🎉
+By contributing, you agree that your contribution is licensed under the [MIT License](LICENSE). Participation is governed by the [Code of Conduct](CODE_OF_CONDUCT.md).

@@ -1,109 +1,37 @@
-# Pull Request
+## Outcome
 
-## 📋 Description
+<!-- What changes for the player, contributor, or maintainer? Keep this concise. -->
 
-Brief description of what this PR does.
+## Why
 
-## 🎯 Type of Change
+<!-- Link context and explain the problem. Use “Closes #N” for an accepted work item. -->
 
-Please delete options that are not relevant:
+Closes #
 
-- [ ] 🐛 Bug fix (non-breaking change which fixes an issue)
-- [ ] ✨ New feature (non-breaking change which adds functionality)
-- [ ] 💥 Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] 📝 Documentation update
-- [ ] 🎨 UI/UX improvement
-- [ ] ⚡ Performance improvement
-- [ ] ♻️ Code refactoring
-- [ ] 🧪 Test addition/update
-- [ ] 🔧 Build/config changes
+## Validation
 
-## 🔗 Related Issues
+<!-- List exact tests, devices, simulator destinations, and manual flows checked. -->
 
-Closes #(issue number)
-Related to #(issue number)
+- [ ] Full `SudoSodokuTests` suite passes
+- [ ] Tested the changed flow on an iPhone Simulator or device
+- [ ] Added or updated regression coverage where appropriate
 
-## 🧪 Testing
+## Product quality
 
-Describe the tests you ran to verify your changes:
+Check each item that applies. If it does not apply, leave it unchecked and explain why below.
 
-- [ ] Tested on iOS Simulator
-- [ ] Tested on physical device (if applicable)
-- [ ] Tested different iOS versions
-- [ ] Tested edge cases
-- [ ] Verified no regressions
+- [ ] Terminal copy and interaction patterns remain consistent
+- [ ] Reduce Motion provides an immediate or simplified path
+- [ ] VoiceOver, larger text, contrast, and non-color cues were considered
+- [ ] Guest and Game Center states were both considered
+- [ ] Local save compatibility and solved-record immutability are preserved
+- [ ] Privacy behavior and disclosures remain accurate
+- [ ] `CHANGELOG.md` and relevant documentation are updated
 
-**Test Results:**
+## Visual changes
 
-- [ ] All tests pass
-- [ ] No crashes
-- [ ] No performance regressions
-- [ ] UI looks correct
+<!-- Add before/after screenshots or a short recording for UI changes. Remove personal information. -->
 
-## 📸 Screenshots/GIFs
+## Notes for review
 
-If applicable, add screenshots or GIFs to demonstrate your changes.
-
-**Before:**
-<!-- Add screenshot here -->
-
-**After:**
-<!-- Add screenshot here -->
-
-## 📝 Code Changes
-
-### Files Changed
-
-- `path/to/file1.swift` - Description of changes
-- `path/to/file2.swift` - Description of changes
-
-### Key Changes
-
-- Change 1
-- Change 2
-- Change 3
-
-## ✅ Checklist
-
-- [ ] My code follows the project's code style guidelines
-- [ ] I have performed a self-review of my own code
-- [ ] I have commented my code, particularly in hard-to-understand areas
-- [ ] I have made corresponding changes to the documentation
-- [ ] My changes generate no new warnings
-- [ ] I have added tests that prove my fix is effective or that my feature works
-- [ ] New and existing unit tests pass locally
-- [ ] Any dependent changes have been merged and published
-
-## 📚 Documentation
-
-- [ ] I have updated the README.md (if applicable)
-- [ ] I have updated the CHANGELOG.md (if applicable)
-- [ ] I have updated the DEVELOPER.md (if applicable)
-- [ ] I have added/updated code comments
-- [ ] My changes require documentation updates
-
-## 🎨 UI/UX Changes
-
-If this PR includes UI/UX changes:
-
-- [ ] UI is consistent with the terminal aesthetic
-- [ ] UI works on different screen sizes
-- [ ] UI is accessible
-- [ ] Animations are smooth
-- [ ] Haptic feedback works (if applicable)
-
-## 🔍 Review Notes
-
-Any additional notes for reviewers:
-
-<!-- Add any notes here -->
-
-## 📋 Additional Context
-
-Add any other context about the PR here.
-
----
-
-**Thank you for contributing to SudoSodoku!** 🎉
-
-Please ensure all checkboxes are completed before requesting review.
+<!-- Call out tradeoffs, risks, follow-up work, or checks a reviewer should focus on. -->
