@@ -1,423 +1,159 @@
-# Development & Roadmap
+# Development and roadmap
 
-Welcome! This document provides transparency into SudoSodoku's development process, upcoming features, and how we ensure quality. Whether you're a user curious about what's coming next, or a contributor looking to help, this is the place to find information.
+SudoSodoku is a native, iPhone-only Sudoku game built with SwiftUI. This document is the engineering map: architecture, invariants, validation, and the public roadmap after the first App Store release.
 
----
+For setup and pull request rules, start with [CONTRIBUTING.md](CONTRIBUTING.md).
 
-## 📋 Table of Contents
+## Current product state
 
-1. [Feature Roadmap](#feature-roadmap)
-2. [Feature Priority](#feature-priority)
-3. [Release Checklist](#release-checklist)
-4. [Implementation Guidelines](#implementation-guidelines)
+- **App Store:** [SudoSodoku 2.0](https://apps.apple.com/us/app/sudosodoku/id6779813086), released July 16, 2026
+- **Source release:** [v2.0.0](https://github.com/SudoSodokuApp/SudoSodoku/releases/tag/v2.0.0)
+- **Platform:** iPhone, iOS 17 or later
+- **Stack:** Swift 5.9, SwiftUI, Combine, GameKit, Core Haptics
+- **Persistence:** one atomic, versioned local JSON save file
+- **External dependencies:** none
+- **Online service:** optional Apple Game Center only
 
----
+Shipping is not the finish line. The quality bar remains stability, accessibility, privacy, and careful iteration on the core deduction experience.
 
-## 🗺️ Feature Roadmap
+## Product principles
 
-### Planned Features (post-2.0)
+Every proposal is evaluated against the same four constraints:
 
-1. **Hint System** 💡
-2. **Tutorial Mode** 📚
-3. **Swift Charts Enhancements** 📊
-4. **CRT scanlines + vignette** 📺 (#18, deferred from v2.0 by subtraction)
-5. **Mechanical keyboard sounds, opt-in** ⌨️ (#19, deferred from v2.0 by subtraction)
-6. **iPad Support** 📱 (Deferred indefinitely)
-7. **macOS Version** 💻 (Deferred indefinitely)
-8. **Custom Themes** 🎨
-9. **Variant Sudoku** 🔀
-10. **AI Features** 🤖
+1. The terminal fantasy should feel complete and internally consistent.
+2. The puzzle remains primary; interruption and pressure mechanics do not belong.
+3. Progress measures play, never spending or engagement manipulation.
+4. Delight must respect accessibility settings and the player’s attention.
 
-### Shipped Features
+These constraints intentionally keep the product small. New capability must earn its place.
 
-#### v2.0 — the ladder, the feel, the fantasy
+## Architecture
 
-**Status**: Shipped (see [CHANGELOG.md](CHANGELOG.md) `[2.0.0]` for the full list)
+```text
+SudoSodokuApp
+└── ContentView / navigation
+    ├── Views
+    │   └── reusable Components and Styles
+    ├── SudokuGame
+    │   ├── board state and move history
+    │   ├── play clock and completion pipeline
+    │   └── generator orchestration
+    └── Managers
+        ├── StorageManager
+        ├── StatisticsManager
+        ├── RatingManager
+        ├── AchievementManager
+        ├── GameCenterManager
+        └── HapticManager
+```
 
-- **Achievement system** 🏅 — eleven binary unlocks incl. one secret, Game Center reporting with an offline queue (`AchievementManager`)
-- **Game Center leaderboards** 🌍 — global ELO plus per-difficulty fastest-time boards; guest play fully supported
-- **Hand-crafted-feel generator** — aesthetic clue patterns + per-difficulty technique identity
-- **Completion time tracking** — active-time play clock, personal bests by fastest solve
-- **Streak indicator**, semantic haptics, breach-log loading, matrix-rain victory sequence
-- **Honest statistics** — no win rate in a no-fail game; SOLVED / ELO / FASTEST / HARDEST
-- **One continuous command line** — accumulating `sudo sudosodoku` navigation with a boot-in on launch
+### State ownership
 
-#### Detailed Statistics 📊 (v1.0)
+- SwiftUI views render state and emit intent.
+- `SudokuGame` owns a live game session, undo/redo, the clock, conflicts, and victory state.
+- `SudokuGenerator` creates, grades, and verifies puzzles.
+- Managers own one domain each and expose stable interfaces to the view model and views.
+- `StorageManager` is the only persistence boundary.
 
-**Status**: Shipped (baseline)
+### Persistence
 
-- `StatisticsManager` with personal bests, difficulty distribution, recent completions
-- `StatsView` dashboard
-- Logical efficiency scoring based on undo count
+The current save format is `save_data_v4.json`. Writes are atomic and decoding supports legacy formats.
 
-### Feature Details
+Non-negotiable invariants:
 
-#### 1. Achievement System 🏅
+- A completed record is immutable history.
+- Viewing a record is read-only.
+- Restarting or replaying forks a new record.
+- New persisted fields have safe decode defaults.
+- Statistics derive from emitted record values, not stale singleton read-backs.
 
-**Status**: ✅ Shipped in v2.0 — `AchievementManager` + `Achievement` model, eleven binary unlocks (completion counts, first MASTER, sub-3-minute, rank tiers, one secret), Game Center reporting with an offline queue, unlocks rendered inside the victory sequence. (A zero-undo unlock was cut pre-release: undo count never measured cleanliness, #62.)
+### Game Center
 
----
+Game Center authentication is optional and initiated once at the app root. The app is fully playable as a guest.
 
-#### 2. iPad Support 📱
+- Global leaderboard values are ELO ratings; higher is better.
+- Difficulty leaderboards receive positive, whole-second solve durations; lower is better.
+- Achievement reporting has an offline retry queue.
+- Looking at a solution never submits a score or achievement.
 
-**Priority**: Deferred | **Version**: TBD | **Complexity**: Medium
+Leaderboard and achievement identifiers are centralized in `SudoSodoku/Utils/AppConstants.swift`.
 
-**Status:** The app currently targets iPhone only. iPad-optimized layouts were removed to reduce maintenance overhead during early development.
+## Quality baseline
 
-**Future features (when revisited):**
+### Automated validation
 
-- Adaptive layout for larger screens
-- Split view support
-- Keyboard shortcuts
-- Trackpad/mouse support
-- Stage Manager support
+The shared `SudoSodoku` scheme includes `SudoSodokuTests`. Run the full suite before every pull request:
 
----
+```bash
+xcodebuild test \
+  -project SudoSodoku.xcodeproj \
+  -scheme SudoSodoku \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
+```
 
-#### 3. Global Leaderboard 🌍
+Generator, rating, persistence, Game Center mapping, and regression changes require targeted tests. Generator quality assertions should verify solvability, uniqueness, technique gates, score bands, clue distribution, and performance.
 
-**Status**: ✅ Shipped in v2.0 — Game Center global ELO ranking plus per-difficulty fastest-time boards, terminal-styled `LeaderboardView` (`cat /leaderboard`), `GKAccessPoint` fallback, guest sign-in notice. No CloudKit needed. Friend/regional/historical rankings remain future ideas.
+### Manual validation
 
----
+For user-visible changes, check:
 
-#### 4. Hint System 💡
+- first launch and returning launch;
+- the smallest supported iPhone and a current Pro-size device;
+- light and dark system appearance, even though the app renders a dark terminal surface;
+- larger text sizes and VoiceOver labels for changed controls;
+- Reduce Motion enabled;
+- Game Center signed in and signed out;
+- background/resume during an active game;
+- an upgraded save and a clean install;
+- offline play;
+- screenshots and copy against the shipping App Store experience.
 
-**Priority**: Medium | **Version**: v1.2 | **Complexity**: Medium-High
+### Build configuration guardrail
 
-**Features:**
+`IPHONEOS_DEPLOYMENT_TARGET` must remain the literal `17.0` in every target. Xcode’s recommended-settings rewrite to `$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)` has caused Xcode Cloud availability failures.
 
-- Cell hints
-- Candidate hints
-- Technique hints
-- Step-by-step guidance
-- Hint cost/limit system
+## Roadmap
 
-**Implementation:**
+GitHub milestones and issues are the canonical roadmap. This summary explains direction without promising dates.
 
-- New `HintManager` class
-- Hint generation algorithms
-- Technique detection
-- Cost system
+### v2.1 — Generator algorithm overhaul
 
----
+The first post-launch update focuses on the heart of the app: honest, explainable puzzle quality.
 
-#### 5. Tutorial Mode 📚
+- [#70](https://github.com/SudoSodokuApp/SudoSodoku/issues/70) — trace-producing logical solver and defensible difficulty index
+- [#71](https://github.com/SudoSodokuApp/SudoSodoku/issues/71) — give MEDIUM a distinct technique identity
+- [#72](https://github.com/SudoSodokuApp/SudoSodoku/issues/72) — define a meaningful MASTER ceiling
+- [#73](https://github.com/SudoSodokuApp/SudoSodoku/issues/73) — shape solve arcs and rotate signature techniques
+- [#74](https://github.com/SudoSodokuApp/SudoSodoku/issues/74) — broaden clue texture beyond symmetry labels
 
-**Priority**: Medium | **Version**: v1.2 | **Complexity**: Medium
+### v2.2 — Gameplay and progression
 
-**Features:**
+Exploration includes daily seeded puzzles, reproducible seed sharing, multi-difficulty gauntlets, seasonal competition, and reasoning-aware feedback. Each idea must preserve offline play, privacy, and the no-pressure philosophy.
 
-- Interactive tutorials
-- Solving techniques guide
-- Progressive learning
-- Practice puzzles
-- Progress tracking
+### Parked
 
-**Implementation:**
+Technique training, platform expansion, themes, variants, and other large surfaces remain parked until the core generator and progression work prove their value. iPad and macOS are not currently planned.
 
-- New `TutorialManager` class
-- Tutorial content system
-- Interactive overlay
-- Step-by-step guidance
+Use [Ideas](https://github.com/SudoSodokuApp/SudoSodoku/discussions/categories/ideas) for product discussion. An idea becomes an Issue only when it is sufficiently defined and actionable.
 
----
+## Release process
 
-#### 6. macOS Version 💻
+1. Confirm the milestone scope and move unfinished work out of the release.
+2. Update `MARKETING_VERSION`, build number, `CHANGELOG.md`, release notes, README status, and website copy.
+3. Run the full automated suite and the manual matrix above.
+4. Verify privacy policy, support URL, App Store screenshots, description, age rating, and Game Center configuration.
+5. Archive and validate the distribution build; submit through App Store Connect.
+6. After approval, verify the public App Store page and all website links.
+7. Publish the matching GitHub Release, close the release issue and milestone, and post a Discussions announcement.
+8. Recheck repository About metadata, topics, support paths, and documentation for stale “beta,” “submission,” or prior-version language.
 
-**Priority**: Low | **Version**: v2.0 | **Complexity**: High
+## Documentation ownership
 
-**Features:**
+- `README.md` is the product and repository front door.
+- `SUPPORT.md` is for players.
+- `CONTRIBUTING.md` is for contributors.
+- `DEVELOPER.md` is for architecture, invariants, and roadmap.
+- `PRIVACY.md` and `.github/SECURITY.md` are policy documents.
+- `CHANGELOG.md` records shipped changes; release notes tell the release story.
 
-- Native macOS app
-- Window management
-- Menu bar integration
-- Keyboard navigation
-- Trackpad gestures
-
-**Implementation:**
-
-- New macOS target
-- Platform-specific UI
-- Shared codebase
-- macOS-specific features
-
----
-
-#### 7. Custom Themes 🎨
-
-**Priority**: Low | **Version**: v1.4 | **Complexity**: Medium
-
-**Features:**
-
-- Multiple theme options
-- Theme customization
-- Theme preview
-- Theme persistence
-
-**Implementation:**
-
-- New `ThemeManager` class
-- Theme definitions
-- Color scheme system
-- Theme storage
-
----
-
-#### 8. Variant Sudoku 🔀
-
-**Priority**: Low | **Version**: v1.5 | **Complexity**: High
-
-**Features:**
-
-- Diagonal Sudoku
-- Irregular Sudoku
-- Hyper Sudoku
-- Windoku
-- Killer Sudoku
-- Samurai Sudoku
-
-**Implementation:**
-
-- New `VariantSudokuGenerator`
-- Variant rule definitions
-- Variant-specific validation
-- UI adaptations
-
----
-
-#### 9. AI Features 🤖
-
-**Priority**: Low | **Version**: v2.0+ | **Complexity**: Very High
-
-**Features:**
-
-- AI hints
-- Difficulty prediction
-- Solving strategy analysis
-- Personalized recommendations
-- AI solver demonstration
-
-**Implementation:**
-
-- Core ML integration
-- Model training
-- AI hint generation
-- Pattern analysis
-
----
-
-## 🎯 Feature Priority
-
-> **Note (July 2026):** Paid Apple Developer membership is now active, unlocking
-> Game Center leaderboards/achievements and CloudKit. The next App Store release
-> is **v2.0**: Game Center features plus a full UX & delight pass. Work items are
-> tracked as GitHub issues under the `v2.0` milestone.
-
-### v2.0 — Next App Store Release
-
-**Foundation (done / in progress):**
-
-1. **Unit Test Target** ✅ (`SudoSodokuTests`: generator, rating, storage migration)
-2. **Completion Time Tracking** ⏱️ (prerequisite for time leaderboards & speed achievements)
-
-**Game Center:**
-
-3. **Global Leaderboard** 🌍 (ELO board + per-difficulty fastest-time boards)
-4. **Achievement System** 🏅
-
-**UX & Delight (three tiers, all in scope):**
-
-5. **Tier A — Fluidity**: auto-clear peer notes (compound undo), numpad digit
-   strike-out when exhausted, no-selection affordance, haptic hierarchy
-   (`.sensoryFeedback` + CoreHaptics), error shake, sliding selection frame
-6. **Tier B — Signature moments**: `sudoers` joke on first MASTER entry,
-   breach-log loading screen, unit-completion phosphor pulse, victory sequence
-   rework (matrix rain + typewriter + ELO count-up), streak indicator
-7. **Tier C — Ambience**: CRT scanlines + vignette (toggleable), mechanical key
-   sounds (opt-in), cold-launch boot sequence (skippable)
-
-**Accessibility baseline:** every animation must respect Reduce Motion; error
-states never rely on color alone; sounds are never forced on.
-
-### v2.1 — Cloud Sync
-
-8. **iCloud Sync** ☁️ (CloudKit private database + `CKSyncEngine`)
-
-### v2.2 — Statistics
-
-9. **Swift Charts Enhancements** 📊 (rating trend, solve-time trend, streaks)
-
-### Later (v2.3+)
-
-10. **Hint System** 💡
-11. **Tutorial Mode** 📚
-12. **Custom Themes** 🎨
-13. **Variant Sudoku** 🔀
-
-### Deferred (not planned)
-
-- **iPad Support** 📱 / **macOS Version** 💻 — iPhone-only for the foreseeable future
-- **AI Features** 🤖
-
----
-
-## ✅ Quality Assurance
-
-We take quality seriously. Before every release, we thoroughly test all features to ensure you have the best possible experience. Here's what we check:
-
-### Pre-Release Testing
-
-#### Functionality Tests
-
-- [ ] **Game Generation**
-  - [ ] All difficulty levels generate correctly
-  - [ ] All puzzles are solvable
-  - [ ] Difficulty scores are within expected ranges
-
-- [ ] **Gameplay**
-  - [ ] Number input works correctly
-  - [ ] Pencil mode toggles properly
-  - [ ] Notes display correctly
-  - [ ] Undo/Redo functions properly
-  - [ ] Clear cell works
-  - [ ] Error detection highlights conflicts
-  - [ ] Victory detection triggers correctly
-  - [ ] Victory animation displays
-
-- [ ] **Archive System**
-  - [ ] Games auto-save during play
-  - [ ] Archive view displays all records
-  - [ ] Favorites system works
-  - [ ] Filter by favorites works
-  - [ ] Batch operations work
-  - [ ] Replay functionality works
-
-- [ ] **Rating System**
-  - [ ] Rating increases on completion
-  - [ ] Rating calculation is correct
-  - [ ] Rank titles display correctly
-  - [ ] User profile shows correct statistics
-  - [ ] Anti-smurfing works
-
-- [ ] **Data Persistence**
-  - [ ] Games save/load correctly
-  - [ ] Local storage works reliably
-  - [ ] Data migration works
-
-#### UI/UX Tests
-
-- [ ] Terminal aesthetic is consistent
-- [ ] All text is readable
-- [ ] Icons display correctly
-- [ ] Animations are smooth
-- [ ] Haptic feedback works
-- [ ] Navigation works correctly
-
-#### Platform Tests
-
-- [ ] App runs on iPhone simulator
-- [ ] App runs on physical iPhone (if available)
-- [ ] Performance is acceptable
-- [ ] No crashes during extended play
-
-#### Build Tests
-
-- [ ] Debug build succeeds
-- [ ] Release build succeeds
-- [ ] Clean build works
-- [ ] No warnings (or acceptable warnings)
-- [ ] Unit tests pass (`SudoSodokuTests` via Cmd+U or `xcodebuild test`)
-
-### Code Quality
-
-- [ ] All code comments are in English
-- [ ] Code follows Swift conventions
-- [ ] MVVM pattern is maintained
-- [ ] Error handling is appropriate
-- [ ] Memory management is correct
-
-### Documentation
-
-- [ ] README.md is up to date
-- [ ] CHANGELOG.md is updated
-- [ ] Code comments are clear
-
-### Version Management
-
-- [ ] Version number updated
-- [ ] Version displayed in app
-- [ ] All version references updated
-
-### Assets
-
-- [ ] App icon is set
-- [ ] All assets are included
-- [ ] No missing images
-
----
-
-## 🛠️ For Contributors
-
-If you're interested in contributing code, here are our development guidelines:
-
-### Code Organization
-
-We follow these principles:
-- **MVVM Pattern**: Maintain clear separation between Models, Views, and ViewModels
-- **File Structure**: Place files in appropriate directories (Models, Views, Managers, etc.)
-- **Dependency Injection**: Use shared instances appropriately
-- **Backward Compatibility**: Ensure updates don't break existing functionality
-
-### Testing
-
-We test thoroughly:
-- Unit tests for core logic
-- UI tests for new features
-- Performance testing
-- User acceptance testing
-
-### Documentation
-
-We maintain documentation:
-- Update README for user-facing changes
-- Add clear code comments (in English)
-- Update CHANGELOG for releases
-- Create guides for complex features
-
-### Git Workflow
-
-Our contribution process:
-- Create feature branches (`feature/your-feature`)
-- Write descriptive commit messages (see CONTRIBUTING.md)
-- Update CHANGELOG before merging
-- Tag releases appropriately
-
----
-
-## 📝 Dependencies & Requirements
-
-### External Dependencies
-
-- **Game Center**: For achievements and leaderboards
-- **CloudKit**: For global leaderboard data (future)
-- **Core ML**: For AI features
-- **Swift Charts**: For statistics visualization
-
-### Apple Developer Requirements
-
-- Paid Apple Developer Account ($99/year) — **active since July 2026**
-- Game Center configuration (leaderboards & achievements in App Store Connect)
-- CloudKit container setup
-- App Store Connect configuration
-
-### Technical Requirements
-
-- iOS 17.0+ (current)
-- macOS 14.0+ (for macOS version)
-- Xcode 15.0+
-- Swift 5.9+
-
----
-
-*Last Updated: July 5, 2026*  
-*Current Version: 1.0.0*
+The GitHub Wiki remains disabled so these versioned files stay the single source of truth. Discussions provide the living community layer without copying canonical documentation.

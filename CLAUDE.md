@@ -17,6 +17,10 @@
 
 ## Project Facts
 
+- Public App Store release: SudoSodoku 2.0, launched 2026-07-16.
+  App Store: `https://apps.apple.com/us/app/sudosodoku/id6779813086`.
+  Website: `https://sudosodoku.kaichen.dev`.
+- Canonical repository: `https://github.com/SudoSodokuApp/SudoSodoku`.
 - iPhone-only iOS app (`TARGETED_DEVICE_FAMILY = 1`), iOS 17.0+, SwiftUI + MVVM,
   Swift 5.9. **No iPadOS or macOS work** — deferred indefinitely.
 - `IPHONEOS_DEPLOYMENT_TARGET` must stay the literal `17.0` in project.pbxproj.
@@ -29,6 +33,9 @@
   (`save_data_v4.json`, atomic writes, legacy migration chain).
 - `DEVLOG.md` is a local-only development journal (gitignored) — newest entry on
   top. Record significant decisions and completed work there; never commit it.
+- Repository documentation is canonical and versioned in Git. Keep the GitHub
+  Wiki disabled rather than duplicating README, support, privacy, or developer
+  content. Use Discussions for questions and early product ideas.
 
 ## Build & Test
 
