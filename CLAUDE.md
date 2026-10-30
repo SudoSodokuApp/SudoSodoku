@@ -1,4 +1,4 @@
-# CLAUDE.md — Agent Guidelines for SudoSodoku
+# CLAUDE.md — Agent Guidelines for sudo sudoku
 
 ## Git Workflow (IMPORTANT)
 
@@ -17,18 +17,24 @@
 
 ## Project Facts
 
-- Public App Store release: SudoSodoku 2.0, launched 2026-07-16.
-  App Store: `https://apps.apple.com/us/app/sudosodoku/id6779813086`.
-  Website: `https://sudosodoku.kaichen.dev`.
-- Canonical repository: `https://github.com/SudoSodokuApp/SudoSodoku`.
+- Public App Store release: 2.0, launched 2026-07-16 (as SudoSodoku; renamed
+  to sudo sudoku afterwards).
+  App Store: `https://apps.apple.com/us/app/sudo-sudoku/id6779813086`.
+  Website: `https://sudosodoku.kaichen.dev` (moving to a new domain).
+- Canonical repository: `https://github.com/sudosudoku/sudo-sudoku`.
 - iPhone-only iOS app (`TARGETED_DEVICE_FAMILY = 1`), iOS 17.0+, SwiftUI + MVVM,
   Swift 5.9. **No iPadOS or macOS work** — deferred indefinitely.
 - `IPHONEOS_DEPLOYMENT_TARGET` must stay the literal `17.0` in project.pbxproj.
   Do not accept Xcode's "Update to recommended settings" suggestion that rewrites
   it to `$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)` — Xcode Cloud resolves that
   macro to nothing and builds fail with iOS 16/17 availability errors.
+- The product name is **sudo sudoku** (lowercase, with a space) in user-facing
+  copy, docs and the home-screen name; code identifiers, the Xcode project,
+  target and scheme use `SudoSudoku`. The repo is `sudosudoku/sudo-sudoku`.
+  The old `sudosodoku.kaichen.dev` domain must stay reachable forever
+  (v2.0.0 hardcodes its privacy URL).
 - Bundle ID `dev.kaichen.sudoku.app`; Game Center leaderboard IDs live in
-  `SudoSodoku/Utils/AppConstants.swift`.
+  `SudoSudoku/Utils/AppConstants.swift`.
 - Persistence is a single local JSON file managed by `StorageManager`
   (`save_data_v4.json`, atomic writes, legacy migration chain).
 - `DEVLOG.md` is a local-only development journal (gitignored) — newest entry on
@@ -42,12 +48,12 @@
 - CLI builds need the full Xcode: `export DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer`
   (the local `xcode-select` points at Command Line Tools).
 - Run tests before every PR:
-  `xcodebuild test -project SudoSodoku.xcodeproj -scheme SudoSodoku -destination 'platform=iOS Simulator,name=iPhone 17 Pro'`
-- The `SudoSodoku` scheme is shared and runs `SudoSodokuTests` in its Test action
+  `xcodebuild test -project SudoSudoku.xcodeproj -scheme SudoSudoku -destination 'platform=iOS Simulator,name=iPhone 17 Pro'`
+- The `SudoSudoku` scheme is shared and runs `SudoSudokuTests` in its Test action
   (Xcode Cloud runs it too). Keep new logic covered: generator/rating/storage
   changes need matching unit tests.
 - The project uses Xcode's synchronized folder groups — new files under
-  `SudoSodoku/` or `SudoSodokuTests/` are picked up automatically; do not hand-edit
+  `SudoSudoku/` or `SudoSudokuTests/` are picked up automatically; do not hand-edit
   `project.pbxproj` to register individual files.
 
 ## Code Style

@@ -1,32 +1,32 @@
 <p align="center">
-  <img src="SudoSodoku/AppIcon_V3.png" alt="SudoSodoku app icon" width="128" height="128">
+  <img src="SudoSudoku/AppIcon_V3.png" alt="sudo sudoku app icon" width="128" height="128">
 </p>
 
-<h1 align="center">SudoSodoku</h1>
+<h1 align="center">sudo sudoku</h1>
 
 <p align="center"><strong><code>sudo solve</code> — logic is root access.</strong></p>
 
 <p align="center">
-  <a href="https://apps.apple.com/us/app/sudosodoku/id6779813086">Download on the App Store</a>
+  <a href="https://apps.apple.com/us/app/sudo-sudoku/id6779813086">Download on the App Store</a>
   · <a href="https://sudosodoku.kaichen.dev">Website</a>
-  · <a href="https://github.com/SudoSodokuApp/SudoSodoku/releases/tag/v2.0.0">v2.0.0</a>
+  · <a href="https://github.com/sudosudoku/sudo-sudoku/releases/tag/v2.0.0">v2.0.0</a>
 </p>
 
 ```text
-root@ios:~$ sudo sudosodoku breach --master
+root@ios:~$ sudo sudoku breach --master
 [sudo] password for logic: ********
 > uniqueness_check ........ [OK]
 > difficulty_index ........ 84
 > ACCESS GRANTED
 ```
 
-SudoSodoku is a pure-logic Sudoku for iPhone wrapped in a full terminal fantasy. Puzzles generate behind a live breach log, victories end in `ACCESS GRANTED`, and a real ELO ladder runs from `SCRIPT_KIDDIE` to `THE_ARCHITECT`.
+sudo sudoku is a pure-logic Sudoku for iPhone wrapped in a full terminal fantasy. Puzzles generate behind a live breach log, victories end in `ACCESS GRANTED`, and a real ELO ladder runs from `SCRIPT_KIDDIE` to `THE_ARCHITECT`.
 
 Free. No ads. No in-app purchases. No tracking.
 
 ## Designed with intent
 
-SudoSodoku is built around four product principles:
+sudo sudoku is built around four product principles:
 
 1. **The fantasy is complete.** The app behaves like one continuous shell session, from the launch prompt to the final victory sequence.
 2. **Logic stays in focus.** There are no lives, fail states, paywalls, or interruption mechanics. The timer is optional and undo is never punished.
@@ -62,7 +62,7 @@ That approach follows the same fundamentals Apple recommends in its [Human Inter
 
 ## Privacy by construction
 
-Game history, rating, statistics, and achievements stay in one local save file on your device. SudoSodoku has no developer account system, analytics, advertising, tracking, or third-party SDKs. Game Center is optional, operated by Apple, and used only for leaderboards and achievements.
+Game history, rating, statistics, and achievements stay in one local save file on your device. sudo sudoku has no developer account system, analytics, advertising, tracking, or third-party SDKs. Game Center is optional, operated by Apple, and used only for leaderboards and achievements.
 
 Read the full [Privacy Policy](PRIVACY.md) or visit [sudosodoku.kaichen.dev/privacy](https://sudosodoku.kaichen.dev/privacy).
 
@@ -77,12 +77,12 @@ Read the full [Privacy Policy](PRIVACY.md) or visit [sudosodoku.kaichen.dev/priv
 ### Setup
 
 ```bash
-git clone https://github.com/SudoSodokuApp/SudoSodoku.git
-cd SudoSodoku
-open SudoSodoku.xcodeproj
+git clone https://github.com/sudosudoku/sudo-sudoku.git
+cd sudo-sudoku
+open SudoSudoku.xcodeproj
 ```
 
-Select the `SudoSodoku` target, choose your own development team under **Signing & Capabilities**, then run with `Command-R`.
+Select the `SudoSudoku` target, choose your own development team under **Signing & Capabilities**, then run with `Command-R`.
 
 Command-line helpers are also available:
 
@@ -92,8 +92,8 @@ Command-line helpers are also available:
 ./play.sh           # Build and launch in Simulator
 
 xcodebuild test \
-  -project SudoSodoku.xcodeproj \
-  -scheme SudoSodoku \
+  -project SudoSudoku.xcodeproj \
+  -scheme SudoSudoku \
   -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
 ```
 
@@ -101,10 +101,10 @@ Do not accept an Xcode recommendation that replaces the literal `IPHONEOS_DEPLOY
 
 ## Architecture
 
-SudoSodoku is an iPhone-only SwiftUI app using MVVM and Combine, with no external dependencies.
+sudo sudoku is an iPhone-only SwiftUI app using MVVM and Combine, with no external dependencies.
 
 ```text
-SudoSodoku/
+SudoSudoku/
 ├── Algorithms/       Puzzle generation, uniqueness, and difficulty grading
 ├── Managers/         Storage, rating, Game Center, achievements, statistics, haptics
 ├── Models/           Game, record, difficulty, rank, and achievement types
@@ -112,7 +112,7 @@ SudoSodoku/
 ├── Views/            Screens and reusable SwiftUI components
 └── Utils/            Shared constants and formatting
 
-SudoSodokuTests/      Generator, gameplay, rating, storage, and regression tests
+SudoSudokuTests/      Generator, gameplay, rating, storage, and regression tests
 Config/               Launch-screen Info.plist values
 ```
 
@@ -122,9 +122,9 @@ For invariants, data flow, and release engineering, see [DEVELOPER.md](DEVELOPER
 
 Choose the path that best fits what you need:
 
-- **Need help using the app?** Start with [Support](SUPPORT.md), then ask in [GitHub Discussions](https://github.com/SudoSodokuApp/SudoSodoku/discussions/categories/q-a).
-- **Found a reproducible bug?** Open a [bug report](https://github.com/SudoSodokuApp/SudoSodoku/issues/new/choose).
-- **Have an idea?** Share it in [Ideas](https://github.com/SudoSodokuApp/SudoSodoku/discussions/categories/ideas) before opening an implementation issue.
+- **Need help using the app?** Start with [Support](SUPPORT.md), then ask in [GitHub Discussions](https://github.com/sudosudoku/sudo-sudoku/discussions/categories/q-a).
+- **Found a reproducible bug?** Open a [bug report](https://github.com/sudosudoku/sudo-sudoku/issues/new/choose).
+- **Have an idea?** Share it in [Ideas](https://github.com/sudosudoku/sudo-sudoku/discussions/categories/ideas) before opening an implementation issue.
 - **Want to contribute?** Read [CONTRIBUTING.md](CONTRIBUTING.md) and the [Code of Conduct](CODE_OF_CONDUCT.md).
 - **Found a security issue?** Follow the private process in [.github/SECURITY.md](.github/SECURITY.md).
 
@@ -140,6 +140,6 @@ Choose the path that best fits what you need:
 
 ## License
 
-SudoSodoku is available under the [MIT License](LICENSE).
+sudo sudoku is available under the [MIT License](LICENSE).
 
 Created by [Kai T. Chen](https://kaichen.dev).

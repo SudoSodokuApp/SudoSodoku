@@ -13,7 +13,7 @@ Security fixes are provided for the current App Store release.
 
 Do not open a public issue or discussion for a suspected vulnerability.
 
-Use the repository’s [private vulnerability reporting form](https://github.com/SudoSodokuApp/SudoSodoku/security/advisories/new). If that form is unavailable, contact Kai T. Chen using the contact details at [kaichen.dev](https://kaichen.dev).
+Use the repository’s [private vulnerability reporting form](https://github.com/sudosudoku/sudo-sudoku/security/advisories/new). If that form is unavailable, contact Kai T. Chen using the contact details at [kaichen.dev](https://kaichen.dev).
 
 Include, when possible:
 
@@ -34,7 +34,7 @@ Confirmed fixes are documented in `CHANGELOG.md` and the relevant GitHub Release
 
 ## Security model
 
-SudoSodoku intentionally has a small attack surface:
+sudo sudoku intentionally has a small attack surface:
 
 - gameplay data is stored locally in one atomic JSON save file;
 - there is no developer account system or backend;
@@ -46,4 +46,4 @@ The app displays a Game Center name and profile image supplied by GameKit, and s
 
 ## Safe installation
 
-Players should install the shipping app only from the [App Store](https://apps.apple.com/us/app/sudosodoku/id6779813086). Developers building from source should use this repository, review changes, and configure their own signing identity.
+Players should install the shipping app only from the [App Store](https://apps.apple.com/us/app/sudo-sudoku/id6779813086). Developers building from source should use this repository, review changes, and configure their own signing identity.

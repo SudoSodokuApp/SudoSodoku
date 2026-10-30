@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# SudoSodoku iOS Project Build Script
+# sudo sudoku iOS Project Build Script
 # Usage:
 #   ./build.sh          # Build Debug version (default)
 #   ./build.sh release  # Build Release version
@@ -8,9 +8,9 @@
 
 set -e
 
-PROJECT_NAME="SudoSodoku"
-SCHEME="SudoSodoku"
-PROJECT_PATH="SudoSodoku.xcodeproj"
+PROJECT_NAME="SudoSudoku"
+SCHEME="SudoSudoku"
+PROJECT_PATH="SudoSudoku.xcodeproj"
 
 # Default build configuration
 BUILD_CONFIG="${1:-debug}"

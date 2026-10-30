@@ -12,7 +12,7 @@ Closes #
 
 <!-- List exact tests, devices, simulator destinations, and manual flows checked. -->
 
-- [ ] Full `SudoSodokuTests` suite passes
+- [ ] Full `SudoSudokuTests` suite passes
 - [ ] Tested the changed flow on an iPhone Simulator or device
 - [ ] Added or updated regression coverage where appropriate
 

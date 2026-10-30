@@ -1,11 +1,11 @@
-# Contributing to SudoSodoku
+# Contributing to sudo sudoku
 
-Thank you for helping improve SudoSodoku. This guide describes the project’s actual workflow and the product constraints that keep the app coherent.
+Thank you for helping improve sudo sudoku. This guide describes the project’s actual workflow and the product constraints that keep the app coherent.
 
 ## Before you begin
 
-- Use [GitHub Discussions](https://github.com/SudoSodokuApp/SudoSodoku/discussions/categories/q-a) for questions.
-- Share early product ideas in [Ideas](https://github.com/SudoSodokuApp/SudoSodoku/discussions/categories/ideas).
+- Use [GitHub Discussions](https://github.com/sudosudoku/sudo-sudoku/discussions/categories/q-a) for questions.
+- Share early product ideas in [Ideas](https://github.com/sudosudoku/sudo-sudoku/discussions/categories/ideas).
 - Use Issues for reproducible bugs and accepted, actionable work.
 - Never include personal, Game Center, or security-sensitive information in a public post. Report vulnerabilities through the process in [.github/SECURITY.md](.github/SECURITY.md).
 
@@ -28,9 +28,9 @@ When tradeoffs are close, subtraction wins.
 Requirements: macOS 13 or later, Xcode 15 or later, Git, and an iOS 17 simulator or device.
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/SudoSodoku.git
-cd SudoSodoku
-open SudoSodoku.xcodeproj
+git clone https://github.com/YOUR_USERNAME/sudo-sudoku.git
+cd sudo-sudoku
+open SudoSudoku.xcodeproj
 ```
 
 Choose your own development team under **Signing & Capabilities**. You can then run the app with `Command-R`, `./build.sh`, or `./play.sh`.
@@ -41,7 +41,7 @@ These constraints are easy to miss and can break CI or an App Store build:
 
 1. **Work on a branch and open a pull request.** Do not commit directly to `main`, including for documentation-only changes.
 2. **Keep `IPHONEOS_DEPLOYMENT_TARGET` as the literal `17.0`.** Do not accept Xcode’s recommendation to replace it with `$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)`; that macro has failed to resolve in Xcode Cloud.
-3. **Do not hand-register source files in `project.pbxproj`.** The project uses synchronized folder groups. Files under `SudoSodoku/` and `SudoSodokuTests/` are discovered automatically.
+3. **Do not hand-register source files in `project.pbxproj`.** The project uses synchronized folder groups. Files under `SudoSudoku/` and `SudoSudokuTests/` are discovered automatically.
 4. **Update `[Unreleased]` in `CHANGELOG.md`** in the same pull request as a user-visible change.
 5. **Preserve saved data.** New persisted fields need decoding defaults and migration coverage.
 6. **Keep solved records immutable.** Viewing never writes; restart and replay create a new record.
@@ -67,8 +67,8 @@ Before opening a pull request:
 
 ```bash
 xcodebuild test \
-  -project SudoSodoku.xcodeproj \
-  -scheme SudoSodoku \
+  -project SudoSudoku.xcodeproj \
+  -scheme SudoSudoku \
   -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
 ```
 
@@ -93,7 +93,7 @@ In the pull request, explain the user-visible outcome, link the issue with `Clos
 
 ## Data and privacy
 
-SudoSodoku stores gameplay data locally and has no analytics, advertising, or third-party SDKs. Game Center is the only online service and must remain optional. Any proposal that changes data handling must update `PRIVACY.md`, App Store privacy metadata, in-app disclosure, and tests before release.
+sudo sudoku stores gameplay data locally and has no analytics, advertising, or third-party SDKs. Game Center is the only online service and must remain optional. Any proposal that changes data handling must update `PRIVACY.md`, App Store privacy metadata, in-app disclosure, and tests before release.
 
 ## License and conduct
 

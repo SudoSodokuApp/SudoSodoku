@@ -1,13 +1,13 @@
 # Development and roadmap
 
-SudoSodoku is a native, iPhone-only Sudoku game built with SwiftUI. This document is the engineering map: architecture, invariants, validation, and the public roadmap after the first App Store release.
+sudo sudoku is a native, iPhone-only Sudoku game built with SwiftUI. This document is the engineering map: architecture, invariants, validation, and the public roadmap after the first App Store release.
 
 For setup and pull request rules, start with [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Current product state
 
-- **App Store:** [SudoSodoku 2.0](https://apps.apple.com/us/app/sudosodoku/id6779813086), released July 16, 2026
-- **Source release:** [v2.0.0](https://github.com/SudoSodokuApp/SudoSodoku/releases/tag/v2.0.0)
+- **App Store:** [sudo sudoku 2.0](https://apps.apple.com/us/app/sudo-sudoku/id6779813086), released July 16, 2026
+- **Source release:** [v2.0.0](https://github.com/sudosudoku/sudo-sudoku/releases/tag/v2.0.0)
 - **Platform:** iPhone, iOS 17 or later
 - **Stack:** Swift 5.9, SwiftUI, Combine, GameKit, Core Haptics
 - **Persistence:** one atomic, versioned local JSON save file
@@ -30,7 +30,7 @@ These constraints intentionally keep the product small. New capability must earn
 ## Architecture
 
 ```text
-SudoSodokuApp
+SudoSudokuApp
 └── ContentView / navigation
     ├── Views
     │   └── reusable Components and Styles
@@ -76,18 +76,18 @@ Game Center authentication is optional and initiated once at the app root. The a
 - Achievement reporting has an offline retry queue.
 - Looking at a solution never submits a score or achievement.
 
-Leaderboard and achievement identifiers are centralized in `SudoSodoku/Utils/AppConstants.swift`.
+Leaderboard and achievement identifiers are centralized in `SudoSudoku/Utils/AppConstants.swift`.
 
 ## Quality baseline
 
 ### Automated validation
 
-The shared `SudoSodoku` scheme includes `SudoSodokuTests`. Run the full suite before every pull request:
+The shared `SudoSudoku` scheme includes `SudoSudokuTests`. Run the full suite before every pull request:
 
 ```bash
 xcodebuild test \
-  -project SudoSodoku.xcodeproj \
-  -scheme SudoSodoku \
+  -project SudoSudoku.xcodeproj \
+  -scheme SudoSudoku \
   -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
 ```
 
@@ -120,11 +120,11 @@ GitHub milestones and issues are the canonical roadmap. This summary explains di
 
 The first post-launch update focuses on the heart of the app: honest, explainable puzzle quality.
 
-- [#70](https://github.com/SudoSodokuApp/SudoSodoku/issues/70) — trace-producing logical solver and defensible difficulty index
-- [#71](https://github.com/SudoSodokuApp/SudoSodoku/issues/71) — give MEDIUM a distinct technique identity
-- [#72](https://github.com/SudoSodokuApp/SudoSodoku/issues/72) — define a meaningful MASTER ceiling
-- [#73](https://github.com/SudoSodokuApp/SudoSodoku/issues/73) — shape solve arcs and rotate signature techniques
-- [#74](https://github.com/SudoSodokuApp/SudoSodoku/issues/74) — broaden clue texture beyond symmetry labels
+- [#70](https://github.com/sudosudoku/sudo-sudoku/issues/70) — trace-producing logical solver and defensible difficulty index
+- [#71](https://github.com/sudosudoku/sudo-sudoku/issues/71) — give MEDIUM a distinct technique identity
+- [#72](https://github.com/sudosudoku/sudo-sudoku/issues/72) — define a meaningful MASTER ceiling
+- [#73](https://github.com/sudosudoku/sudo-sudoku/issues/73) — shape solve arcs and rotate signature techniques
+- [#74](https://github.com/sudosudoku/sudo-sudoku/issues/74) — broaden clue texture beyond symmetry labels
 
 ### v2.2 — Gameplay and progression
 
@@ -134,7 +134,7 @@ Exploration includes daily seeded puzzles, reproducible seed sharing, multi-diff
 
 Technique training, platform expansion, themes, variants, and other large surfaces remain parked until the core generator and progression work prove their value. iPad and macOS are not currently planned.
 
-Use [Ideas](https://github.com/SudoSodokuApp/SudoSodoku/discussions/categories/ideas) for product discussion. An idea becomes an Issue only when it is sufficiently defined and actionable.
+Use [Ideas](https://github.com/sudosudoku/sudo-sudoku/discussions/categories/ideas) for product discussion. An idea becomes an Issue only when it is sufficiently defined and actionable.
 
 ## Release process
 

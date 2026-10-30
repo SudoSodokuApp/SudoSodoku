@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# Run SudoSodoku app in iOS Simulator
+# Run sudo sudoku app in iOS Simulator
 # Usage: ./play.sh
 
 set -e
 
-PROJECT_NAME="SudoSodoku"
-SCHEME="SudoSodoku"
-PROJECT_PATH="SudoSodoku.xcodeproj"
+PROJECT_NAME="SudoSudoku"
+SCHEME="SudoSudoku"
+PROJECT_PATH="SudoSudoku.xcodeproj"
 
 echo "🎮 Preparing to run $PROJECT_NAME in simulator..."
 echo ""
@@ -77,11 +77,11 @@ if [ $? -ne 0 ]; then
 fi
 
 # 4. Install and launch
-APP_PATH=$(xcodebuild -project "$PROJECT_PATH" -scheme "$SCHEME" -configuration Debug -sdk iphonesimulator -showBuildSettings 2>/dev/null | grep "BUILT_PRODUCTS_DIR" | head -1 | sed 's/.*= *//' | xargs)/SudoSodoku.app
+APP_PATH=$(xcodebuild -project "$PROJECT_PATH" -scheme "$SCHEME" -configuration Debug -sdk iphonesimulator -showBuildSettings 2>/dev/null | grep "BUILT_PRODUCTS_DIR" | head -1 | sed 's/.*= *//' | xargs)/SudoSudoku.app
 
 if [ ! -d "$APP_PATH" ]; then
     # Try to find in DerivedData
-    APP_PATH=$(find ~/Library/Developer/Xcode/DerivedData -name "SudoSodoku.app" -type d | head -1)
+    APP_PATH=$(find ~/Library/Developer/Xcode/DerivedData -name "SudoSudoku.app" -type d | head -1)
 fi
 
 if [ -z "$APP_PATH" ] || [ ! -d "$APP_PATH" ]; then
@@ -104,4 +104,4 @@ xcrun simctl launch "$SIMULATOR_ID" "$BUNDLE_ID" 2>&1 || true
 
 echo ""
 echo "✅ Done! The app should be running in the simulator now"
-echo "💡 If the app didn't open automatically, tap the SudoSodoku app icon in the simulator"
+echo "💡 If the app didn't open automatically, tap the 'sudo sudoku' app icon in the simulator"
