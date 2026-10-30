@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to SudoSodoku will be documented in this file.
+All notable changes to sudo sudoku will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 ## [Unreleased]
+
+### Changed
+
+- Renamed the app from SudoSodoku to **sudo sudoku**: the home-screen name is now `sudo sudoku`, and the terminal command reads `root@ios:~$ sudo sudoku …`. The Xcode project, target, scheme, source folders and test target are now `SudoSudoku` / `SudoSudokuTests`. Bundle ID, Game Center IDs and save data are unchanged, so existing installs update in place.
+
+### Accessibility
+
+- Conflicting digits are now struck through as well as shown in red, so errors no longer rely on color alone (Differentiate Without Color).
 
 ---
 

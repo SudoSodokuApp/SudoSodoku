@@ -1,9 +1,9 @@
-# Privacy Policy — SudoSodoku
+# Privacy Policy — sudo sudoku
 
 **Effective date:** 2026-07-10
-**Applies to:** SudoSodoku for iOS (bundle `dev.kaichen.sudoku.app`), version 2.0.0 and later.
+**Applies to:** sudo sudoku for iOS (bundle `dev.kaichen.sudoku.app`), version 2.0.0 and later.
 
-SudoSodoku is a fully offline, single-player sudoku game. This policy explains
+sudo sudoku is a fully offline, single-player sudoku game. This policy explains
 exactly what data the app handles, where it lives, and what (if anything)
 leaves your device. The short version:
 
@@ -41,7 +41,7 @@ The app's App Store privacy label is therefore **Data Not Collected**.
 
 ## 2. Game Center (optional, operated by Apple)
 
-SudoSodoku integrates Apple's **Game Center** through Apple's GameKit
+sudo sudoku integrates Apple's **Game Center** through Apple's GameKit
 framework for leaderboards and achievements. It is entirely optional:
 
 - The app never requires an account and never blocks play behind sign-in.
@@ -94,7 +94,7 @@ third-party data for advertising or share data with data brokers.
 
 ## 6. Children
 
-SudoSodoku is rated 4+. It shows no ads, contains no in-app purchases, no
+sudo sudoku is rated 4+. It shows no ads, contains no in-app purchases, no
 chat or user-generated content, and collects no data from anyone, including
 children.
 
@@ -107,5 +107,5 @@ that version ships, with the effective date above revised.
 ## 8. Contact
 
 Questions or requests about privacy:
-open an issue at <https://github.com/SudoSodokuApp/SudoSodoku/issues>,
+open an issue at <https://github.com/sudosudoku/sudo-sudoku/issues>,
 or reach the developer, Kai T. Chen, via <https://kaichen.dev>.

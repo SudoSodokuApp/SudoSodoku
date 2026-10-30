@@ -7,7 +7,7 @@
 // The PNGs are one-time ASC uploads and are not committed; this script
 // is their source of truth. Regenerate after adding an achievement:
 //
-//   swift Tools/gen_achievement_art.swift ~/Downloads/SudoSodoku-achievement-art
+//   swift Tools/gen_achievement_art.swift ~/Downloads/SudoSudoku-achievement-art
 //
 // Keep the slugs in sync with `Achievement` (Models/Achievement.swift).
 

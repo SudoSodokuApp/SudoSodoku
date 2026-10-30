@@ -1,7 +1,7 @@
-# **SudoSodoku**
+# **sudo sudoku**
 
 ```
-root@ios:~$ sudo sudosodoku breach --master
+root@ios:~$ sudo sudoku breach --master
 [sudo] password for logic: ********
 > uniqueness_check ........ [OK]
 > difficulty_index ........ 84
@@ -10,16 +10,16 @@ root@ios:~$ sudo sudosodoku breach --master
 
 **`sudo solve` — logic is root access.**
 
-SudoSodoku is the only sudoku on the App Store that treats you like root. It is a full terminal fantasy: green phosphor on deep dark glass, mechanical-keyboard haptics, and an ELO ladder that climbs from `SCRIPT_KIDDIE` to `THE_ARCHITECT`. You are not filling in numbers — you are breaching a grid, and every victory ends the only way it should: `ACCESS GRANTED`.
+sudo sudoku is the only sudoku on the App Store that treats you like root. It is a full terminal fantasy: green phosphor on deep dark glass, mechanical-keyboard haptics, and an ELO ladder that climbs from `SCRIPT_KIDDIE` to `THE_ARCHITECT`. You are not filling in numbers — you are breaching a grid, and every victory ends the only way it should: `ACCESS GRANTED`.
 
-**📱 v2.0.0 · iOS 17.0+ · iPhone · [App Store](https://apps.apple.com/us/app/sudosodoku/id6779813086) · [sudosodoku.kaichen.dev](https://sudosodoku.kaichen.dev)**
+**📱 v2.0.0 · iOS 17.0+ · iPhone · [App Store](https://apps.apple.com/us/app/sudo-sudoku/id6779813086) · [sudosodoku.kaichen.dev](https://sudosodoku.kaichen.dev)**
 
 ## **🧠 Philosophy**
 
 Four rules the whole game is built on:
 
 1. **You're not filling numbers. You're breaching systems.**
-   The terminal fantasy is total — the app is one continuous shell session. The landing prompt boots in on launch (`root@ios:~$ ` types `sudo sudosodoku` before your eyes), every screen is a subcommand picked from tab completion, puzzles generate behind a live breach log, victories detonate matrix rain, and rank-ups get a ceremony.
+   The terminal fantasy is total — the app is one continuous shell session. The landing prompt boots in on launch (`root@ios:~$ ` types `sudo sudoku` before your eyes), every screen is a subcommand picked from tab completion, puzzles generate behind a live breach log, victories detonate matrix rain, and rank-ups get a ceremony.
 
 2. **Pure logic. Zero noise.**
    No ads. No lives. No pay-to-win. No guilt mechanics. No fail state — boards are finished or unfinished, never "lost". Even the timer is optional; nothing is allowed to interrupt a deduction.
@@ -35,7 +35,7 @@ Four rules the whole game is built on:
 ### **🖥️ The Terminal**
 
 * Authentic green phosphor on deep dark glass (`#0D121A`), all-monospaced UI — from the launch screen (which boots dark, never a white flash) to the last stat card
-* **One accumulating command line**: `breach`, `archives`, `stats`, and `whoami` are subcommands typed into a live prompt; each destination echoes the full command it was reached with (`root@ios:~$ sudo sudosodoku breach --easy`)
+* **One accumulating command line**: `breach`, `archives`, `stats`, and `whoami` are subcommands typed into a live prompt; each destination echoes the full command it was reached with (`root@ios:~$ sudo sudoku breach --easy`)
 * Typewriter **breach-log loading screen** whose verdict lines report the real uniqueness check and difficulty index of your puzzle
 * Three-act **victory sequence**: Canvas-drawn matrix rain → typewriter `ACCESS GRANTED` → ELO ticker rolling to your new rating, with a glowing `>> RANK_UP <<` ceremony on tier crossings — and achievement unlocks rendered right inside it
 * A semantic **haptic vocabulary**: cell selection ticks, rigid key-press placements, error notifications, and a custom CoreHaptics victory rumble
@@ -64,13 +64,13 @@ Four rules the whole game is built on:
 * **Platform**: iPhone-only, iOS 17.0+
 * **Persistence**: single local JSON file, atomic writes, versioned migration chain — everything stays on device
 * **Game services**: GameKit (optional auth, leaderboards, achievements) · CoreHaptics
-* **Testing**: `SudoSodokuTests` unit suite (generator quality, rating, storage, record immutability, gameplay logic) run locally and on Xcode Cloud
+* **Testing**: `SudoSudokuTests` unit suite (generator quality, rating, storage, record immutability, gameplay logic) run locally and on Xcode Cloud
 
 ### **Directory Structure**
 
 ```
-SudoSodoku/
-├── SudoSodokuApp.swift           # @main entry
+SudoSudoku/
+├── SudoSudokuApp.swift           # @main entry
 ├── Models/                       # GameRecord, SudokuCell, MoveHistory, Difficulty, RankTier, Achievement, ...
 ├── ViewModels/
 │   └── SudokuGame.swift          # Core game logic, play clock, undo/redo, victory pipeline
@@ -91,7 +91,7 @@ SudoSodoku/
     └── Components/               # TerminalCommandComposer, BreachLogView, MatrixVictoryOverlay, ...
 
 Config/Info.plist                 # Launch screen keys merged into the generated Info.plist
-SudoSodokuTests/                  # Unit tests (picked up automatically by the shared scheme)
+SudoSudokuTests/                  # Unit tests (picked up automatically by the shared scheme)
 ```
 
 ## **🚀 Building the Project**
@@ -101,14 +101,14 @@ SudoSodokuTests/                  # Unit tests (picked up automatically by the s
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/kaiiiichen/SudoSodoku.git
+   git clone https://github.com/sudosudoku/sudo-sudoku.git
    ```
 
 2. **Open in Xcode**:
-   Double-click `SudoSodoku.xcodeproj`. Xcode 15.0+ required.
+   Double-click `SudoSudoku.xcodeproj`. Xcode 15.0+ required.
 
 3. **Configure Signing**:
-   Select the SudoSodoku target → **Signing & Capabilities** → set your own Team.
+   Select the SudoSudoku target → **Signing & Capabilities** → set your own Team.
 
 4. **Run**:
    Connect your iPhone or select a Simulator and press `Cmd + R`.
@@ -134,7 +134,7 @@ SudoSodokuTests/                  # Unit tests (picked up automatically by the s
 * **Tests**:
 
   ```bash
-  xcodebuild test -project SudoSodoku.xcodeproj -scheme SudoSodoku \
+  xcodebuild test -project SudoSudoku.xcodeproj -scheme SudoSudoku \
     -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
   ```
 

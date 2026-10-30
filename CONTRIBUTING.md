@@ -1,4 +1,4 @@
-# Contributing to SudoSodoku
+# Contributing to sudo sudoku
 
 Thank you for your interest in contributing! This document describes how this repository actually works — read it before opening a PR.
 
@@ -29,11 +29,11 @@ Thank you for your interest in contributing! This document describes how this re
 1. **Fork and clone**
 
    ```bash
-   git clone https://github.com/YOUR_USERNAME/SudoSodoku.git
-   cd SudoSodoku
+   git clone https://github.com/YOUR_USERNAME/sudo-sudoku.git
+   cd sudo-sudoku
    ```
 
-2. **Open `SudoSodoku.xcodeproj`**, set your own Team under Signing & Capabilities.
+2. **Open `SudoSudoku.xcodeproj`**, set your own Team under Signing & Capabilities.
 
 3. **Build and run**: `Cmd + R` in Xcode, or `./build.sh` / `./play.sh` from the terminal.
 
@@ -45,18 +45,18 @@ These are the non-obvious constraints; violating them breaks CI or the App Store
 
 2. **`IPHONEOS_DEPLOYMENT_TARGET` must stay the literal `17.0`** in `project.pbxproj`. Do **not** accept Xcode's "Update to recommended settings" suggestion that rewrites it to `$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)` — Xcode Cloud resolves that macro to nothing and the build fails with iOS 16/17 availability errors.
 
-3. **Don't hand-register files in `project.pbxproj`.** The project uses Xcode's synchronized folder groups: new files under `SudoSodoku/` or `SudoSodokuTests/` are picked up automatically. (Corollary: files that must *not* be bundled as resources — like the merged `Info.plist` — live outside those folders, e.g. `Config/`.)
+3. **Don't hand-register files in `project.pbxproj`.** The project uses Xcode's synchronized folder groups: new files under `SudoSudoku/` or `SudoSudokuTests/` are picked up automatically. (Corollary: files that must *not* be bundled as resources — like the merged `Info.plist` — live outside those folders, e.g. `Config/`.)
 
 4. **Update `CHANGELOG.md` (`[Unreleased]` section) in the same PR** as the change it describes.
 
 5. **Run the full test suite before every PR**:
 
    ```bash
-   xcodebuild test -project SudoSodoku.xcodeproj -scheme SudoSodoku \
+   xcodebuild test -project SudoSudoku.xcodeproj -scheme SudoSudoku \
      -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
    ```
 
-   New generator, rating, or storage logic needs matching unit tests in `SudoSodokuTests/`.
+   New generator, rating, or storage logic needs matching unit tests in `SudoSudokuTests/`.
 
 ## 📋 Workflow
 
@@ -77,7 +77,7 @@ Types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`. Examples fro
 ```
 feat: landing terminal boots in on launch
 fix: solved records are immutable history
-refactor: rename command-line branding to `sudo sudosodoku`
+refactor: rename command-line branding to `sudo sudoku`
 ```
 
 ### 3. Pull Request
@@ -99,7 +99,7 @@ refactor: rename command-line branding to `sudo sudosodoku`
 
 * Monospaced everywhere, `UPPER_SNAKE` labels (`SYSTEM_OVERVIEW:`, `NO_RECORDS_FOUND`)
 * Shell-flavored strings (`cat /leaderboard`, `$ rm -rf /user_data`, `# awaiting command`)
-* The navigation fiction is one accumulating command line (`root@ios:~$ sudo sudosodoku …`) — new screens should extend it, not break it
+* The navigation fiction is one accumulating command line (`root@ios:~$ sudo sudoku …`) — new screens should extend it, not break it
 
 ### Accessibility & Feel (non-negotiable)
 
@@ -133,4 +133,4 @@ By contributing, you agree that your contributions will be licensed under the MI
 
 ---
 
-**Thank you for contributing to SudoSodoku!** 🎉
+**Thank you for contributing to sudo sudoku!** 🎉

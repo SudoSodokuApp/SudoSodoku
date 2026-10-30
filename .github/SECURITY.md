@@ -19,7 +19,7 @@ We take security vulnerabilities seriously. If you discover a security vulnerabi
 
 Instead, please report them via one of the following methods:
 
-1. **GitHub Security Advisory**: Use GitHub's [private vulnerability reporting](https://github.com/kaiiiichen/SudoSodoku/security/advisories/new) (recommended)
+1. **GitHub Security Advisory**: Use GitHub's [private vulnerability reporting](https://github.com/sudosudoku/sudo-sudoku/security/advisories/new) (recommended)
 2. **Direct Contact**: Contact the maintainer directly through GitHub
 
 ### 📋 What to Include
@@ -74,7 +74,7 @@ If you're contributing code:
 
 #### Permissions
 
-SudoSodoku requests minimal permissions:
+sudo sudoku requests minimal permissions:
 
 * **Game Center**: For user authentication, leaderboards, and achievements (optional — never presented at launch)
 
@@ -103,7 +103,7 @@ Security updates will be:
 
 ### 🏆 Recognition
 
-We deeply appreciate responsible disclosure of security vulnerabilities. Security researchers and contributors who help keep SudoSodoku secure will be:
+We deeply appreciate responsible disclosure of security vulnerabilities. Security researchers and contributors who help keep sudo sudoku secure will be:
 
 * Credited in security advisories (with your permission)
 * Acknowledged in release notes
@@ -117,4 +117,4 @@ We deeply appreciate responsible disclosure of security vulnerabilities. Securit
 
 ---
 
-**Thank you for helping keep SudoSodoku secure!** 🔒
+**Thank you for helping keep sudo sudoku secure!** 🔒

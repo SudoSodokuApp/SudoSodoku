@@ -1,6 +1,6 @@
 # Development & Roadmap
 
-Welcome! This document provides transparency into SudoSodoku's development process, upcoming features, and how we ensure quality. Whether you're a user curious about what's coming next, or a contributor looking to help, this is the place to find information.
+Welcome! This document provides transparency into sudo sudoku's development process, upcoming features, and how we ensure quality. Whether you're a user curious about what's coming next, or a contributor looking to help, this is the place to find information.
 
 ---
 
@@ -40,7 +40,7 @@ Welcome! This document provides transparency into SudoSodoku's development proce
 - **Completion time tracking** — active-time play clock, personal bests by fastest solve
 - **Streak indicator**, semantic haptics, breach-log loading, matrix-rain victory sequence
 - **Honest statistics** — no win rate in a no-fail game; SOLVED / ELO / FASTEST / HARDEST
-- **One continuous command line** — accumulating `sudo sudosodoku` navigation with a boot-in on launch
+- **One continuous command line** — accumulating `sudo sudoku` navigation with a boot-in on launch
 
 #### Detailed Statistics 📊 (v1.0)
 
@@ -217,7 +217,7 @@ Welcome! This document provides transparency into SudoSodoku's development proce
 
 **Foundation (done / in progress):**
 
-1. **Unit Test Target** ✅ (`SudoSodokuTests`: generator, rating, storage migration)
+1. **Unit Test Target** ✅ (`SudoSudokuTests`: generator, rating, storage migration)
 2. **Completion Time Tracking** ⏱️ (prerequisite for time leaderboards & speed achievements)
 
 **Game Center:**
@@ -326,7 +326,7 @@ We take quality seriously. Before every release, we thoroughly test all features
 - [ ] Release build succeeds
 - [ ] Clean build works
 - [ ] No warnings (or acceptable warnings)
-- [ ] Unit tests pass (`SudoSodokuTests` via Cmd+U or `xcodebuild test`)
+- [ ] Unit tests pass (`SudoSudokuTests` via Cmd+U or `xcodebuild test`)
 
 ### Code Quality
 

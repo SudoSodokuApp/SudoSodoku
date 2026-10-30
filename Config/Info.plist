@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<!-- Merged into the generated Info.plist via INFOPLIST_FILE. Lives
-	     outside SudoSodoku/ because the synchronized folder group would
+	     outside SudoSudoku/ because the synchronized folder group would
 	     otherwise bundle it as a resource and collide with the processed
 	     Info.plist ("Multiple commands produce Info.plist").
 

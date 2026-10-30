@@ -104,6 +104,6 @@ Add any other context about the PR here.
 
 ---
 
-**Thank you for contributing to SudoSodoku!** 🎉
+**Thank you for contributing to sudo sudoku!** 🎉
 
 Please ensure all checkboxes are completed before requesting review.
