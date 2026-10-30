@@ -8,6 +8,10 @@ sudo sudoku 2.0 is available free on the [App Store](https://apps.apple.com/us/a
 
 An active puzzle is saved locally as you play. Relaunch the app and open `archives` to resume it. The play clock counts active time only and pauses while the app is in the background.
 
+### I got a new iPhone — where is my progress?
+
+If you are signed in to iCloud on both iPhones with the same Apple Account, sudo sudoku restores your game history, rating, and achievements on its own after launch; give it a moment online. Check **Settings → [your name] → iCloud** and make sure iCloud is allowed for sudo sudoku. Playing on two iPhones keeps both in sync, and rating earned on each one adds up.
+
 ### Game Center is not showing my profile
 
 sudo sudoku works without Game Center. For leaderboards and achievements:
@@ -32,10 +36,10 @@ Enable **Settings → Accessibility → Motion → Reduce Motion**. sudo sudoku 
 
 ## Data and privacy
 
-Gameplay data stays on your device. There is no sudo sudoku account, analytics, advertising, tracking, or developer-operated cloud service. Game Center is optional and operated by Apple.
+Gameplay data stays on your device and, if iCloud is on, in your own private iCloud storage, which the developer cannot see. There is no sudo sudoku account, analytics, advertising, tracking, or developer-operated cloud service. iCloud and Game Center are optional and operated by Apple.
 
 - Read the [Privacy Policy](PRIVACY.md).
-- To remove local gameplay data, delete the app. This cannot be undone.
+- To remove local gameplay data, delete the app. To remove the iCloud copy too, delete it in **Settings → [your name] → iCloud → Manage Account Storage**. This cannot be undone.
 - Deleting the app does not delete Game Center leaderboard scores or achievements; Apple manages that data through Game Center.
 
 Never post personal information, Apple Account details, or private Game Center information in a public issue or discussion.

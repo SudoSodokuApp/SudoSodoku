@@ -9,6 +9,10 @@ import SwiftUI
 
 @main
 struct SudoSudokuApp: App {
+    init() {
+        CloudSyncManager.startForApp()
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView()

@@ -132,7 +132,7 @@ struct UserProfileView: View {
             }
             Button("CANCEL", role: .cancel) {}
         } message: {
-            Text("Erases local records and rating, clears achievements, and resets Game Center achievement progress.")
+            Text("Erases records, rating and achievements on this device and in iCloud, and resets Game Center achievement progress.")
         }
     }
     #endif
