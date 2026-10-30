@@ -9,7 +9,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for helping improve SudoSodoku. For setup questions, use [Discussions Q&A](https://github.com/SudoSodokuApp/SudoSodoku/discussions/categories/q-a). For a security vulnerability, stop and use [private vulnerability reporting](https://github.com/SudoSodokuApp/SudoSodoku/security/advisories/new).
+        Thanks for helping improve sudo sudoku. For setup questions, use [Discussions Q&A](https://github.com/sudosudoku/sudo-sudoku/discussions/categories/q-a). For a security vulnerability, stop and use [private vulnerability reporting](https://github.com/sudosudoku/sudo-sudoku/security/advisories/new).
 
   - type: textarea
     id: summary
@@ -35,7 +35,7 @@ body:
   - type: input
     id: app-version
     attributes:
-      label: SudoSodoku version
+      label: sudo sudoku version
       description: Find this on the landing screen or App Store page.
       placeholder: "2.0"
     validations:

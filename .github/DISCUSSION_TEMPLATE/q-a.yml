@@ -3,7 +3,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Start with [SUPPORT.md](https://github.com/SudoSodokuApp/SudoSodoku/blob/main/SUPPORT.md). Never include Apple Account details, private Game Center information, or other personal data.
+        Start with [SUPPORT.md](https://github.com/sudosudoku/sudo-sudoku/blob/main/SUPPORT.md). Never include Apple Account details, private Game Center information, or other personal data.
 
   - type: textarea
     id: question
@@ -18,7 +18,7 @@ body:
     attributes:
       label: Relevant environment
       description: Optional — app version, iOS version, device, Xcode version, or commit.
-      placeholder: "SudoSodoku 2.0 · iOS 27.0 · iPhone 17 Pro"
+      placeholder: "sudo sudoku 2.0 · iOS 27.0 · iPhone 17 Pro"
 
   - type: textarea
     id: context

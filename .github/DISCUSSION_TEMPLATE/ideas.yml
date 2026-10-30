@@ -16,7 +16,7 @@ body:
   - type: textarea
     id: proposal
     attributes:
-      label: What would you like SudoSodoku to do?
+      label: What would you like sudo sudoku to do?
       description: Describe the smallest useful version of the idea.
     validations:
       required: true
