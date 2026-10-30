@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Accessibility
+
+- Conflicting digits are now struck through as well as shown in red, so errors no longer rely on color alone (Differentiate Without Color).
+
 ### Changed
 
 - README opens with the app icon and a launch-focused product hierarchy, matching the product site

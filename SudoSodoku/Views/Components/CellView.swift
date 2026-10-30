@@ -26,6 +26,9 @@ struct CellView: View {
                 Text("\(val)")
                     .font(.system(size: cellSize * 0.6, weight: cell.isGiven ? .bold : .regular, design: .monospaced))
                     .foregroundColor(txt)
+                    // Strike through conflicting digits so errors never rely
+                    // on red alone (Differentiate Without Color).
+                    .strikethrough(cell.isError, color: txt)
             }
         }
         .frame(width: cellSize, height: cellSize)
@@ -35,7 +38,7 @@ struct CellView: View {
             content.offset(x: offset)
         } keyframes: { _ in
             // CRT-glitch jitter on conflict; collapses to a no-op (amplitude 0)
-            // when Reduce Motion is on — the red text still marks the error.
+            // when Reduce Motion is on — the red strikethrough still marks the error.
             let amplitude: Double = reduceMotion ? 0 : cellSize * 0.08
             LinearKeyframe(-amplitude, duration: 0.05)
             LinearKeyframe(amplitude, duration: 0.05)
