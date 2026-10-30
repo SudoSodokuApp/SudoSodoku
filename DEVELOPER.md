@@ -6,8 +6,8 @@ For setup and pull request rules, start with [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Current product state
 
-- **App Store:** [sudo sudoku 2.0](https://apps.apple.com/us/app/sudo-sudoku/id6779813086), released July 16, 2026
-- **Source release:** [v2.0.0](https://github.com/sudosudoku/sudo-sudoku/releases/tag/v2.0.0)
+- **App Store:** [sudo sudoku 2.0.1](https://apps.apple.com/us/app/sudo-sudoku/id6779813086), released TBD (2.0 first shipped July 16, 2026 as SudoSodoku)
+- **Source release:** [v2.0.1](https://github.com/sudosudoku/sudo-sudoku/releases/tag/v2.0.1)
 - **Platform:** iPhone, iOS 17 or later
 - **Stack:** Swift 5.9, SwiftUI, Combine, GameKit, Core Haptics
 - **Persistence:** one atomic, versioned local JSON save file

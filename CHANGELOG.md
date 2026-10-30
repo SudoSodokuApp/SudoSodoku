@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to sudo sudoku will be documented in this file.
+All notable changes to sudo sudoku (formerly SudoSodoku) will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -9,18 +9,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Accessibility
+---
 
-- Conflicting digits are now struck through as well as shown in red, so errors no longer rely on color alone (Differentiate Without Color).
+## [2.0.1] - TBD
+
+### 🏷️ sudo sudoku — the name finally types itself right
+
+v2.0.1 is a maintenance release. "Sodoku" was a misspelling, so the app is now **sudo sudoku**: `sudo` plus `sudoku`, which was always the joke. It also stops marking errors by color alone. Existing installs update in place: history, rating, achievements, and Game Center scores carry over untouched.
+
+**Available on the [App Store](https://apps.apple.com/us/app/sudo-sudoku/id6779813086).**
+
+**Requirements:** iOS 17.0+, iPhone only. Internet optional (Game Center).
 
 ### Changed
 
-- Adopted Xcode 27's recommended project settings (upgrade check 2700, project-level development team, string catalog symbols); the deployment target stays iOS 17.0.
-- Version is now 2.0.1: 2.0.0 is already on the App Store, so App Store Connect rejects new builds under it (Xcode Cloud archives failed at "Preparing build for App Store Connect").
-- The in-app privacy link (`cat /privacy`) and the README/SUPPORT links point at the new product site, `https://sudosudoku.kaichen.dev`. The old domain keeps redirecting, so v2.0.0 links still work.
-- Renamed the app from SudoSodoku to **sudo sudoku**: the home-screen name is now `sudo sudoku`, and the terminal command reads `root@ios:~$ sudo sudoku …`. The Xcode project, target, scheme, source folders and test target are now `SudoSudoku` / `SudoSudokuTests`, and docs point at the renamed `sudosudoku/sudo-sudoku` repository. Bundle ID, Game Center IDs and save data are unchanged, so existing installs update in place.
+- Renamed the app from SudoSodoku to **sudo sudoku**: the home-screen name is now `sudo sudoku`, and the terminal command reads `root@ios:~$ sudo sudoku …` everywhere it is typed or echoed. Bundle ID, Game Center IDs and save data are unchanged, so existing installs update in place (#105)
+- The in-app privacy link (`cat /privacy`) opens the product site's new home, `https://sudosudoku.kaichen.dev/privacy`. The old domain keeps redirecting, so links in v2.0.0 still work (#111)
+
+### Accessibility
+
+- Conflicting digits are now struck through as well as shown in red, so errors no longer rely on color alone (Differentiate Without Color) (#103)
+
+### Project
+
+- The Xcode project, target, scheme, module, source folders and test target are now `SudoSudoku` / `SudoSudokuTests`; the repository moved to [`sudosudoku/sudo-sudoku`](https://github.com/sudosudoku/sudo-sudoku) and all docs and templates link there (#105)
+- Version is 2.0.1: 2.0.0 is already on the App Store, so App Store Connect rejected new builds under it (Xcode Cloud archives failed at "Preparing build for App Store Connect") (#113)
+- Adopted Xcode 27's recommended project settings (upgrade check 2700, project-level development team, string catalog symbols); the deployment target stays iOS 17.0 (#115)
 - README opens with the app icon and a launch-focused product hierarchy, matching the product site
-- Reorganized the post-launch repository around clear product, support, contribution, discussion, privacy, security, and release paths; updated all canonical links to the SudoSodokuApp organization
+- Reorganized the post-launch repository around clear product, support, contribution, discussion, privacy, security, and release paths
 - Replaced legacy issue and pull request templates with focused forms that route questions and ideas to Discussions and keep bug reports actionable
 - Corrected historical v1.0 source-release documentation that described iCloud and App Store availability before those features existed
 
