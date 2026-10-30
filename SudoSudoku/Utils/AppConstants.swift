@@ -18,7 +18,7 @@ enum AppConstants {
     }
 
     static var marketingVersion: String {
-        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "2.0.0"
+        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "2.1.0"
     }
 
     /// Privacy policy on the product site (rendered from the repository's
