@@ -37,7 +37,7 @@ body:
     attributes:
       label: sudo sudoku version
       description: Find this on the landing screen or App Store page.
-      placeholder: "2.0"
+      placeholder: "2.0.1"
     validations:
       required: true
 

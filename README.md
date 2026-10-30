@@ -9,7 +9,7 @@
 <p align="center">
   <a href="https://apps.apple.com/us/app/sudo-sudoku/id6779813086">Download on the App Store</a>
   · <a href="https://sudosudoku.kaichen.dev">Website</a>
-  · <a href="https://github.com/sudosudoku/sudo-sudoku/releases/tag/v2.0.0">v2.0.0</a>
+  · <a href="https://github.com/sudosudoku/sudo-sudoku/releases/latest">Latest release</a>
 </p>
 
 ```text
@@ -134,6 +134,7 @@ Choose the path that best fits what you need:
 - [Development and roadmap](DEVELOPER.md)
 - [Contributing](CONTRIBUTING.md)
 - [Changelog](CHANGELOG.md)
+- [v2.0.1 release notes](RELEASE_NOTES_v2.0.1.md)
 - [v2.0.0 release notes](RELEASE_NOTES_v2.0.0.md)
 - [Privacy Policy](PRIVACY.md)
 - [Security Policy](.github/SECURITY.md)

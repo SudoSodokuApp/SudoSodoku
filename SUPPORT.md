@@ -1,6 +1,6 @@
 # sudo sudoku support
 
-sudo sudoku 2.0 is available free on the [App Store](https://apps.apple.com/us/app/sudo-sudoku/id6779813086) for iPhone running iOS 17 or later.
+sudo sudoku 2.0.1 is available free on the [App Store](https://apps.apple.com/us/app/sudo-sudoku/id6779813086) for iPhone running iOS 17 or later.
 
 ## Quick help
 
