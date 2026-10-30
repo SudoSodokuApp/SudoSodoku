@@ -9,21 +9,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Changed
-
-- Renamed the app from SudoSodoku to **sudo sudoku**: the home-screen name is now `sudo sudoku`, and the terminal command reads `root@ios:~$ sudo sudoku …`. The Xcode project, target, scheme, source folders and test target are now `SudoSudoku` / `SudoSudokuTests`. Bundle ID, Game Center IDs and save data are unchanged, so existing installs update in place.
-
 ### Accessibility
 
 - Conflicting digits are now struck through as well as shown in red, so errors no longer rely on color alone (Differentiate Without Color).
 
+### Changed
+
+- Renamed the app from SudoSodoku to **sudo sudoku**: the home-screen name is now `sudo sudoku`, and the terminal command reads `root@ios:~$ sudo sudoku …`. The Xcode project, target, scheme, source folders and test target are now `SudoSudoku` / `SudoSudokuTests`, and docs point at the renamed `sudosudoku/sudo-sudoku` repository. Bundle ID, Game Center IDs and save data are unchanged, so existing installs update in place.
+- README opens with the app icon and a launch-focused product hierarchy, matching the product site
+- Reorganized the post-launch repository around clear product, support, contribution, discussion, privacy, security, and release paths; updated all canonical links to the SudoSodokuApp organization
+- Replaced legacy issue and pull request templates with focused forms that route questions and ideas to Discussions and keep bug reports actionable
+- Corrected historical v1.0 source-release documentation that described iCloud and App Store availability before those features existed
+
 ---
 
-## [2.0.0] - 2026-07-08
+## [2.0.0] - 2026-07-16
 
 ### 🚀 sudo solve — logic is root access
 
-v2.0.0 is the release where SudoSodoku becomes what it always wanted to be: a full terminal fantasy with a real competitive ladder. Game Center leaderboards and achievements go live, every puzzle now reads as hand-crafted, and the whole game got a feel pass — haptics, signature moments, and accessibility discipline throughout.
+v2.0.0 is the first App Store release and the version where SudoSodoku becomes what it always wanted to be: a full terminal fantasy with a real competitive ladder. Game Center leaderboards and achievements go live, every puzzle now reads as hand-crafted, and the whole game got a feel pass — haptics, signature moments, and accessibility discipline throughout.
+
+**Available on the [App Store](https://apps.apple.com/us/app/sudosodoku/id6779813086).**
 
 **Requirements:** iOS 17.0+, iPhone only. Internet optional (Game Center).
 
@@ -70,7 +76,7 @@ v2.0.0 is the release where SudoSodoku becomes what it always wanted to be: a fu
 - `StorageManager` uses atomic JSON writes; `SudokuGame` preserves session `startTime` across saves
 - Game Center auth runs once at app root; removed duplicate `authenticateUser()` calls
 - Rating anti-smurfing: zero gain when puzzle difficulty is far below player ELO
-- Unified signing config, Swift 5.9, marketing version `1.0.0`, and `play.sh` bundle ID fallback
+- Unified signing config, Swift 5.9, marketing version `2.0.0`, and `play.sh` bundle ID fallback
 - Landing page version reads from app bundle instead of hardcoded string
 - Author attribution reads Kai T. Chen throughout (LICENSE, README, source header), with links to [kaichen.dev](https://kaichen.dev) and the product site
 - Fixed swapped section bodies in DEVELOPER.md (Achievement System / iPad Support) and aligned the roadmap tiers with the phased v1.1-v1.3 plan
@@ -104,9 +110,9 @@ v2.0.0 is the release where SudoSodoku becomes what it always wanted to be: a fu
 
 ## [1.0.0] - 2026-01-02
 
-### 🎉 First Official Release
+### First public source release
 
-SudoSodoku v1.0.0 marks a major milestone - the first stable release of our terminal-style Sudoku experience. After months of development and beta testing, we're excited to share this polished, feature-complete game with the community.
+SudoSodoku v1.0.0 was the first stable source release of the terminal-style Sudoku project. It predates the public App Store launch; v2.0.0 is the first App Store release.
 
 **System Requirements (at release):**
 
@@ -154,16 +160,14 @@ See [DEVELOPER.md](DEVELOPER.md) for the current roadmap.
 
 #### Data Persistence
 
-- **iCloud Sync**: Automatic cloud synchronization across devices
-- **Local Fallback**: Graceful degradation to local storage if iCloud unavailable
-- **Data Migration**: Automatic migration from v2/v3/v4 save formats
+- **Local Save**: Gameplay data stored in a JSON file on device
+- **Data Migration**: Automatic migration from earlier save formats
 - **JSON Serialization**: Codable structs ensuring backward compatibility
 
 #### Game Center Integration
 
 - **Seamless Authentication**: Password-less login via Game Center
 - **Profile Management**: Display player name and photo
-- **Cross-Device Sync**: Game state synchronization through iCloud
 
 ### 🏗️ Architecture
 
@@ -209,7 +213,7 @@ SudoSodoku/
 - **Language**: Swift 5.9
 - **UI Framework**: SwiftUI (Declarative UI)
 - **State Management**: ObservableObject + Combine
-- **Persistence**: FileManager + iCloud Documents
+- **Persistence**: FileManager + local JSON
 - **Game Framework**: GameKit for Game Center integration
 
 ### 🐛 Fixed

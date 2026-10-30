@@ -1,8 +1,14 @@
-blank_issues_enabled: true
+blank_issues_enabled: false
 contact_links:
-  - name: 💬 GitHub Discussions
-    url: https://github.com/sudosudoku/sudo-sudoku/discussions
-    about: Ask questions, share ideas, or discuss the project
-  - name: 📚 Documentation
-    url: https://github.com/sudosudoku/sudo-sudoku#readme
-    about: Check the README and other documentation
+  - name: Ask a question
+    url: https://github.com/sudosudoku/sudo-sudoku/discussions/categories/q-a
+    about: Get help with the app, building the project, or using Game Center.
+  - name: Suggest an idea
+    url: https://github.com/sudosudoku/sudo-sudoku/discussions/categories/ideas
+    about: Discuss a product idea and its fit before it becomes an implementation issue.
+  - name: Read support guidance
+    url: https://github.com/sudosudoku/sudo-sudoku/blob/main/SUPPORT.md
+    about: Check common answers, privacy information, and reporting paths.
+  - name: Report a security vulnerability privately
+    url: https://github.com/sudosudoku/sudo-sudoku/security/advisories/new
+    about: Do not disclose security issues in a public issue or discussion.

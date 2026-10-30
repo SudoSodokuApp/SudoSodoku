@@ -1,5 +1,7 @@
 # SudoSodoku v2.0.0
 
+**Released July 16, 2026 · [Download on the App Store](https://apps.apple.com/us/app/sudosodoku/id6779813086) · [Official website](https://sudosodoku.kaichen.dev)**
+
 ```
 $ sudo solve
 > root access granted.
@@ -7,7 +9,7 @@ $ sudo solve
 
 **sudo solve — logic is root access.**
 
-v2.0.0 is the release where SudoSodoku becomes what it always wanted to be: a full terminal fantasy with a real competitive ladder.
+v2.0.0 is SudoSodoku's first App Store release — the release where it becomes what it always wanted to be: a full terminal fantasy with a real competitive ladder.
 
 ## The Ladder goes live 🏆
 

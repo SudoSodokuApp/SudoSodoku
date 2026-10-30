@@ -1,0 +1,46 @@
+title: "[Idea] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Ideas are evaluated by user value, fit with the terminal fantasy, accessibility, privacy, and maintenance cost. Subtraction wins close calls.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What need or problem would this address?
+      description: Start with the player experience, not the implementation.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What would you like SudoSodoku to do?
+      description: Describe the smallest useful version of the idea.
+    validations:
+      required: true
+
+  - type: textarea
+    id: fit
+    attributes:
+      label: How does it fit the product principles?
+      description: Consider focus, fairness, privacy, accessibility, and the terminal experience.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives or tradeoffs
+      description: What could be removed, simplified, or solved another way?
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before posting
+      options:
+        - label: I searched existing discussions and issues.
+          required: true
+        - label: This idea does not depend on ads, tracking, pay-to-win, or forced engagement.
+          required: true

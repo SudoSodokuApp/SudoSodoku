@@ -1,86 +1,26 @@
-# SudoSodoku v1.0.0 - First Official Release 🎉
+# SudoSodoku v1.0.0
 
-> **Note:** This document describes the original v1.0.0 release. For current platform support and persistence behavior, see [CHANGELOG.md](CHANGELOG.md) `[Unreleased]`.
+> Historical note: v1.0.0 was a public source release, not an App Store release. Some original release copy described planned iCloud and iPad work that did not ship in the current product. This page now records the source release without carrying those claims forward. For the shipping app, see [v2.0.0](https://github.com/SudoSodokuApp/SudoSodoku/releases/tag/v2.0.0).
 
-We're thrilled to announce the first stable release of **SudoSodoku** - a terminal-style Sudoku experience for iOS!
+Released January 2, 2026.
 
-## What's New
+## What it established
 
-### 🎮 Core Features
+- Procedurally generated, unique Sudoku puzzles
+- Four difficulty levels with logical difficulty scoring
+- Pencil notes and undo/redo
+- A local archive and statistics
+- ELO ratings and six rank tiers
+- The green-phosphor terminal visual identity
+- SwiftUI and MVVM architecture
+- Command-line build and simulator helpers
 
-- **Procedural Puzzle Generation**: Infinite unique puzzles generated in real-time
-- **Four Difficulty Levels**: Easy, Medium, Hard, and Master with intelligent scoring
-- **ELO Rating System**: Competitive ranking from SCRIPT_KIDDIE to THE_ARCHITECT
-- **Pencil Mode**: Candidate notes for advanced solving strategies
-- **Undo/Redo**: Full history stack for fearless experimentation
+## Requirements at the time
 
-### 🎨 Terminal Aesthetic
+- iOS 17 or later
+- Xcode 15 or later for source builds
+- Optional Game Center access
 
-- Authentic green phosphor terminal UI
-- Matrix-style victory animations
-- Haptic feedback for every interaction
-- Smooth, polished animations
+## Current release
 
-### 💾 Data & Sync
-
-- **iCloud Sync**: Automatic cloud synchronization across devices
-- **Game Center Integration**: Seamless authentication and profile management
-- **Smart Archives**: Auto-save with favorites and replay functionality
-
-### 🏗️ Technical Excellence
-
-- Clean MVVM architecture
-- Modular, maintainable codebase
-- Open source and fully documented
-
-## System Requirements
-
-- iOS 17.0 or later
-- iPhone and iPad support
-- Minimal storage (~5MB)
-- Optional internet (for iCloud sync and Game Center)
-
-## Getting Started
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/kaiiiichen/SudoSodoku.git
-   ```
-
-2. Open in Xcode:
-
-   ```bash
-   open SudoSodoku.xcodeproj
-   ```
-
-3. Configure signing and build!
-
-See [README.md](README.md) for detailed build instructions.
-
-## What's Next
-
-We're planning future updates including:
-
-- Detailed statistics
-- iPad optimization
-- Achievement system
-- Hint system
-- Tutorial mode
-- And more!
-
-See [DEVELOPER.md](DEVELOPER.md) for the full roadmap.
-
-## Contributing
-
-We welcome contributions! Check out [CONTRIBUTING.md](CONTRIBUTING.md) to get started.
-
-## License
-
-Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
-
----
-
-**Enjoy the game!** 🎮
-
-*Created with logic and ❤️ by ginger cat.*
+SudoSodoku 2.0 is now available on the [App Store](https://apps.apple.com/us/app/sudosodoku/id6779813086). See the [v2.0.0 release](https://github.com/SudoSodokuApp/SudoSodoku/releases/tag/v2.0.0) and [CHANGELOG.md](https://github.com/SudoSodokuApp/SudoSodoku/blob/main/CHANGELOG.md) for the current product.

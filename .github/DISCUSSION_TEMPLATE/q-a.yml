@@ -1,0 +1,27 @@
+title: "[Question] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Start with [SUPPORT.md](https://github.com/SudoSodokuApp/SudoSodoku/blob/main/SUPPORT.md). Never include Apple Account details, private Game Center information, or other personal data.
+
+  - type: textarea
+    id: question
+    attributes:
+      label: What do you need help with?
+      description: Explain the goal, what you tried, and where you got stuck.
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Relevant environment
+      description: Optional — app version, iOS version, device, Xcode version, or commit.
+      placeholder: "SudoSodoku 2.0 · iOS 27.0 · iPhone 17 Pro"
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Add screenshots or logs if useful, after removing personal information.
