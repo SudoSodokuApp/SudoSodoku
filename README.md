@@ -8,7 +8,7 @@
 
 <p align="center">
   <a href="https://apps.apple.com/us/app/sudo-sudoku/id6779813086">Download on the App Store</a>
-  · <a href="https://sudosodoku.kaichen.dev">Website</a>
+  · <a href="https://sudosudoku.kaichen.dev">Website</a>
   · <a href="https://github.com/sudosudoku/sudo-sudoku/releases/tag/v2.0.0">v2.0.0</a>
 </p>
 
@@ -64,7 +64,7 @@ That approach follows the same fundamentals Apple recommends in its [Human Inter
 
 Game history, rating, statistics, and achievements stay in one local save file on your device. sudo sudoku has no developer account system, analytics, advertising, tracking, or third-party SDKs. Game Center is optional, operated by Apple, and used only for leaderboards and achievements.
 
-Read the full [Privacy Policy](PRIVACY.md) or visit [sudosodoku.kaichen.dev/privacy](https://sudosodoku.kaichen.dev/privacy).
+Read the full [Privacy Policy](PRIVACY.md) or visit [sudosudoku.kaichen.dev/privacy](https://sudosudoku.kaichen.dev/privacy).
 
 ## Build from source
 

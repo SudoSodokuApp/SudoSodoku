@@ -58,7 +58,7 @@ Security vulnerabilities must not be posted publicly. Follow the private reporti
 ## Product links
 
 - [App Store](https://apps.apple.com/us/app/sudo-sudoku/id6779813086)
-- [Official website](https://sudosodoku.kaichen.dev)
+- [Official website](https://sudosudoku.kaichen.dev)
 - [GitHub Discussions](https://github.com/sudosudoku/sudo-sudoku/discussions)
 - [Known issues](https://github.com/sudosudoku/sudo-sudoku/issues)
-- [Privacy Policy](https://sudosodoku.kaichen.dev/privacy)
+- [Privacy Policy](https://sudosudoku.kaichen.dev/privacy)
