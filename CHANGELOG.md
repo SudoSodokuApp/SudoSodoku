@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Version is now 2.1.0: 2.0.0 is already on the App Store, so App Store Connect rejects new builds under it (Xcode Cloud archives failed at "Preparing build for App Store Connect").
+- Version is now 2.0.1: 2.0.0 is already on the App Store, so App Store Connect rejects new builds under it (Xcode Cloud archives failed at "Preparing build for App Store Connect").
 - The in-app privacy link (`cat /privacy`) and the README/SUPPORT links point at the new product site, `https://sudosudoku.kaichen.dev`. The old domain keeps redirecting, so v2.0.0 links still work.
 - Renamed the app from SudoSodoku to **sudo sudoku**: the home-screen name is now `sudo sudoku`, and the terminal command reads `root@ios:~$ sudo sudoku …`. The Xcode project, target, scheme, source folders and test target are now `SudoSudoku` / `SudoSudokuTests`, and docs point at the renamed `sudosudoku/sudo-sudoku` repository. Bundle ID, Game Center IDs and save data are unchanged, so existing installs update in place.
 - README opens with the app icon and a launch-focused product hierarchy, matching the product site
