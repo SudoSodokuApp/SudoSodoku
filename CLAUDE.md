@@ -20,7 +20,8 @@
 - Public App Store release: 2.0, launched 2026-07-16 (as SudoSodoku; renamed
   to sudo sudoku afterwards).
   App Store: `https://apps.apple.com/us/app/sudo-sudoku/id6779813086`.
-  Website: `https://sudosodoku.kaichen.dev` (moving to a new domain).
+  Website: `https://sudosudoku.kaichen.dev` (the old
+  `sudosodoku.kaichen.dev` 308-redirects every path to it).
 - Canonical repository: `https://github.com/sudosudoku/sudo-sudoku`.
 - iPhone-only iOS app (`TARGETED_DEVICE_FAMILY = 1`), iOS 17.0+, SwiftUI + MVVM,
   Swift 5.9. **No iPadOS or macOS work** — deferred indefinitely.
@@ -31,7 +32,7 @@
 - The product name is **sudo sudoku** (lowercase, with a space) in user-facing
   copy, docs and the home-screen name; code identifiers, the Xcode project,
   target and scheme use `SudoSudoku`. The repo is `sudosudoku/sudo-sudoku`.
-  The old `sudosodoku.kaichen.dev` domain must stay reachable forever
+  The old `sudosodoku.kaichen.dev` domain must keep redirecting forever
   (v2.0.0 hardcodes its privacy URL).
 - Bundle ID `dev.kaichen.sudoku.app`; Game Center leaderboard IDs live in
   `SudoSudoku/Utils/AppConstants.swift`.
