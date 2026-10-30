@@ -62,7 +62,7 @@ That approach follows the same fundamentals Apple recommends in its [Human Inter
 
 ## Privacy by construction
 
-Game history, rating, statistics, and achievements stay in one local save file on your device. sudo sudoku has no developer account system, analytics, advertising, tracking, or third-party SDKs. Game Center is optional, operated by Apple, and used only for leaderboards and achievements.
+Game history, rating, statistics, and achievements live in one save file on your device and sync through your private iCloud database, so a new iPhone picks up where the old one left off. The developer can't see that data. sudo sudoku has no developer account system, analytics, advertising, tracking, or third-party SDKs. iCloud and Game Center are optional and operated by Apple.
 
 Read the full [Privacy Policy](PRIVACY.md) or visit [sudosodoku.kaichen.dev/privacy](https://sudosodoku.kaichen.dev/privacy).
 

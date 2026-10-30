@@ -37,6 +37,13 @@
   `SudoSudoku/Utils/AppConstants.swift`.
 - Persistence is a single local JSON file managed by `StorageManager`
   (`save_data_v4.json`, atomic writes, legacy migration chain).
+  `CloudSyncManager` mirrors it to the private CloudKit database
+  (`iCloud.dev.kaichen.sudoku.app`, zone `SaveData`) with `CKSyncEngine`; the
+  JSON file stays the source of truth. The rating is a `RatingLedger`
+  (baselines merged by max, per-solve gains by union) — never store it as a
+  bare number again. Merge rules live in `SaveDataMerge` and need tests.
+  New CloudKit record types/fields must be deployed to Production in the
+  CloudKit Console before an App Store/TestFlight build uses them.
 - `DEVLOG.md` is a local-only development journal (gitignored) — newest entry on
   top. Record significant decisions and completed work there; never commit it.
 - Repository documentation is canonical and versioned in Git. Keep the GitHub

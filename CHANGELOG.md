@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- iCloud sync: game history, rating and achievements are mirrored to the player's private iCloud database (CloudKit via `CKSyncEngine`), so a new or second iPhone on the same Apple Account gets its progress back. Works offline as before; sync is skipped when iCloud is off.
+- The ELO rating is now a mergeable ledger (one line per solve plus a migrated baseline), so points earned on two iPhones both count after syncing instead of one overwriting the other.
+
+### Fixed
+
+- Migrating a pre-v4 save no longer writes an empty v4 file before the migrated records are published.
+
 ### Accessibility
 
 - Conflicting digits are now struck through as well as shown in red, so errors no longer rely on color alone (Differentiate Without Color).

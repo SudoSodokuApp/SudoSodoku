@@ -1,20 +1,21 @@
 # Privacy Policy — sudo sudoku
 
-**Effective date:** 2026-07-10
+**Effective date:** 2026-10-29
 **Applies to:** sudo sudoku for iOS (bundle `dev.kaichen.sudoku.app`), version 2.0.0 and later.
 
-sudo sudoku is a fully offline, single-player sudoku game. This policy explains
-exactly what data the app handles, where it lives, and what (if anything)
-leaves your device. The short version:
+sudo sudoku is a single-player sudoku game that works fully offline. This
+policy explains exactly what data the app handles, where it lives, and what
+(if anything) leaves your device. The short version:
 
 > **We do not collect your data.** Everything the game knows about you is
-> stored locally on your device. We operate no servers, embed no analytics or
-> advertising SDKs, and never see your data. The only online feature is
-> Apple's Game Center, which is optional and operated by Apple.
+> stored on your device and, if you use iCloud, in your own private iCloud
+> storage. We operate no servers, embed no analytics or advertising SDKs, and
+> never see your data. The only online features are iCloud sync and Game
+> Center, both optional and operated by Apple.
 
 ---
 
-## 1. Data the app stores — locally, on your device only
+## 1. Data the app stores
 
 The app keeps a single local save file (plus small on-device preference
 values) containing:
@@ -31,15 +32,31 @@ values) containing:
 **How it is used:** solely to provide app functionality — resuming games,
 showing your archive, statistics, rating, and achievements.
 
-**Where it goes:** nowhere. This data is never transmitted off your device by
-the app. There is no developer server, no cloud sync operated by us, no
-analytics, no advertising, and no tracking. The app works fully without any
-network connection.
+**Where it goes:** to your device and, if iCloud is on, to your own private
+iCloud database (section 2). It is never sent to us: there is no developer
+server, no analytics, no advertising, and no tracking. The app works fully
+without any network connection.
 
-In App Store privacy terms: data processed only on device is not "collected."
-The app's App Store privacy label is therefore **Data Not Collected**.
+In App Store privacy terms, data kept on device or in your private iCloud
+storage, which the developer cannot access, is not "collected." The app's
+App Store privacy label is therefore **Data Not Collected**.
 
-## 2. Game Center (optional, operated by Apple)
+## 2. iCloud sync (optional, operated by Apple)
+
+If you are signed in to iCloud, the app copies the save data above — game
+history, rating, and achievement progress — into **your private iCloud
+database** using Apple's CloudKit, so a new or second iPhone signed in to the
+same Apple Account gets it back.
+
+- The private database belongs to your Apple Account. The developer has no
+  access to its contents; Apple stores it under Apple's own terms and privacy
+  policy and counts it against your iCloud storage.
+- Nothing else is synced: no identifiers, contacts, location, or device data.
+- Sync is off whenever you are signed out of iCloud or have turned iCloud off
+  for this app in Settings → [your name] → iCloud. Your local data stays on
+  the device either way.
+
+## 3. Game Center (optional, operated by Apple)
 
 sudo sudoku integrates Apple's **Game Center** through Apple's GameKit
 framework for leaderboards and achievements. It is entirely optional:
@@ -65,46 +82,53 @@ identifiers, and leaderboard infrastructure. See
 [Apple's Privacy Policy](https://www.apple.com/legal/privacy/) and
 Settings → Game Center on your device.
 
-## 3. Third parties
+## 4. Third parties
 
 None. The app contains no third-party SDKs, no analytics tools, no
-advertising networks, and shares data with no one. The only external service
-the app talks to is Apple's Game Center, as described above.
+advertising networks, and shares data with no one. The only external services
+the app talks to are Apple's iCloud and Game Center, as described above.
 
 We do not use your data for tracking, and the app does not link data with
 third-party data for advertising or share data with data brokers.
 
-## 4. Data retention and deletion
+## 5. Data retention and deletion
 
 - **Local data** is retained on your device until you delete it. Deleting the
   app deletes the save file and all local game data. (iOS device backups you
   control, such as iCloud or local backups, may include the app's local data
   under your own Apple account settings.)
+- **iCloud copy** is retained in your private iCloud storage until you delete
+  it in Settings → [your name] → iCloud → Manage Account Storage. Deleting the
+  app alone does not remove it, which is what lets a reinstall restore your
+  progress.
 - **Game Center data** (leaderboard scores, achievements, your Game Center
   profile) is retained by Apple under Apple's policies. You can manage it
   through Settings → Game Center on your device, and exercise data rights
   with Apple at [privacy.apple.com](https://privacy.apple.com).
 
-## 5. Revoking consent
+## 6. Revoking consent
 
 - To stop submitting scores and achievements: sign out of Game Center in
   Settings → Game Center (or restrict Game Center for this app). The game
   continues to work fully offline.
-- To remove all local data: delete the app.
+- To stop iCloud sync: turn iCloud off for this app in Settings → [your name]
+  → iCloud. Data already on the device stays there.
+- To remove all local data: delete the app. To remove the iCloud copy too,
+  delete it from your iCloud storage as described in section 5.
 
-## 6. Children
+## 7. Children
 
 sudo sudoku is rated 4+. It shows no ads, contains no in-app purchases, no
 chat or user-generated content, and collects no data from anyone, including
 children.
 
-## 7. Changes to this policy
+## 8. Changes to this policy
 
 If a future version of the app changes what data is handled (for example, new
 online features), this document will be updated in this repository before
 that version ships, with the effective date above revised.
 
-## 8. Contact
+## 9. Contact
 
 For general privacy questions, see [sudo sudoku support](SUPPORT.md). Do not put
 personal information in a public issue. For a private request, reach the

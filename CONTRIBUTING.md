@@ -93,7 +93,7 @@ In the pull request, explain the user-visible outcome, link the issue with `Clos
 
 ## Data and privacy
 
-sudo sudoku stores gameplay data locally and has no analytics, advertising, or third-party SDKs. Game Center is the only online service and must remain optional. Any proposal that changes data handling must update `PRIVACY.md`, App Store privacy metadata, in-app disclosure, and tests before release.
+sudo sudoku stores gameplay data locally, mirrors it to the player's private iCloud database (CloudKit, never a developer server), and has no analytics, advertising, or third-party SDKs. iCloud and Game Center are the only online services and must remain optional. Any proposal that changes data handling must update `PRIVACY.md`, App Store privacy metadata, in-app disclosure, and tests before release.
 
 ## License and conduct
 

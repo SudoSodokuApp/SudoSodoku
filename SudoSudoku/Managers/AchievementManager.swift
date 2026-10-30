@@ -13,6 +13,10 @@ final class AchievementManager: ObservableObject {
     private let unlockedKey = "unlockedAchievements"
     private let pendingReportsKey = "pendingAchievementReports"
 
+    /// Told when local unlocks are added or cleared, so iCloud sync can
+    /// mirror them. Remote unlocks applied via `applyRemote` don't echo.
+    var onUnlockSetChange: ((_ unlocked: [String], _ removed: [String]) -> Void)?
+
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
     }
@@ -23,7 +27,7 @@ final class AchievementManager: ObservableObject {
         unlockedIDs.contains(achievement.rawValue)
     }
 
-    private var unlockedIDs: Set<String> {
+    var unlockedIDs: Set<String> {
         Set(defaults.stringArray(forKey: unlockedKey) ?? [])
     }
 
@@ -46,12 +50,23 @@ final class AchievementManager: ObservableObject {
     /// reset server-side achievement progress. Used by the debug factory
     /// reset so unlock flows can be re-verified on a played account.
     func resetAllProgress() {
+        let cleared = Array(unlockedIDs)
         defaults.removeObject(forKey: unlockedKey)
         defaults.removeObject(forKey: pendingReportsKey)
         objectWillChange.send()
         if GameCenterManager.shared.isAuthenticated {
             GKAchievement.resetAchievements { _ in }
         }
+        onUnlockSetChange?([], cleared)
+    }
+
+    /// Merges unlocks fetched from iCloud. Not reported to Game Center: the
+    /// device that earned them already did, or queued it.
+    func applyRemote(unlocked: Set<String>, removed: Set<String>) {
+        let merged = unlockedIDs.union(unlocked).subtracting(removed)
+        guard merged != unlockedIDs else { return }
+        defaults.set(Array(merged), forKey: unlockedKey)
+        objectWillChange.send()
     }
 
     /// Called after Game Center authentication succeeds.
@@ -70,6 +85,7 @@ final class AchievementManager: ObservableObject {
 
         defaults.set(Array(unlockedIDs.union(fresh.map(\.rawValue))), forKey: unlockedKey)
         objectWillChange.send()
+        onUnlockSetChange?(fresh.map(\.rawValue), [])
         report(fresh)
         return fresh
     }

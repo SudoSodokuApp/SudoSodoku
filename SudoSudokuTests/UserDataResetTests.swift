@@ -23,8 +23,9 @@ final class UserDataResetTests: XCTestCase {
     func testWipeAllDataResetsRecordsRatingAndPersists() throws {
         let manager = StorageManager()
         RunLoop.current.run(until: Date().addingTimeInterval(0.1))
-        manager.saveGame(makeRecord())
-        manager.updateUserRating(add: 300)
+        let record = makeRecord()
+        manager.saveGame(record)
+        manager.recordRatingGain(300, forGame: record.id)
         XCTAssertEqual(manager.userRating, 1500)
         XCTAssertEqual(manager.records.count, 1)
 
@@ -37,6 +38,33 @@ final class UserDataResetTests: XCTestCase {
         let container = try JSONDecoder().decode(StorageManager.StorageContainer.self, from: data)
         XCTAssertEqual(container.rating, 1200, "The wipe must be persisted, not just in-memory")
         XCTAssertTrue(container.records.isEmpty)
+        XCTAssertEqual(container.ratingLedger, RatingLedger(), "The ledger must be emptied too")
+    }
+
+    func testWipeReportsEveryDeletionSoICloudCannotRestoreIt() {
+        let manager = StorageManager()
+        RunLoop.current.run(until: Date().addingTimeInterval(0.1))
+        let record = makeRecord()
+        manager.saveGame(record)
+        manager.recordRatingGain(40, forGame: record.id)
+        let spy = SyncSpy()
+        manager.syncDelegate = spy
+
+        manager.wipeAllData()
+
+        XCTAssertEqual(spy.changes.last?.deletedRecordIDs, [record.id])
+        XCTAssertEqual(spy.changes.last?.deletedRatingKeys, [.gain(record.id.uuidString)])
+    }
+
+    func testAchievementResetReportsClearedUnlocks() {
+        let manager = AchievementManager(defaults: defaults)
+        manager.unlockIncidentReported()
+        var removed: [String] = []
+        manager.onUnlockSetChange = { _, cleared in removed = cleared }
+
+        manager.resetAllProgress()
+
+        XCTAssertEqual(removed, [Achievement.incidentReported.rawValue])
     }
 
     func testAchievementResetClearsLocalStateAndAllowsReUnlock() {
@@ -55,6 +83,11 @@ final class UserDataResetTests: XCTestCase {
     }
 
     // MARK: - Fixtures
+
+    private final class SyncSpy: SaveDataSyncDelegate {
+        var changes: [SaveDataChange] = []
+        func storageDidChange(_ change: SaveDataChange) { changes.append(change) }
+    }
 
     private func saveURL() -> URL {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]

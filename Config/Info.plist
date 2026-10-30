@@ -11,6 +11,12 @@
 	     not systemBackground: the app is always dark, and the default
 	     generated launch screen flashed white in light mode - a long white
 	     stare on slow first launches after install. -->
+	<!-- Silent CloudKit pushes wake CKSyncEngine when another device
+	     changes the save data (CloudSyncManager). -->
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchScreen</key>
 	<dict>
 		<key>UIColorName</key>

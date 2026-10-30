@@ -457,8 +457,8 @@ class SudokuGame: ObservableObject {
         )
         ratingGained = gained
 
-        if gained > 0 {
-            StorageManager.shared.updateUserRating(add: gained)
+        if gained > 0, let recordID = currentRecordID {
+            StorageManager.shared.recordRatingGain(gained, forGame: recordID)
             GameCenterManager.shared.submitRating(StorageManager.shared.userRating)
         }
 
